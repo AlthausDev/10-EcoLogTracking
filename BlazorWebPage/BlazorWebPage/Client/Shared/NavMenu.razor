@@ -1,0 +1,91 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">BlazorWebPage</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All" hidden="@(!IsHidden)">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" id="dinamicHref" href="@ProfilePath" Match="NavLinkMatch.All" hidden="@IsHidden">
+                <span class="oi oi-home" aria-hidden="true"></span> Perfil
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter" hidden="@IsHidden">
+                <span class="oi oi-plus" aria-hidden="true"></span> Contador
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata" hidden="@IsHidden">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="componentsample" hidden="@IsHidden">
+                <span class="oi oi-chevron-right" aria-hidden="true"></span> Example Component!
+            </NavLink>
+        </div>
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="Todo" hidden="@IsHidden">
+                <span class="oi oi-spreadsheet" aria-hidden="true"></span> TO-DO
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+<style>
+    :root{
+        -href: "Sesion/"
+    }
+
+    #dinamicHref{
+        
+    }
+</style>
+
+@code {
+    private bool collapseNavMenu = true;
+    private static string ProfilePath = "Sesion/";
+
+    public static bool IsHidden = true;
+
+    private static string _Id { get; set; } = string.Empty;
+
+    public static string Id
+    {
+        get
+        {
+            return _Id;
+        }
+        set
+        {
+            if (!_Id.Equals(value))
+            {
+                _Id = value;
+                HandlerPageId(value);
+            }
+        }
+    }
+
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private static void HandlerPageId(string value)
+    {
+        ProfilePath = $"Sesion/{value}";
+    }
+}

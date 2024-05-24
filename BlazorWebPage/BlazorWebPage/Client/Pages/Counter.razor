@@ -1,0 +1,33 @@
+﻿@page "/counter"
+
+<PageTitle>Contador</PageTitle>
+
+<h1>Counter?</h1>
+
+<hr />
+<div>
+<p role="status">Contador aleatorio: @currentCount</p>
+
+<p role="status">Multiplicador: @multiplier</p>
+<p role="status">Restulado actual: @multiple</p>
+</div>
+<br/>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<style>
+   
+</style>
+
+@code {
+    private int currentCount = 0;
+    private int multiple = 0;
+    private int multiplier = 0;
+
+    private void IncrementCount()
+    {        
+        Random random = new Random();
+        currentCount+= random.Next(11);
+        multiplier++;
+        multiple = multiplier * currentCount;
+    }
+}

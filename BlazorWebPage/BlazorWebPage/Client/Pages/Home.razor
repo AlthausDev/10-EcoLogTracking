@@ -1,0 +1,62 @@
+﻿@page "/"
+<PageTitle>Home</PageTitle>
+
+@inject HttpClient Http
+@inject IJSRuntime JS
+@inject NavigationManager NavManager
+@inject ILocalStorageService storageService
+
+
+@using BlazorWebPage.Shared
+@using Blazored.LocalStorage
+
+<Modal @ref="ModalInstance" Size="ModalSize.Regular" />
+
+<article class="content">
+
+    <h1>Hello, wor... Blazor!</h1>
+
+    Esta es una página de prueba
+
+    <SurveyPrompt Title="Separador" />
+</article>
+
+<Toasts class="p-3" Messages="Messages" AutoHide="true" Delay="6000" StackLength="5" Placement="ToastsPlacement.TopRight" />
+
+
+<div>
+    <Button Color="ButtonColor.Primary" @onclick="Registro">Registrarse</Button>
+    <Button Color="ButtonColor.Primary" @onclick="Login">Iniciar Sesion</Button>
+</div>
+<div>
+    <Button id="btnImprimir" Color="ButtonColor.Primary" @onclick="ImprimirUsuarios">Imprimir por consola</Button>
+</div>
+
+<div class="grafica">
+    <div id="chart">
+        <LineChart @ref="LineChartInstance" Width="800" Class="mb-4" />
+    </div>
+</div>
+
+<style>
+    .grafica {
+        display: flex;
+        width: 100%;
+        margin-top: 5%;
+    }
+
+    #chart {
+        display: flex;
+        position: relative;
+        margin: auto;
+    }
+
+    button {
+        margin: 1%;
+        width: 150px;
+    }
+
+    #btnImprimir {
+        width: 300px;
+    }
+</style>
