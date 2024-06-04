@@ -26,8 +26,4 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.3.11" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ClientModels\" />
-  </ItemGroup>
 </Project>

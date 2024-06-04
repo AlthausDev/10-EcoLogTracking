@@ -1,4 +1,4 @@
-﻿/*
+﻿
 .container {
     overflow: auto;
 }
@@ -18,7 +18,7 @@
     .rounded-grid th,
     .rounded-grid td {
         padding: 6px;
-        border-radius: 8px;
+        
     }
 
     .rounded-grid th {
@@ -59,8 +59,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #03e9f4;
-    border-radius: 20px;
+    background-color: #03e9f4;    
     border: 3px solid white;
 }
 
@@ -68,4 +67,3 @@
         background-color: #028090;
     }
 
-*/

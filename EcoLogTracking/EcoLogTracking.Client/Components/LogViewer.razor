@@ -7,41 +7,52 @@
 @inject IJSRuntime JS
 @inject ILocalStorageService storageService
 
-
-
 <div class="main-container">   
 
     @RenderLoadingIndicator()
 
-    @if (!isLoading)
+    @if (!IsLoading)
     {
         <Grid TItem="Log"
               AllowFiltering="false"
               AllowPaging="true"
-              PageSize="15"
+              PageSize="100"
               AllowRowClick="true"
               AllowSorting="true"
               HeaderRowCssClass="bg-black text-black"
               DataProvider="LogsDataProvider"          
               Responsive="true"
+              EmptyText="No se han obtenido registros"
               class="table rounded-grid"
               @ref="DataGrid">
 
-            <GridColumn TItem="Log" HeaderText="Tarea" PropertyName="Name" SortKeySelector="item => item.Name" IsDefaultSortColumn="true">
-                @context.Name
+            <GridColumn TItem="Log" HeaderText="ID" PropertyName="ID" SortKeySelector="item => item.Id" IsDefaultSortColumn="true">
+                @context.Id
             </GridColumn>
 
-@*             <GridColumn TItem="TaskItem" HeaderText="Alta" PropertyName="Nombre" SortKeySelector="item => item.CreatedAt" TextNoWrap="true">
-                @context.CreatedAt.ToString("dd/MM/yyyy")
+            <GridColumn TItem="Log" HeaderText="Equipo" PropertyName="MachineName" SortKeySelector="item => item.MachineName" IsDefaultSortColumn="true">
+                @context.MachineName
             </GridColumn>
 
-            <GridColumn TItem="TaskItem" HeaderText="Vencimiento" PropertyName="Fecha Vencimiento" SortKeySelector="item => item.ExpirationDate" TextNoWrap="true">
-                @context.ExpirationDate?.ToString("dd/MM/yyyy")
+            <GridColumn TItem="Log" HeaderText="Fecha/Hora" PropertyName="Logged" SortKeySelector="item => item.Logged" IsDefaultSortColumn="true">
+                @context.Logged
             </GridColumn>
 
-            <GridColumn TItem="TaskItem" HeaderText="Estado" PropertyName="Estado" SortKeySelector="item => item.StateId">
-                @((TaskStateEnum)@context.StateId)
-            </GridColumn> *@          
+            <GridColumn TItem="Log" HeaderText="Nivel" PropertyName="Level" SortKeySelector="item => item.Level" IsDefaultSortColumn="true">
+                @context.Level
+            </GridColumn>
+
+            <GridColumn TItem="Log" HeaderText="Mensaje" PropertyName="Message" SortKeySelector="item => item.Message" IsDefaultSortColumn="true">
+                @context.Message
+            </GridColumn>
+
+            <GridColumn TItem="Log" HeaderText="Logger" PropertyName="Logger" SortKeySelector="item => item.Logger" IsDefaultSortColumn="true">
+                @context.Logger
+            </GridColumn>
+
+            <GridColumn TItem="Log" HeaderText="Metodo" PropertyName="Request_method" SortKeySelector="item => item.Request_method" IsDefaultSortColumn="true">
+                @context.Request_method
+            </GridColumn> 
         </Grid>
     }
 </div>
