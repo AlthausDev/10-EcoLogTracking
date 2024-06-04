@@ -11,33 +11,14 @@ namespace EcoLogTracking.Server.Controllers.Impl
     public class LogController : ControllerBase
     {
         private readonly ILogService _logService;
-        /// <summary>
-        /// ////////////////////////////////////////////
-        /// </summary>
-        /// <param name="logService"></param>
+        
         public LogController(ILogService logService)
         {            
             _logService = logService;
         }
 
-        //COM DE PRUEBA MARTES
-        //com de prueba dos
-        [HttpPost]
-        public async Task<IActionResult> Post(Log log)
-        {
-            try
-            {
-                bool result = await _logService.Add(log, null);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {             
-                return StatusCode(500, "Error interno del servidor");
-            }
-        }
-
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
@@ -50,46 +31,5 @@ namespace EcoLogTracking.Server.Controllers.Impl
             }
         }
    
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateLog(int id, Log log)
-        {
-            try
-            {
-                if (id != log.Id)
-                {
-                    return BadRequest("");
-                }
-
-                var updatedLog = await _logService.Update(log, null);
-                return Ok(updatedLog);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Error interno del servidor");
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpGet("count")]
-        public Task<int> Count()
-        {
-            return _logService.Count();
-        }
-
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLog(int id)
-        {
-            try
-            {
-                _logService.Delete(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {    
-                return StatusCode(500, "Error interno del servidor");
-            }
-        }
     }
 }
