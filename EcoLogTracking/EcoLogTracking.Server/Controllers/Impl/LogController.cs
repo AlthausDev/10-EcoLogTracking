@@ -21,6 +21,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         }
 
         //COM DE PRUEBA MARTES
+        //com de prueba dos
         [HttpPost]
         public async Task<IActionResult> Post(Log log)
         {
