@@ -2,34 +2,34 @@
 {
     public class Log : BaseModel
     {
-        private string _name;
+        private int ID { get; set; }
+        private string MachineName { get; set; }
 
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("El nombre de la categoría no puede estar vacío o contener solo espacios en blanco.");
-                }
-                _name = value;
-            }
-        }
+        private DateTime Logged { get; set; }
+
+        private String Level { get; set; }
+
+        private String Message { get; set; }
+
+        private String Logger { get; set; }
+
+        private String request_method { get; set; }
+
+
 
         public Log()
         {
         }
 
-        public Log(int id, string name)
+        public Log(int id, string machinename, DateTime logged, string level, string message, string logger, string r_m)
         {
-            Id = id;
-            Name = name;
-        }
-
-        public Log(string name)
-        {
-            Name = name;
+            ID = id;
+            MachineName = machinename;
+            Logged = logged;
+            Level = level;
+            Message = message;
+            Logger = logger;
+            request_method = r_m;
         }
     }
-}
+    }
