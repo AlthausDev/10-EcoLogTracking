@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>ea3725c4-a9c7-44f6-a105-0a55784a2206</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>EcoLogTracking.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\CategoryData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\TaskItemData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\UserCredentialsData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\UserData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BaseModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Category.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Enum\TaskStateEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Request\UserCredentialsRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\UserCredentials.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TaskItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Enum\ColorsEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Enum\FieldTypeEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Enum\Keys.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Request\GetRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\LoginResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Enum\UserTypeEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Validation.cs" />
+  </ItemGroup>
+</Project>

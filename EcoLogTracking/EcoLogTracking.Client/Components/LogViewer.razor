@@ -1,0 +1,86 @@
+﻿@page "/LogList"
+@using EcoLogTracking.Client.Models
+
+
+@inject HttpClient Http
+@inject NavigationManager NavManager
+@inject IJSRuntime JS
+@inject ILocalStorageService storageService
+
+
+
+<div class="main-container">   
+
+    @RenderLoadingIndicator()
+
+    @if (!isLoading)
+    {
+        <Grid TItem="Log"
+              AllowFiltering="false"
+              AllowPaging="true"
+              PageSize="15"
+              AllowRowClick="true"
+              AllowSorting="true"
+              HeaderRowCssClass="bg-black text-black"
+              DataProvider="LogsDataProvider"          
+              Responsive="true"
+              class="table rounded-grid"
+              @ref="DataGrid">
+
+            <GridColumn TItem="Log" HeaderText="Tarea" PropertyName="Name" SortKeySelector="item => item.Name" IsDefaultSortColumn="true">
+                @context.Name
+            </GridColumn>
+
+@*             <GridColumn TItem="TaskItem" HeaderText="Alta" PropertyName="Nombre" SortKeySelector="item => item.CreatedAt" TextNoWrap="true">
+                @context.CreatedAt.ToString("dd/MM/yyyy")
+            </GridColumn>
+
+            <GridColumn TItem="TaskItem" HeaderText="Vencimiento" PropertyName="Fecha Vencimiento" SortKeySelector="item => item.ExpirationDate" TextNoWrap="true">
+                @context.ExpirationDate?.ToString("dd/MM/yyyy")
+            </GridColumn>
+
+            <GridColumn TItem="TaskItem" HeaderText="Estado" PropertyName="Estado" SortKeySelector="item => item.StateId">
+                @((TaskStateEnum)@context.StateId)
+            </GridColumn> *@          
+        </Grid>
+    }
+</div>
+
+
+<section id="bottom" />
+
+<script>
+    var mybutton = document.getElementById("scrollBtn");
+    var mybuttonTop = document.getElementById("scrollBtnDown");
+
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+
+    window.addEventListener('scroll', (e) => {
+        const body = document.body;
+        const parent = body.parentElement;
+        const pixelsFromBottom = body.scrollHeight - parent.clientHeight - 50;
+
+        if (parent.scrollTop < pixelsFromBottom) {
+            mybuttonTop.style.display = "block";
+        } else {
+            mybuttonTop.style.display = "none";
+        }
+    });
+
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+    function bottomFuction() {
+        document.getElementById('bottom').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>

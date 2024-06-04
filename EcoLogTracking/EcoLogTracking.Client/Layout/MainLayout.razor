@@ -1,0 +1,35 @@
+﻿@inherits LayoutComponentBase
+@using BlazorBootstrap
+
+<div class="page">
+    <main>     
+        @Body
+    </main>
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+<Preload LoadingText="Loading..." />
+@* 
+<style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background: linear-gradient(#141e30, #243b55);
+    }
+</style>
+
+
+@code {
+    public static Modal ModalInstance = default!;
+    public static List<ToastMessage> messages = new();
+} *@
