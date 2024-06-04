@@ -21,20 +21,14 @@ namespace EcoLogTracking.Client.Components
        
         private Log Log { get; set; }
 
-
-        /// <summary>
-        /// Servicio para mostrar indicadores de precarga.
-        /// </summary>
+      
         [Inject] protected PreloadService PreloadService { get; set; }
         
        private Grid<Log> DataGrid = default!;
 
         private ObservableCollection<Log> LogList { get; set; } = new ObservableCollection<Log>();
        
-        /// <summary>
-        /// Indicador de si la página está cargando.
-        /// </summary>
-        private bool isLoading = true;
+               private bool isLoading = true;
 
      
         protected override async Task OnInitializedAsync()
