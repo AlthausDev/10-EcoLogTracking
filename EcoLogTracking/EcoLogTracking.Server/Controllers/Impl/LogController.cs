@@ -11,13 +11,16 @@ namespace EcoLogTracking.Server.Controllers.Impl
     public class LogController : ControllerBase
     {
         private readonly ILogService _logService;
-
+        /// <summary>
+        /// ////////////////////////////////////////////
+        /// </summary>
+        /// <param name="logService"></param>
         public LogController(ILogService logService)
         {            
             _logService = logService;
         }
 
-
+        //COM DE PRUEBA MARTES
         [HttpPost]
         public async Task<IActionResult> Post(Log log)
         {
