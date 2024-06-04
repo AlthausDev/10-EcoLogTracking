@@ -1,7 +1,0 @@
-﻿CREATE TABLE [dbo].[Tarea]
-(
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-	[Nombre] VARCHAR(50) NOT NULL,
-	[Descripcion] VARCHAR(MAX) NOT NULL,
-	[Finalizado] TINYINT NOT NULL DEFAULT 0
-)
