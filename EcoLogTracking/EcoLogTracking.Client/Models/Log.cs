@@ -3,8 +3,7 @@
 namespace EcoLogTracking.Client.Models
 {
     public class Log : BaseModel
-    {
-        public int ID { get; set; }
+    {       
         public string MachineName { get; set; }
         public DateTime Logged { get; set; }
         public string Level { get; set; }
@@ -18,7 +17,7 @@ namespace EcoLogTracking.Client.Models
 
         public Log(int Id, string machineName, DateTime logged, string level, string message, string logger, string request_method)
         {
-            ID = Id;
+            this.Id = Id;
             MachineName = machineName;
             Logged = logged;
             Level = level;

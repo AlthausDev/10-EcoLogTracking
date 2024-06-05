@@ -1,6 +1,7 @@
 ﻿using BlazorBootstrap;
 using EcoLogTracking.Client.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -15,18 +16,37 @@ namespace EcoLogTracking.Client.Components
         [Inject] protected PreloadService PreloadService { get; set; }
 
         private Log Log { get; set; } = new();
+
         private Grid<Log> DataGrid = default!;
+        private Modal ModalInstance = default!;
 
         private ObservableCollection<Log> LogList { get; set; } = new ObservableCollection<Log>();
 
         private bool IsLoading = false;
+
+        private Log? selectedLogItem { get; set; } = null;
+
+        public Log? SelectedLogItem
+        {
+            get
+            {
+                return selectedLogItem;
+            }
+            set
+            {
+                if (selectedLogItem != value)
+                {
+                    selectedLogItem = value;
+                }
+            }
+        }
         #endregion
 
 
         #region Initialize
         protected override async Task OnInitializedAsync()
         {
-
+            //await GetAllLogData();
         }
 
         private async Task<GridDataProviderResult<Log>> LogsDataProvider(GridDataProviderRequest<Log> request)
@@ -46,8 +66,25 @@ namespace EcoLogTracking.Client.Components
         }
         #endregion
 
+        #region Events
+        private async Task OnClickShowDetails()
+        {
+            var parameters = new Dictionary<string, object>
+            {
+                { "Id", SelectedLogItem.Id },
+                { "MachineName", SelectedLogItem.MachineName },
+                { "Logged", SelectedLogItem.Logged },
+                { "Level", SelectedLogItem.Level },
+                { "Message", SelectedLogItem.Message },
+                { "Logger", SelectedLogItem.Logger },
+                { "Request_method", SelectedLogItem.Request_method }
+            };
+            await ModalInstance.ShowAsync<DetailsModal>(title: "Registro", parameters: parameters);
+        }
+        #endregion
+
         #region ApiCalls
-        private async Task GetLogData()
+        private async Task GetAllLogData()
         {
             LogList = new ObservableCollection<Log>(await Http.GetFromJsonAsync<List<Log>>("api/Log"));
         }
@@ -65,5 +102,13 @@ namespace EcoLogTracking.Client.Components
             }
         };
         #endregion
+
+        #region SelectRow    
+        private async Task SelectLogItem(GridRowEventArgs<Log> args)
+        {
+            SelectedLogItem = args.Item;
+        }
+
+        #endregion SelectRow   
     }
 }
