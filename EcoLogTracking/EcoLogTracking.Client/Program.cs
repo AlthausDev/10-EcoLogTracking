@@ -7,10 +7,17 @@ using System.Threading.Tasks;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 
-var apiBaseUrl = builder.Configuration.GetValue<string>("ApiSettings:BaseUrl");
+//var apiBaseUrl = builder.Configuration.GetValue<string>("ApiSettings:BaseUrl");
+//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
+
+builder.Services.AddScoped(client =>
+{
+    var apiBaseUrl = builder.Configuration.GetValue<string>("ApiSettings:BaseUrl");
+    return new HttpClient { BaseAddress = new Uri(apiBaseUrl) };
+});
 
 builder.Services.AddBlazorBootstrap();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
+
 builder.Services.AddBlazoredLocalStorage();
 
 await builder.Build().RunAsync();

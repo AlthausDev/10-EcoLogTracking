@@ -7,11 +7,15 @@
 
 <PageTitle>EcoLog Tracker</PageTitle>
 
-<Modal @ref="ModalInstance" Size="ModalSize.ExtraLarge" ShowCloseButton=" true" IsVerticallyCentered="true" IsScrollable="true" />
+<Modal @ref="ModalInstance" ShowCloseButton=" true" IsVerticallyCentered="true" IsScrollable="true" />
 
 <div class="mainContainer">
-    <div class="NavButtons">
-    </div>
+    @if (isLoading)
+    {
+        <div class="spinner-overlay">
+            <div class="spinner"></div>
+        </div>
+    }
 
     <div class="container">       
         <div class="todoContainer">

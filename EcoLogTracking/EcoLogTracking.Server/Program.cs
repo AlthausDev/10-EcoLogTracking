@@ -16,6 +16,8 @@ var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentCla
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
 
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
 
 #region Añadir servicios
 builder.Services.AddSingleton<MockLogService>();
@@ -58,7 +60,12 @@ builder.Services.AddScoped(client => new HttpClient
 
 #region Configuración de HttpClient
 var apiBaseUrl = builder.Configuration.GetValue<string>("ApiSettings:BaseUrl");
-builder.Services.AddScoped(client => new HttpClient
+if (string.IsNullOrEmpty(apiBaseUrl))
+{
+    throw new ArgumentNullException(nameof(apiBaseUrl), "ApiSettings:BaseUrl no está configurado correctamente en appsettings.json");
+}
+
+builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri(apiBaseUrl)
 });
