@@ -1,14 +1,8 @@
 ﻿
 .container {
     overflow: auto;
+    width: max-content;
 }
-
-.upper-buttons {
-    padding-bottom: 2.5em;
-    display: flex;
-    justify-content: space-between;
-}
-
 
 .rounded-grid {
     border-collapse: separate;

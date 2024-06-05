@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using EcoLogTracking.Client.Services;
 using EcoLogTracking.Server.Components;
 using EcoLogTracking.Server.Repository.Impl;
 using EcoLogTracking.Server.Repository.Interfaces;
@@ -17,6 +18,7 @@ builder.Host.UseNLog();
 
 
 #region Añadir servicios
+builder.Services.AddSingleton<MockLogService>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddHttpClient();
 builder.Services.AddControllers();
@@ -51,6 +53,14 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped(client => new HttpClient
 {
     BaseAddress = new Uri("https://localhost:7216/"),
+});
+#endregion
+
+#region Configuración de HttpClient
+var apiBaseUrl = builder.Configuration.GetValue<string>("ApiSettings:BaseUrl");
+builder.Services.AddScoped(client => new HttpClient
+{
+    BaseAddress = new Uri(apiBaseUrl)
 });
 #endregion
 

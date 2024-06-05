@@ -1,5 +1,6 @@
 ﻿using BlazorBootstrap;
 using EcoLogTracking.Client.Models;
+using EcoLogTracking.Client.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,7 @@ namespace EcoLogTracking.Client.Components
     {
         #region Atributes
         [Inject] protected PreloadService PreloadService { get; set; }
+        [Inject] protected MockLogService MockLogService { get; set; }
 
         private Log Log { get; set; } = new();
 
@@ -46,21 +48,23 @@ namespace EcoLogTracking.Client.Components
         #region Initialize
         protected override async Task OnInitializedAsync()
         {
+            LogList = new ObservableCollection<Log>(MockLogService.GetMockLogs());
+
             //await GetAllLogData();
         }
 
         private async Task<GridDataProviderResult<Log>> LogsDataProvider(GridDataProviderRequest<Log> request)
         {
-            //Stopwatch stopwatch = new();
-            //stopwatch.Start();
+            Stopwatch stopwatch = new();
+            stopwatch.Start();
 
-            //while (LogList.IsNullOrEmpty())
-            //{
-            //    await Task.Delay(5);
-            //}
+            while (LogList.IsNullOrEmpty())
+            {
+                await Task.Delay(5);
+            }
 
-            //stopwatch.Stop();
-            //Debug.WriteLine($"Tiempo total de espera: {stopwatch.ElapsedMilliseconds} ms");
+            stopwatch.Stop();
+            Debug.WriteLine($"Tiempo total de espera: {stopwatch.ElapsedMilliseconds} ms");
 
             return await Task.FromResult(request.ApplyTo(LogList.OrderBy(Log => Log.Id)));
         }

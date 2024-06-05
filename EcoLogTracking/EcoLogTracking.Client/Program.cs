@@ -1,10 +1,16 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.Services.AddBlazorBootstrap();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+
+var apiBaseUrl = builder.Configuration.GetValue<string>("ApiSettings:BaseUrl");
+
+builder.Services.AddBlazorBootstrap();
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
 builder.Services.AddBlazoredLocalStorage();
 
 await builder.Build().RunAsync();
