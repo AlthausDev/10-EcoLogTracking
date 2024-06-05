@@ -7,9 +7,8 @@ CREATE PROCEDURE [dbo].[NLog_AddEntry_p] (
   @logger nvarchar(300),
   @method nvarchar(300),
   @stacktrace nvarchar(max),
-  @filename nvarchar(300),
-  @allEventProperties nvarchar(max)
-
+  @filename nvarchar(max),
+  @alleventproperties nvarchar(max)
 ) AS
 BEGIN
   INSERT INTO [dbo].[NLog] (
@@ -18,20 +17,19 @@ BEGIN
     [Level],
     [Message],
     [Logger],
-	[request_method],
-	[stacktrace],
-	[file name],
-	[allEventProperties]
-
+	[method],
+	[Stacktrace],
+	[File_name],
+	[All_event_properties]
   ) VALUES (
     @machineName,
     @logged,
     @level,
     @message,
     @logger,
-	@method,
+    @method,
 	@stacktrace,
 	@filename,
-	@allEventProperties
+	@alleventproperties
   );
 END

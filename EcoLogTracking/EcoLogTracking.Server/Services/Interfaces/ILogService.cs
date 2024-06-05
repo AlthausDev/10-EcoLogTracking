@@ -2,8 +2,10 @@
 
 namespace EcoLogTracking.Server.Services.Interfaces
 {
-    public interface ILogService : IGenericService<Log, object>
+    public interface ILogService 
     {
+        Task<IEnumerable<Log>> GetAll();
 
+        public bool PostLog(Log log);
     }
 }
