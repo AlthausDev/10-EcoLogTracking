@@ -12,7 +12,7 @@ namespace EcoLogTracking.Client.Services
             var mockLogs = new List<Log>();
 
             // Generar 20 registros de prueba
-            for (int i = 1; i <= 20; i++)
+            for (int i = 1; i <= 200; i++)
             {
                 mockLogs.Add(new Log
                 {
@@ -20,7 +20,7 @@ namespace EcoLogTracking.Client.Services
                     MachineName = $"Machine {i}",
                     Logged = DateTime.Now.AddDays(-i),
                     Level = "Info",
-                    Message = $"This is log message {i}",
+                    Message = $"This is a really loooooooong log message {i} This is a really loooooooong log message This is a really loooooooong log message",
                     Logger = "MockLogger",
                     Request_method = "GET"
                 });

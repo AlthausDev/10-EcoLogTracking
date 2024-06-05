@@ -1,0 +1,178 @@
+﻿.modal-body {
+    display: contents;
+}
+
+.modal-header {
+    display: none;
+}
+
+.main-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    /*min-width: 50%;
+    max-width: 80%;*/
+    padding: 40px;
+    box-sizing: border-box;
+    /*  box-shadow: 0px 0px 36px 2px rgba(183, 28, 28, 1);
+    border-radius: 10px;
+    border: 2px solid #db6f6f;*/
+    box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+    border-radius: 10px;
+    border: 2px solid #a1f097;
+    background: rgba(0,0,0,.9);
+    transform: translate(-50%, -50%);
+    max-height: 100vh;
+    overflow-y: auto;
+    height: auto;
+    transition: all ease-in-out 10s;
+}
+
+    .main-box h2 {
+        margin: 0 0 10%;
+        font-size: 2em;
+        padding: 0;
+        color: #fff;
+        text-align: center;
+    }
+
+    .main-box .core-box {
+        position: relative;
+        transition: all ease-in-out 10s;
+    }
+
+        .main-box .core-box input, 
+        .main-box .core-box select {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: #fff;            
+            margin: 30px 0px;
+            outline: none;
+            background: rgba(255, 255, 255, .2);
+            box-shadow: 0 3px 26px rgba(3,233,244);
+            border-radius: 5px;
+            border: 2px solid #03e9f4;
+            
+        }
+
+        .main-box .core-box input:focus,
+        .main-box .core-box select:focus {
+            border: 2px solid white;
+        }
+
+        .main-box .core-box select option {
+            background: rgba(0, 0, 0, .8) !important;
+        }
+
+        .main-box .core-box label {
+            position: absolute;
+            top: 31px;
+            left: 1px;
+            padding: 10px 15px;
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: .5s;
+        }
+
+        .main-box .core-box input:focus ~ label,        
+        .main-box .core-box input:valid ~ label {
+            top: -5px;
+            left: 12px;
+            color: #03e9f4;
+            font-size: 14px;
+        }
+
+   
+
+    .main-box form a {
+        position: relative;
+        display: ruby-text;
+        padding: 10px 20px;
+        color: #03e9f4;
+        font-size: 16px;
+        text-decoration: none;
+        text-transform: uppercase;
+        overflow: hidden;
+        transition: .5s;
+        margin-top: 40px;
+        letter-spacing: 4px
+    }
+
+    .main-box a:hover {
+        background: #03e9f4;
+        color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 100px #03e9f4;
+    }
+
+    .main-box a span {
+        position: absolute;
+        display: block;
+    }
+
+        .main-box a span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #03e9f4);
+            animation: btn-anim1 1s linear infinite;
+        }
+
+        .main-box a span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #03e9f4);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: 1500ms
+        }
+
+        .main-box a span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #03e9f4);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: 3000ms
+        }
+
+
+        .main-box a span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #03e9f4);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: 4500ms
+        }
+
+    .main-box form button {
+        margin-inline:5%;
+    }
+
+  
+    .main-box::-webkit-scrollbar {
+        width: 0px;         
+    }   
+
+
+keyframes btn-anim1, btn-anim2, btn-anim3, btn-anim4 {
+    0%
+
+{
+    left: -100%;
+}
+
+50%, 100% {
+    left: 100%;
+}
+
+}
+}

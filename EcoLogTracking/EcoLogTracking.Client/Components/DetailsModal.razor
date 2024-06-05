@@ -1,1 +1,56 @@
-﻿
+﻿<div class="main-box">
+    <h3>Detalles del Registro @Id</h3>
+    <table>
+        <tr>
+            <td>Fecha y Hora:</td>
+            <td>@Logged.ToString("yyyy-MM-dd HH:mm:ss")</td>
+        </tr>
+        <tr>
+            <td>Nivel:</td>
+            <td>@Level</td>
+        </tr>
+        <tr>
+            <td>Solicitud:</td>
+            <td>@Request_method</td>
+        </tr>
+        <tr>
+            <td>Mensaje:</td>
+            <td>@Message</td>
+        </tr>
+        <tr>
+            <td>Logger:</td>
+            <td>@Logger</td>
+        </tr>
+        <tr>
+            <td>Máquina:</td>
+            <td>@MachineName</td>
+        </tr>
+    </table>
+</div>
+
+<style>
+    h3{
+        margin-bottom: 10%;
+    }
+
+    table {
+        width: 100%; 
+        border-collapse: collapse; 
+    }
+
+    td {
+        padding: 8px;
+        border-bottom: 1px solid #ddd; 
+    }
+
+        td:first-child {
+            width: 135px;
+            color: #b7f8ce;
+            text-transform: uppercase;
+        }
+
+        td:last-child {
+         
+        }
+
+</style>

@@ -1,36 +1,35 @@
 ﻿
 .container {
     overflow: auto;
-    width: max-content;
+    min-width: 100%;
+    max-width: 100%;
 }
 
-.rounded-grid {
-    border-collapse: separate;
-    color: black;
+.grid-style {
+    color: white;   
 }
 
-    .rounded-grid th,
-    .rounded-grid td {
-        padding: 6px;
-        
+    .grid-style th,
+    .grid-style td {
+        padding: 6px;       
     }
 
-    .rounded-grid th {
-        background-color: #d9d9d9;
+    .grid-style th {
+        background-color: #8e44656b;
         font-weight: bold;
     }
 
 
-    .rounded-grid tr:not(.selected-row) {
+    .grid-style tr:not(.selected-row) {
         cursor: pointer;
         background-color: rgba(33,33,33, .7);        
     }
 
-    .rounded-grid tr:hover:not(.selected-row) {
-        background-color: lightcyan;
+    .grid-style tr:hover:not(.selected-row) {
+        background-color: #5a5e5e;
     }
 
-/*.selected-row {
+.selected-row {
     background-color: #9ed9e0 !important;
 }
 
@@ -39,7 +38,7 @@
     color: white;
 }
 
-.options-container {  
+/*.options-container {  
     display: inline;    
 }*/
 

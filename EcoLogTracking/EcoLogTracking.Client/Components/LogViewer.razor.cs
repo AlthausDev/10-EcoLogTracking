@@ -1,5 +1,6 @@
 ﻿using BlazorBootstrap;
 using EcoLogTracking.Client.Models;
+using EcoLogTracking.Client.Pages;
 using EcoLogTracking.Client.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -19,8 +20,7 @@ namespace EcoLogTracking.Client.Components
 
         private Log Log { get; set; } = new();
 
-        private Grid<Log> DataGrid = default!;
-        private Modal ModalInstance = default!;
+        private Grid<Log> DataGrid = default!;  
 
         private ObservableCollection<Log> LogList { get; set; } = new ObservableCollection<Log>();
 
@@ -83,7 +83,7 @@ namespace EcoLogTracking.Client.Components
                 { "Logger", SelectedLogItem.Logger },
                 { "Request_method", SelectedLogItem.Request_method }
             };
-            await ModalInstance.ShowAsync<DetailsModal>(title: "Registro", parameters: parameters);
+            await MainPanel.ModalInstance.ShowAsync<DetailsModal>(title: "Detalles del Registro", parameters: parameters);
         }
         #endregion
 

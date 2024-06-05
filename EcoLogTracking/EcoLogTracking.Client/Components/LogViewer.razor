@@ -6,8 +6,6 @@
 @inject IJSRuntime JS
 @inject ILocalStorageService storageService
 
-<Modal @ref="ModalInstance" Size="ModalSize.Regular" ShowCloseButton="false" UseStaticBackdrop="true" IsVerticallyCentered="true" />
-
 <div class="main-container">   
 
     @RenderLoadingIndicator()
@@ -17,45 +15,47 @@
         <Grid TItem="Log"
               AllowFiltering="true"
               AllowPaging="true"
-              PageSize="100"
+              PageSize="20"
               AllowRowClick="true"
-              AllowSorting="true"
-              HeaderRowCssClass="bg-black text-black"
+              AllowSorting="true"              
+              HeaderRowCssClass="bg-secondary text-white border-bottom-0"
+              FiltersRowCssClass="bg-secondary text-white bg-opacity-25 border-bottom-0"
               DataProvider="LogsDataProvider"          
               Responsive="true"
               EmptyText="No se han obtenido registros"
               OnRowClick="SelectLogItem"
-              OnRowDoubleClick="OnClickShowDetails"
-              class="table rounded-grid"
+              OnRowDoubleClick="OnClickShowDetails"              
+              class="table grid-style"
               @ref="DataGrid">
 
             <GridColumn TItem="Log" HeaderText="ID" PropertyName="ID" SortKeySelector="item => item.Id" IsDefaultSortColumn="true">
                 @context.Id
             </GridColumn>
 
-            <GridColumn TItem="Log" HeaderText="Equipo" PropertyName="MachineName" SortKeySelector="item => item.MachineName" IsDefaultSortColumn="true">
-                @context.MachineName
+            <GridColumn TItem="Log" HeaderText="Nivel" PropertyName="Level" SortKeySelector="item => item.Level" >
+                @context.Level.ToUpper()
             </GridColumn>
 
-            <GridColumn TItem="Log" HeaderText="Fecha/Hora" PropertyName="Logged" SortKeySelector="item => item.Logged" IsDefaultSortColumn="true">
-                @context.Logged
+            <GridColumn TItem="Log" HeaderText="Metodo" PropertyName="Request_method" SortKeySelector="item => item.Request_method">
+                @context.Request_method
             </GridColumn>
 
-            <GridColumn TItem="Log" HeaderText="Nivel" PropertyName="Level" SortKeySelector="item => item.Level" IsDefaultSortColumn="true">
-                @context.Level
-            </GridColumn>
-
-            <GridColumn TItem="Log" HeaderText="Mensaje" PropertyName="Message" SortKeySelector="item => item.Message" IsDefaultSortColumn="true">
+            <GridColumn TItem="Log" HeaderText="Mensaje" PropertyName="Message" SortKeySelector="item => item.Message" TextNoWrap="true">
                 @context.Message
             </GridColumn>
 
-            <GridColumn TItem="Log" HeaderText="Logger" PropertyName="Logger" SortKeySelector="item => item.Logger" IsDefaultSortColumn="true">
+           @*  <GridColumn TItem="Log" HeaderText="Logger" PropertyName="Logger" SortKeySelector="item => item.Logger">
                 @context.Logger
             </GridColumn>
 
-            <GridColumn TItem="Log" HeaderText="Metodo" PropertyName="Request_method" SortKeySelector="item => item.Request_method" IsDefaultSortColumn="true">
-                @context.Request_method
-            </GridColumn> 
+            <GridColumn TItem="Log" HeaderText="Equipo" PropertyName="MachineName" SortKeySelector="item => item.MachineName">
+                @context.MachineName
+            </GridColumn> *@
+
+            <GridColumn TItem="Log" HeaderText="Fecha/Hora" PropertyName="Logged" SortKeySelector="item => item.Logged">
+                @context.Logged
+            </GridColumn>
+           
         </Grid>
     }
 </div>

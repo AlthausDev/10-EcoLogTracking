@@ -4953,7 +4953,7 @@ textaskitem.form-control-lg {
     position: relative;
     display: inline-block;
     padding: 10px 15px;
-    color: #03e9f4;
+    color: white;
     font-size: 16px;
     text-decoration: none;
     text-transform: uppercase;
@@ -4974,19 +4974,20 @@ textaskitem.form-control-lg {
     }
 
 
-    .page-item.active .page-link {
-        background: #03e9f4;
-        color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 5px #03e9f4, 0 0 19px #03e9f4, 0 0 19px #03e9f4, 0 0 15px #03e9f4;
-       
-    }
+.page-item.active .page-link {
+    background: #b92b2b;
+    color: #fff;
+    border-radius: 10px;
+    /*box-shadow: 0 0 5px rgba(183, 28, 28, 1), 0 0 15px rgba(183, 28, 28, 1);*/
+    /* box-shadow: 0 0 5px #03e9f4, 0 0 19px #03e9f4, 0 0 19px #03e9f4, 0 0 15px #03e9f4;*/
+    box-shadow: 0px 0px 36px 13px rgba(183, 28, 28, 1);
+}
 
 .page-link:focus,
 .page-item .page-link:hover {
-    background: #03e9f4;
+    background: #d34e4e;
     color: #fff;
-    box-shadow: 0 0 5px #03e9f4, 0 0 19px #03e9f4, 0 0 19px #03e9f4, 0 0 15px #03e9f4;    
+    box-shadow: 0px 0px 36px 13px rgba(183, 28, 28, 1);
     transition: transform 0.5s ease-in-out;
 }
 
