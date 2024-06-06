@@ -36,7 +36,8 @@ namespace EcoLogTracking.Server.Services.Impl
             }
             catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex.StackTrace);
+                return false;
             }
         }
     }

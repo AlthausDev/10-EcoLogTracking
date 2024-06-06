@@ -25,12 +25,11 @@ namespace EcoLogTracking.Server.Repository.Impl
         /// <returns>Lista con los registros obtenidos de la base de datos: EcoLogTrackingDB</returns>
         public async Task<IEnumerable<Log>> GetAll()
         {
-            _logger.Info("Entra en get log");
             using (var connection = new SqlConnection(con)) {
                 string query = @"SELECT
                                ID, MachineName, Logged,
                                Level, Message, Logger,
-                               request_method, Stacktrace, File_name, All_event_properties
+                               Method, Stacktrace, File_name, All_event_properties
                                FROM NLog";
 
                 var logs =  await connection.QueryAsync<Log>(query);
@@ -48,7 +47,7 @@ namespace EcoLogTracking.Server.Repository.Impl
     Level,
    Message,
    Logger,
-method,
+Method,
 Stacktrace,
 File_name,
 All_event_properties) Values('{log.MachineName}','{log.Logged}','{log.Level}','{log.Message}','{log.Logger}',

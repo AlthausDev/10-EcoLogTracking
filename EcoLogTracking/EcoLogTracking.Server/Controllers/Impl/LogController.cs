@@ -4,9 +4,11 @@ using EcoLogTracking.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using System.Diagnostics;
 
 namespace EcoLogTracking.Server.Controllers.Impl
 {
+    
     [ApiController]
     [Route("api/[controller]")]
     public class LogController : ControllerBase
@@ -18,7 +20,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         {            
             _logService = logService;
         }
-
+        /*
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,27 +34,44 @@ namespace EcoLogTracking.Server.Controllers.Impl
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
                 return StatusCode(500, "Error interno del servidor");
             }
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> PostLog([FromBody] string log)
+        {
+            
+            try
+            {
+                _logger.Info("Received log: {0}", log.Level);
+                bool success = _logService.PostLog(log);
+                if (success)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(500, "Error al insertar el log en la base de datos");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Error processing log");
+                return StatusCode(500, "Error interno del servidor");
+            }
+            
+        }
+        */
 
         [HttpPost]
-        public bool PostLog(Log log)
+        public async Task PostLog()
         {
-            _logger.Info($"{nameof(PostLog)}");
-            _logger.Info("Entra en Post log");
-            return _logService.PostLog(log);
-
-            //try
-            //{
-            //    var logs = _logService.PostLog(log);
-            //    return Ok(logs);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(500, "Error interno del servidor");
-            //}
+            Debug.WriteLine("dfhdfgh");
+            Console.WriteLine("WRTGWETGHE");
+            
+            
         }
-
     }
 }

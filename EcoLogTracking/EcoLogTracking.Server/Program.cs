@@ -7,6 +7,8 @@ using EcoLogTracking.Server.Services.Interfaces;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
+using System.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 
 //var logger = NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
@@ -30,6 +32,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 });
+
 #endregion
 
 #region Configuración de CORS
@@ -41,6 +44,10 @@ builder.Services.AddCors(options => options.AddPolicy("corsPolicy", builder =>
            .AllowAnyOrigin();
 
 }));
+
+
+
+
 #endregion
 
 #region Configura componentes de Blazor
@@ -84,12 +91,12 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.Use(async (context, next) =>
-{
-    logger.Info($"Handling request: {context.Request.Method} {context.Request.Path}");
-    await next.Invoke();
-    logger.Info($"Finished handling request: {context.Request.Method} {context.Request.Path}");
-});
+//app.Use(async (context, next) =>
+//{
+//    logger.Info($"Handling request: {context.Request.Method} {context.Request.Path}");
+//    await next.Invoke();
+//    logger.Info($"Finished handling request: {context.Request.Method} {context.Request.Path}");
+//});
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
