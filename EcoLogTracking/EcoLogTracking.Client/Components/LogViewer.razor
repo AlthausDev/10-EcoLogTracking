@@ -15,7 +15,7 @@
         <Grid TItem="Log"
               AllowFiltering="true"
               AllowPaging="true"
-              PageSize="20"
+              PageSize="25"
               AllowRowClick="true"
               AllowSorting="true"              
               HeaderRowCssClass="bg-secondary text-white border-bottom-0"
@@ -24,7 +24,8 @@
               Responsive="true"
               EmptyText="No se han obtenido registros"
               OnRowClick="SelectLogItem"
-              OnRowDoubleClick="OnClickShowDetails"              
+              OnRowDoubleClick="OnClickShowDetails"
+              PageSizeSelectorVisible = "true"
               class="table grid-style"
               @ref="DataGrid">
 
@@ -32,65 +33,27 @@
                 @context.Id
             </GridColumn>
 
-            <GridColumn TItem="Log" HeaderText="Nivel" PropertyName="Level" SortKeySelector="item => item.Level" >
-                @context.Level.ToUpper()
-            </GridColumn>
-
-            <GridColumn TItem="Log" HeaderText="Metodo" PropertyName="Request_method" SortKeySelector="item => item.Request_method">
-                @context.Request_method
-            </GridColumn>
-
-            <GridColumn TItem="Log" HeaderText="Mensaje" PropertyName="Message" SortKeySelector="item => item.Message" TextNoWrap="true">
-                @context.Message
-            </GridColumn>
-
-           <GridColumn TItem="Log" HeaderText="Logger" PropertyName="Logger" SortKeySelector="item => item.Logger">
-                @context.Logger
-            </GridColumn>           
-
             <GridColumn TItem="Log" HeaderText="Fecha/Hora" PropertyName="Logged" SortKeySelector="item => item.Logged">
                 @context.Logged
             </GridColumn>
-           
+
+            <GridColumn TItem="Log" HeaderText="Nivel" PropertyName="Level" SortKeySelector="item => item.Level" >
+                @context.Level.ToUpper()
+            </GridColumn>       
+
+            <GridColumn TItem="Log" HeaderText="StackTrace" PropertyName="Message" SortKeySelector="item => item.Message" >
+                @context.Message
+            </GridColumn>
+
+            <GridColumn TItem="Log" HeaderText="Logger" PropertyName="Logger" SortKeySelector="item => item.Logger" >
+                @context.Logger
+            </GridColumn>   
         </Grid>
     }
 </div>
 
-
-<section id="bottom" />
-
-<script>
-    var mybutton = document.getElementById("scrollBtn");
-    var mybuttonTop = document.getElementById("scrollBtnDown");
-
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
-        }
+<style>
+    .main-container{
+        padding-top: 1%;     
     }
-
-    window.addEventListener('scroll', (e) => {
-        const body = document.body;
-        const parent = body.parentElement;
-        const pixelsFromBottom = body.scrollHeight - parent.clientHeight - 50;
-
-        if (parent.scrollTop < pixelsFromBottom) {
-            mybuttonTop.style.display = "block";
-        } else {
-            mybuttonTop.style.display = "none";
-        }
-    });
-
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }
-
-    function bottomFuction() {
-        document.getElementById('bottom').scrollIntoView({ behavior: 'smooth' });
-    }
-</script>
+</style>

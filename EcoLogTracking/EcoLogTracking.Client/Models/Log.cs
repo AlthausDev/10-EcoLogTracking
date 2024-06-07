@@ -14,34 +14,37 @@ namespace EcoLogTracking.Client.Models
         public string? Stacktrace { get; set; }
         public string? File_name { get; set; }
         public string? All_event_properties { get; set; }
+        public string? Log_exception { get; set; }
 
         public Log() { }
 
-        public Log(int id, DateTime logged, string level, string message, string machineName, string? logger, string? request_method, string? stacktrace, string? file_name, string? all_event_properties)
+        public Log(DateTime logged, string level, string? logger, string message, string machineName, string? request_method, string? stacktrace, string? file_name, string? all_event_properties, string? log_exception)
+        {
+            Logged = logged;
+            Level = level;
+            Logger = logger;
+            Message = message;
+            MachineName = machineName;
+            Request_method = request_method;
+            Stacktrace = stacktrace;
+            File_name = file_name;
+            All_event_properties = all_event_properties;
+            Log_exception = log_exception;
+        }
+
+        public Log(int id, DateTime logged, string level, string? logger, string message, string machineName, string? request_method, string? stacktrace, string? file_name, string? all_event_properties, string? log_exception)
         {
             Id = id;
             Logged = logged;
             Level = level;
+            Logger = logger;
             Message = message;
             MachineName = machineName;
-            Logger = logger;
             Request_method = request_method;
             Stacktrace = stacktrace;
             File_name = file_name;
             All_event_properties = all_event_properties;
-        }
-
-        public Log(DateTime logged, string level, string message, string machineName, string? logger, string? request_method, string? stacktrace, string? file_name, string? all_event_properties)
-        {
-            Logged = logged;
-            Level = level;
-            Message = message;
-            MachineName = machineName;
-            Logger = logger;
-            Request_method = request_method;
-            Stacktrace = stacktrace;
-            File_name = file_name;
-            All_event_properties = all_event_properties;
+            Log_exception = log_exception;
         }
     }
 }
