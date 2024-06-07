@@ -106,12 +106,12 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.Use(async (context, next) =>
-//{
-//    logger.Info($"Handling request: {context.Request.Method} {context.Request.Path}");
-//    await next.Invoke();
-//    logger.Info($"Finished handling request: {context.Request.Method} {context.Request.Path}");
-//});
+app.Use(async (context, next) =>
+{
+    logger.Info($"Handling request: {context.Request.Method} {context.Request.Path}");
+    await next.Invoke();
+    logger.Info($"Finished handling request: {context.Request.Method} {context.Request.Path}");
+});
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>

@@ -20,13 +20,10 @@ namespace EcoLogTracking.Server.Controllers.Impl
         {            
             _logService = logService;
         }
-        /*
+        
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            _logger.Info($"{nameof(GetAll)}");
-            _logger.Info("FUNCIONA!!!!!");
-
             try
             {
                 var logs = await _logService.GetAll();
@@ -38,40 +35,27 @@ namespace EcoLogTracking.Server.Controllers.Impl
                 return StatusCode(500, "Error interno del servidor");
             }
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> PostLog([FromBody] string log)
+        public IActionResult PostLog([FromBody] Log log)
         {
-            
             try
-            {
-                _logger.Info("Received log: {0}", log.Level);
+            {             
                 bool success = _logService.PostLog(log);
+
                 if (success)
-                {
+                {                  
                     return Ok();
                 }
                 else
-                {
+                {                   
                     return StatusCode(500, "Error al insertar el log en la base de datos");
                 }
             }
             catch (Exception ex)
-            {
-                _logger.Error(ex, "Error processing log");
+            {               
                 return StatusCode(500, "Error interno del servidor");
             }
-            
-        }
-        */
-
-        [HttpPost]
-        public async Task PostLog()
-        {
-            Debug.WriteLine("dfhdfgh");
-            Console.WriteLine("WRTGWETGHE");
-            
-            
         }
     }
 }

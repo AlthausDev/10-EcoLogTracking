@@ -1,4 +1,4 @@
-USE [TODO_V2]
+USE [DBEcoLogTracking]
 GO
 
 DELETE FROM [dbo].[Log]

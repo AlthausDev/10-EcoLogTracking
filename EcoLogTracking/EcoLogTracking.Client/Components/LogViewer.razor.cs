@@ -48,9 +48,8 @@ namespace EcoLogTracking.Client.Components
         #region Initialize
         protected override async Task OnInitializedAsync()
         {
-            LogList = new ObservableCollection<Log>(MockLogService.GetMockLogs());
-
-            //await GetAllLogData();
+            //LogList = new ObservableCollection<Log>(MockLogService.GetMockLogs());
+            await GetAllLogData();
         }
 
         private async Task<GridDataProviderResult<Log>> LogsDataProvider(GridDataProviderRequest<Log> request)
