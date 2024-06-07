@@ -3,8 +3,10 @@ using EcoLogTracking.Server.Models;
 
 namespace EcoLogTracking.Server.Repository.Interfaces
 {
-    public interface ILogRepository : IGenericRepository<Log, object>
+    public interface ILogRepository 
     {
-        Task<IEnumerable<Log>> GetAll();        
+        Task<IEnumerable<Log>> GetAll();      
+        
+        public bool PostLog(Log log);
     }
 }

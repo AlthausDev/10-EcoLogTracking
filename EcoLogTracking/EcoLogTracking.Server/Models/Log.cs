@@ -1,35 +1,38 @@
 ﻿namespace EcoLogTracking.Server.Models
 {
-    public class Log : BaseModel
+    public class Log 
     {
-        private string _name;
+        public int ID { get; set; }
+        public string MachineName { get; set; }
 
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("El nombre de la categoría no puede estar vacío o contener solo espacios en blanco.");
-                }
-                _name = value;
-            }
-        }
+        public DateTime Logged { get; set; }
 
-        public Log()
-        {
-        }
+        public string Level { get; set; }
 
-        public Log(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        public string Message { get; set; }
 
-        public Log(string name)
+        public string Logger { get; set; }
+
+        public string Method { get; set; }
+        public string Stacktrace { get; set; }
+        public string File_name { get; set; } 
+        public string All_event_properties { get; set; } 
+
+        public Log(){}
+
+        public Log(int id, string machinename, DateTime logged, string level, string message, string logger, string r_m, string st, string fl, string aep)
         {
-            Name = name;
+            ID = id;
+            MachineName = machinename;
+            Logged = logged;
+            Level = level;
+            Message = message;
+            Logger = logger;
+            Method = r_m;
+            Stacktrace = st;
+            File_name = fl;
+            All_event_properties = aep;
+
         }
     }
-}
+    }

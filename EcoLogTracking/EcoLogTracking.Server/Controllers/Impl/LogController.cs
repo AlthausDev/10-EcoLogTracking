@@ -3,38 +3,30 @@ using EcoLogTracking.Server.Models;
 using EcoLogTracking.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
+using System.Diagnostics;
 
 namespace EcoLogTracking.Server.Controllers.Impl
 {
+    
     [ApiController]
     [Route("api/[controller]")]
     public class LogController : ControllerBase
     {
         private readonly ILogService _logService;
-     
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public LogController(ILogService logService)
         {            
             _logService = logService;
         }
-
-       
-        [HttpPost]
-        public async Task<IActionResult> Post(Log log)
-        {
-            try
-            {
-                bool result = await _logService.Add(log, null);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {             
-                return StatusCode(500, "Error interno del servidor");
-            }
-        }
-
+        /*
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAll()
         {
+            _logger.Info($"{nameof(GetAll)}");
+            _logger.Info("FUNCIONA!!!!!");
+
             try
             {
                 var logs = await _logService.GetAll();
@@ -42,50 +34,44 @@ namespace EcoLogTracking.Server.Controllers.Impl
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.StackTrace);
                 return StatusCode(500, "Error interno del servidor");
             }
         }
-   
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateLog(int id, Log log)
+        
+        [HttpPost]
+        public async Task<IActionResult> PostLog([FromBody] string log)
         {
+            
             try
             {
-                if (id != log.Id)
+                _logger.Info("Received log: {0}", log.Level);
+                bool success = _logService.PostLog(log);
+                if (success)
                 {
-                    return BadRequest("");
+                    return Ok();
                 }
-
-                var updatedLog = await _logService.Update(log, null);
-                return Ok(updatedLog);
+                else
+                {
+                    return StatusCode(500, "Error al insertar el log en la base de datos");
+                }
             }
             catch (Exception ex)
             {
+                _logger.Error(ex, "Error processing log");
                 return StatusCode(500, "Error interno del servidor");
             }
+            
         }
+        */
 
-        [AllowAnonymous]
-        [HttpGet("count")]
-        public Task<int> Count()
+        [HttpPost]
+        public async Task PostLog()
         {
-            return _logService.Count();
-        }
-
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLog(int id)
-        {
-            try
-            {
-                _logService.Delete(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {    
-                return StatusCode(500, "Error interno del servidor");
-            }
+            Debug.WriteLine("dfhdfgh");
+            Console.WriteLine("WRTGWETGHE");
+            
+            
         }
     }
 }

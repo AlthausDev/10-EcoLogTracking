@@ -15,42 +15,6 @@ namespace EcoLogTracking.Server.Services.Impl
             LogRepository = logRepository;
         }
 
-        public async Task<bool> Add(Log log, object? secondEntity)
-        {
-            try
-            {
-                return await LogRepository.Add(log, secondEntity);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al agregar la categoría: {ex.Message}");
-                throw;
-            }
-        }
-
-        public async Task<int> Count()
-        {
-            try
-            {
-                return await LogRepository.Count();
-            }
-            catch (Exception ex)
-            {
-                return 0;
-            }
-        }
-
-        public void Delete(int entityId)
-        {
-            try
-            {
-                _ = LogRepository.Delete(entityId);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
 
         public async Task<IEnumerable<Log>> GetAll()
         {
@@ -64,51 +28,16 @@ namespace EcoLogTracking.Server.Services.Impl
             }
         }
 
-        public async Task<IEnumerable<Log>> GetAllLogic()
+        public bool PostLog(Log log)
         {
             try
             {
-                return await LogRepository.GetAllLogic();
-            }
-            catch (Exception ex)
-            {             
-                throw;
-            }
-        }
-
-        public async Task<Log> GetById(int entityId)
-        {
-            try
-            {
-                return await LogRepository.GetById(entityId);
+                return  LogRepository.PostLog(log);
             }
             catch (Exception ex)
             {
-                throw;
-            }
-        }
-
-        public void LogicDelete(int entityId)
-        {
-            try
-            {
-                _ = LogRepository.LogicDelete(entityId);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-
-        public async Task<Log> Update(Log log, object? secondEntity)
-        {
-            try
-            {
-                return await LogRepository.Update(log, secondEntity);
-            }
-            catch (Exception ex)
-            {
-                throw;
+                Console.WriteLine(ex.StackTrace);
+                return false;
             }
         }
     }
