@@ -10,14 +10,12 @@ using NLog;
 using NLog.Web;
 
 
-//var logger = NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
 
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
 
 #region Añadir servicios
 builder.Services.AddSingleton<MockLogService>();
