@@ -33,6 +33,8 @@ namespace EcoLogTracking.Client.Components
 
         [Parameter]
         public string? All_event_properties { get; set; }
-      
+
+        [Parameter]
+        public string? Status_code { get; set; }
     }
 }

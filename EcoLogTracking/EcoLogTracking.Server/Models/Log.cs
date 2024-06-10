@@ -14,11 +14,11 @@ namespace EcoLogTracking.Server.Models
         public string? Stacktrace { get; set; }
         public string? File_name { get; set; }
         public string? All_event_properties { get; set; }
-        public string? Log_exception { get; set; }
+        public string? Status_code { get; set; }
 
         public Log() { }
 
-        public Log(DateTime logged, string level, string? logger, string message, string machineName, string? request_method, string? stacktrace, string? file_name, string? all_event_properties, string? log_exception)
+        public Log(DateTime logged, string level, string? logger, string message, string machineName, string? request_method, string? stacktrace, string? file_name, string? all_event_properties, string? status_code)
         {
             Logged = logged;
             Level = level;
@@ -29,10 +29,11 @@ namespace EcoLogTracking.Server.Models
             Stacktrace = stacktrace;
             File_name = file_name;
             All_event_properties = all_event_properties;
-            Log_exception = log_exception;
+            Status_code = status_code;
+
         }
 
-        public Log(int id, DateTime logged, string level, string? logger, string message, string machineName, string? request_method, string? stacktrace, string? file_name, string? all_event_properties, string? log_exception)
+        public Log(int id, DateTime logged, string level, string? logger, string message, string machineName, string? request_method, string? stacktrace, string? file_name, string? all_event_properties, string? status_code)
         {
             Id = id;
             Logged = logged;
@@ -44,7 +45,7 @@ namespace EcoLogTracking.Server.Models
             Stacktrace = stacktrace;
             File_name = file_name;
             All_event_properties = all_event_properties;
-            Log_exception = log_exception;
+            Status_code = status_code;
         }
     }
 }
