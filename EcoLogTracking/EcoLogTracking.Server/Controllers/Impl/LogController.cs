@@ -1,10 +1,12 @@
 ﻿using EcoLogTracking.Server.Controllers.Interfaces;
 using EcoLogTracking.Server.Models;
+using EcoLogTracking.Server.Services.Impl;
 using EcoLogTracking.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace EcoLogTracking.Server.Controllers.Impl
 {
@@ -22,18 +24,9 @@ namespace EcoLogTracking.Server.Controllers.Impl
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IEnumerable<Log>> GetAll()
         {
-            try
-            {
-                var logs = await _logService.GetAll();
-                return Ok(logs);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace);
-                return StatusCode(500, "Error interno del servidor");
-            }
+            return await _logService.GetAll();
         }
 
         [HttpPost]

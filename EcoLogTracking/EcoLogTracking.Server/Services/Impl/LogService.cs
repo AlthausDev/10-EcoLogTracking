@@ -15,7 +15,6 @@ namespace EcoLogTracking.Server.Services.Impl
             LogRepository = logRepository;
         }
 
-
         public async Task<IEnumerable<Log>> GetAll()
         {
             try

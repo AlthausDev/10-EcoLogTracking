@@ -27,7 +27,7 @@ namespace EcoLogTracking.Server.Repository.Impl
             using (var connection = new SqlConnection(_connectionString))
             {
                 string query = @"SELECT
-                               Id, Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties
+                               *
                                FROM [dbo].[Log]";
 
                 var logs = await connection.QueryAsync<Log>(query);
@@ -40,8 +40,8 @@ namespace EcoLogTracking.Server.Repository.Impl
             _logger.Info("Entra en Post log");
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = @$"INSERT INTO [dbo].[Log](Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties) 
-                                  VALUES(@Logged, @Level, @Message, @MachineName, @Logger, @Request_method, @Stacktrace, @File_name, @All_event_properties)";
+                string query = @$"INSERT INTO [dbo].[Log](Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Log_exception) 
+                                  VALUES(@Logged, @Level, @Message, @MachineName, @Logger, @Request_method, @Stacktrace, @File_name, @All_event_properties, @Log_exception)";
 
                 return connection.Execute(query, log) > 0;
             }

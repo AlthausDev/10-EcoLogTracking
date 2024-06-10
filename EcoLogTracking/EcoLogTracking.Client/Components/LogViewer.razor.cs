@@ -44,7 +44,6 @@ namespace EcoLogTracking.Client.Components
         }
         #endregion
 
-
         #region Initialize
         protected override async Task OnInitializedAsync()
         {
@@ -72,7 +71,7 @@ namespace EcoLogTracking.Client.Components
         #region Events
         private async Task OnClickShowDetails()
         {
-            var parameters = new Dictionary<string, object>
+            Dictionary<string, object> parameters = new Dictionary<string, object>
             {
                 { "Id", SelectedLogItem.Id },
                 { "MachineName", SelectedLogItem.MachineName },
@@ -80,10 +79,16 @@ namespace EcoLogTracking.Client.Components
                 { "Level", SelectedLogItem.Level },
                 { "Message", SelectedLogItem.Message },
                 { "Logger", SelectedLogItem.Logger },
-                { "Request_method", SelectedLogItem.Request_method }
+                { "Request_method", SelectedLogItem.Request_method },
+                { "Stacktrace", SelectedLogItem.Stacktrace },
+                { "File_name", SelectedLogItem.File_name },
+                { "All_event_properties", SelectedLogItem.All_event_properties },
+                { "Log_exception", SelectedLogItem.Log_exception }
             };
             await MainPanel.ModalInstance.ShowAsync<DetailsModal>(title: "Detalles del Registro", parameters: parameters);
         }
+
+
         #endregion
 
         #region ApiCalls
