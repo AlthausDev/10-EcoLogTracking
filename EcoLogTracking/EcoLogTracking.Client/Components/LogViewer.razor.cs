@@ -16,7 +16,6 @@ namespace EcoLogTracking.Client.Components
     {
         #region Atributes
         [Inject] protected PreloadService PreloadService { get; set; }
-        [Inject] protected MockLogService MockLogService { get; set; }
 
         private Log Log { get; set; } = new();
 
@@ -24,7 +23,7 @@ namespace EcoLogTracking.Client.Components
 
         private ObservableCollection<Log> LogList { get; set; } = new ObservableCollection<Log>();
 
-        private bool IsLoading = false;
+        private bool IsLoading = true;
 
         private Log? selectedLogItem { get; set; } = null;
 
@@ -47,9 +46,19 @@ namespace EcoLogTracking.Client.Components
         #region Initialize
         protected override async Task OnInitializedAsync()
         {
-            //LogList = new ObservableCollection<Log>(MockLogService.GetMockLogs());
-            await GetAllLogData();
+            try
+            {
+                IsLoading = true;                
+                await GetAllLogData();
+            }
+            finally
+            {
+                IsLoading = false;
+                await Task.Delay(1000);
+                PreloadService.Hide();
+            }
         }
+
 
         private async Task<GridDataProviderResult<Log>> LogsDataProvider(GridDataProviderRequest<Log> request)
         {
@@ -82,8 +91,7 @@ namespace EcoLogTracking.Client.Components
                 { "Request_method", SelectedLogItem.Request_method },
                 { "Stacktrace", SelectedLogItem.Stacktrace },
                 { "File_name", SelectedLogItem.File_name },
-                { "All_event_properties", SelectedLogItem.All_event_properties },
-                { "Log_exception", SelectedLogItem.Log_exception }
+                { "All_event_properties", SelectedLogItem.All_event_properties }
             };
             await MainPanel.ModalInstance.ShowAsync<DetailsModal>(title: "Detalles del Registro", parameters: parameters);
         }
