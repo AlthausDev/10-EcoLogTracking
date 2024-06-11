@@ -21,7 +21,7 @@ namespace EcoLogTracking.Client.Components
 
         private Grid<Log> DataGrid = default!;  
 
-        private ObservableCollection<Log> LogList { get; set; } = new ObservableCollection<Log>();
+        public static ObservableCollection<Log> LogList { get; set; } = new ObservableCollection<Log>();
 
         private bool IsLoading = true;
 

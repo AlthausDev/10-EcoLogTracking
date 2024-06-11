@@ -1,0 +1,15 @@
+﻿
+//Código de configuración en Program.cs en el Servidor del programa
+
+//Colocar al principio del archivo Program.cs
+var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+
+//Colocar tras declarar la variable "app"
+ app.UseMiddleware<RequestLoggingMiddleware>();
+    app.Use(async (context, next) =>
+    {
+        logger.Info($"Handling request: {context.Request.Method} {context.Request.Path}");
+        await next.Invoke();
+        logger.Info($"Finished handling request: {context.Request.Method} {context.Request.Path}");
+    });
+

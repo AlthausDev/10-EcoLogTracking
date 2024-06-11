@@ -26,8 +26,7 @@
 
 .grid-style {
     color: white;
-    justify-items: center;
-    
+    justify-items: center;    
 }
 
 @keyframes borderEffect {
@@ -94,9 +93,6 @@
     padding-left: 40px;
     text-align: left;
 }
-
-
-
 
 .selected-row {
     background-color: #9ed9e0 !important;
