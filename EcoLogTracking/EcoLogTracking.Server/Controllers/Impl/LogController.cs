@@ -22,13 +22,23 @@ namespace EcoLogTracking.Server.Controllers.Impl
         {            
             _logService = logService;
         }
-        
+
+        /// <summary>
+        /// MÉTODO QUE ACCEDE A LA BASE DE DATOS Y OBTIENE TODOS LOS REGISTROS
+        /// </summary>
+        /// <returns>Lista _connectionString los registros obtenidos de la base de datos: EcoLogTrackingDB</returns>
         [HttpGet]
         public async Task<IEnumerable<Log>> GetAll()
         {
             return await _logService.GetAll();
         }
 
+
+        /// <summary>
+        /// MÉTODO QUE GUARDA EN LA BASE DE DATOS LOS REGISTROS RECIBIDOS
+        /// </summary>
+        /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
+        /// <returns>Boolean True si el guardado es satifactorio. False en caso contrario.</returns>
         [HttpPost]
         public IActionResult PostLog([FromBody] Log log)
         {

@@ -36,6 +36,11 @@ namespace EcoLogTracking.Server.Repository.Impl
             }
         }
 
+        /// <summary>
+        /// MÉTODO QUE GUARDA EN LA BASE DE DATOS LOS REGISTROS RECIBIDOS
+        /// </summary>
+        /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
+        /// <returns>Boolean True si el guardado es satifactorio. False en caso contrario.</returns>
         public bool PostLog(Log log)
         {
             _logger.Info("Entra en Post log");

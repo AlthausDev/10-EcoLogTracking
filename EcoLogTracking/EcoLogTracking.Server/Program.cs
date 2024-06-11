@@ -11,7 +11,6 @@ using NLog.Web;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 
-
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 var builder = WebApplication.CreateBuilder(args);
