@@ -39,7 +39,11 @@
 
             <GridColumn TItem="Log" HeaderText="Nivel" PropertyName="Level" SortKeySelector="item => item.Level" >
                 @context.Level.ToUpper()
-            </GridColumn>       
+            </GridColumn>
+
+            <GridColumn TItem="Log" HeaderText="Status Code" PropertyName="Message" SortKeySelector="item => item.Status_code">
+                @context.Status_code
+            </GridColumn>
 
             <GridColumn TItem="Log" HeaderText="StackTrace" PropertyName="Message" SortKeySelector="item => item.Message" >
                 @context.Message

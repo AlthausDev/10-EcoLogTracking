@@ -65,10 +65,10 @@ namespace EcoLogTracking.Client.Components
             Stopwatch stopwatch = new();
             stopwatch.Start();
 
-            while (LogList.IsNullOrEmpty())
-            {
-                await Task.Delay(5);
-            }
+            //while (LogList.IsNullOrEmpty())
+            //{
+            //    await Task.Delay(5);
+            //}
 
             stopwatch.Stop();
             Debug.WriteLine($"Tiempo total de espera: {stopwatch.ElapsedMilliseconds} ms");
@@ -104,6 +104,13 @@ namespace EcoLogTracking.Client.Components
         private async Task GetAllLogData()
         {
             LogList = new ObservableCollection<Log>(await Http.GetFromJsonAsync<List<Log>>("api/Log"));
+
+            foreach (var log in LogList)
+            {
+                int index = log.Message.IndexOf("]");
+                log.Status_code = log.Message.Substring(0, index + 1);
+                log.Message = log.Message.Substring(index + 1);
+            }
         }
         #endregion
 
