@@ -4,6 +4,7 @@ using EcoLogTracking.Client.Components;
 using EcoLogTracking.Client.Models;
 using Microsoft.JSInterop;
 
+
 namespace EcoLogTracking.Client.Pages
 {
     public partial class MainPanel
@@ -53,7 +54,7 @@ namespace EcoLogTracking.Client.Pages
                 using (var memoria = new MemoryStream())
                 {
                     libro.SaveAs(memoria);
-                    var nombreExcel = string.Concat("Usuarios_", DateTime.Now.ToString(), ".xlsx");
+                    var nombreExcel = string.Concat("Logs_", DateTime.Now.ToString(), ".xlsx");
 
                     await JS.InvokeAsync<object>(
                     "DescargarExcel", nombreExcel, Convert.ToBase64String(memoria.ToArray())

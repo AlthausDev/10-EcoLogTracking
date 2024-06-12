@@ -38,38 +38,4 @@
 
 <section id="bottom" />
 
-<script>
-    var mybutton = document.getElementById("scrollBtn");
-    var mybuttonTop = document.getElementById("scrollBtnDown");
-
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
-        }
-    }
-
-    window.addEventListener('scroll', (e) => {
-        const body = document.body;
-        const parent = body.parentElement;
-        const pixelsFromBottom = body.scrollHeight - parent.clientHeight - 50;
-
-        if (parent.scrollTop < pixelsFromBottom) {
-            mybuttonTop.style.display = "block";
-        } else {
-            mybuttonTop.style.display = "none";
-        }
-    });
-
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }
-
-    function bottomFuction() {
-        document.getElementById('bottom').scrollIntoView({ behavior: 'smooth' });
-    }
-</script>
+<script src="/js/utilidades.js"></script>
