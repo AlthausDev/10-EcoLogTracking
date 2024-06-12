@@ -52,5 +52,27 @@ namespace EcoLogTracking.Server.Repository.Impl
                 return connection.Execute(query, log) > 0;
             }
         }
+
+
+        /// <summary>
+        /// MÉTODO QUE FILTRA LOS REGISTROS EN LA BASE DE DATOS EN FUNCIÓN DE SU FECHA
+        /// </summary>
+        /// <param name="start">Fecha a partir de la cual se quieren obtener los registros</param>
+        /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
+        /// <returns>IEnumerable con la lista de registros existentes en el rango de fechas proporcionado</returns>
+        public async Task<IEnumerable<Log>> GetLogsBetween(DateTime start, DateTime end)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                string query = @"SELECT Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Status_code 
+                         FROM [dbo].[Log] 
+                         WHERE Logged BETWEEN @StartDate AND @EndDate";
+
+                var parameters = new { StartDate = start, EndDate = end };
+
+                var list = await connection.QueryAsync<Log>(query, parameters);
+                return list.ToList();
+            }
+        }
     }
 }

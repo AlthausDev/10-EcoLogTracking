@@ -31,6 +31,26 @@ namespace EcoLogTracking.Server.Services.Impl
             }
         }
 
+
+        /// <summary>
+        /// MÉTODO QUE FILTRA LOS REGISTROS EN LA BASE DE DATOS EN FUNCIÓN DE SU FECHA
+        /// </summary>
+        /// <param name="start">Fecha a partir de la cual se quieren obtener los registros</param>
+        /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
+        /// <returns>IEnumerable con la lista de registros existentes en el rango de fechas proporcionado</returns>
+        public Task<IEnumerable<Log>> GetLogsBetween(DateTime start, DateTime end)
+        {
+            try
+            {
+                return  LogRepository.GetLogsBetween(start, end);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return null;
+           }
+        }
+
         /// <summary>
         /// MÉTODO QUE GUARDA EN LA BASE DE DATOS LOS REGISTROS RECIBIDOS
         /// </summary>

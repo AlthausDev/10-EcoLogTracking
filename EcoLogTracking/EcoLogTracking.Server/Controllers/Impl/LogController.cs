@@ -60,5 +60,17 @@ namespace EcoLogTracking.Server.Controllers.Impl
                 return StatusCode(500, "Error interno del servidor");
             }
         }
+
+        /// <summary>
+        /// MÉTODO QUE FILTRA LOS REGISTROS EN LA BASE DE DATOS EN FUNCIÓN DE SU FECHA
+        /// </summary>
+        /// <param name="start">Fecha a partir de la cual se quieren obtener los registros</param>
+        /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
+        /// <returns>IEnumerable con la lista de registros existentes en el rango de fechas proporcionado</returns>
+        [HttpGet("/GetBetween/{start}/{end}")]
+        public async Task<IEnumerable<Log>> GetLogsBetween(DateTime start, DateTime end)
+        {
+            return await _logService.GetLogsBetween(start,end);
+        }
     }
 }
