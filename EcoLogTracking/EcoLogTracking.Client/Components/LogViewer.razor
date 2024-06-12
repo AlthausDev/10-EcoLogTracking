@@ -27,6 +27,7 @@
               OnRowClick="SelectLogItem"
               OnRowDoubleClick="OnClickShowDetails"
               PageSizeSelectorVisible = "true"
+              PageSizeSelectorItems="@(new int[] { 10,25,50,100})"
               class="table grid-style"
               @ref="DataGrid">
 

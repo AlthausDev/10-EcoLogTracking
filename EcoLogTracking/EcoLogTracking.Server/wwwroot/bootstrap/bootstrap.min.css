@@ -7062,7 +7062,8 @@ textaskitem.form-control-lg {
 }
 
 .d-flex {
-    display: flex !important
+    display: flex !important;
+    align-items: center;
 }
 
 .d-inline-flex {
@@ -7403,7 +7404,9 @@ textaskitem.form-control-lg {
 }
 
 .justify-content-start {
-    justify-content: flex-start !important
+    justify-content: flex-start !important;
+    align-items: center;
+    margin-bottom: 0px;
 }
 
 .justify-content-end {
@@ -7415,7 +7418,7 @@ textaskitem.form-control-lg {
 }
 
 .justify-content-between {
-    /*justify-content: space-between !important*/
+    justify-content: space-between !important
 }
 
 .justify-content-around {
