@@ -15,7 +15,7 @@ namespace EcoLogTracking.Client.Components
     public partial class LogViewer
     {
         #region Atributes
-        [Inject] protected PreloadService PreloadService { get; set; }
+        [Inject] protected PreloadService PreloadService { get; set; } = default!;
 
         private Log Log { get; set; } = new();
 
@@ -62,19 +62,32 @@ namespace EcoLogTracking.Client.Components
 
         private async Task<GridDataProviderResult<Log>> LogsDataProvider(GridDataProviderRequest<Log> request)
         {
-            Stopwatch stopwatch = new();
-            stopwatch.Start();
-
-            //while (LogList.IsNullOrEmpty())
-            //{
-            //    await Task.Delay(5);
-            //}
-
-            stopwatch.Stop();
-            Debug.WriteLine($"Tiempo total de espera: {stopwatch.ElapsedMilliseconds} ms");
-
             return await Task.FromResult(request.ApplyTo(LogList.OrderBy(Log => Log.Id)));
         }
+
+        private async Task<IEnumerable<FilterOperatorInfo>> GridFiltersTranslationProvider()
+        {
+            var filtersTranslation = new List<FilterOperatorInfo>();
+
+            // número/fecha/booleano
+            filtersTranslation.Add(new("=", "Igual", FilterOperator.Equals));
+            filtersTranslation.Add(new("!=", "No es igual", FilterOperator.NotEquals));
+            // número/fecha
+            filtersTranslation.Add(new("<", "Menor que", FilterOperator.LessThan));
+            filtersTranslation.Add(new("<=", "Menor o igual que", FilterOperator.LessThanOrEquals));
+            filtersTranslation.Add(new(">", "Mayor que", FilterOperator.GreaterThan));
+            filtersTranslation.Add(new(">=", "Mayor o igual que", FilterOperator.GreaterThanOrEquals));
+            // cadena
+            filtersTranslation.Add(new("*a*", "Contiene", FilterOperator.Contains));
+            filtersTranslation.Add(new("a**", "Comienza con", FilterOperator.StartsWith));
+            filtersTranslation.Add(new("**a", "Termina en", FilterOperator.EndsWith));
+            filtersTranslation.Add(new("=", "Igual a", FilterOperator.Equals)); 
+
+            filtersTranslation.Add(new("x", "Limpiar", FilterOperator.Clear));
+
+            return await Task.FromResult(filtersTranslation);
+        }
+
         #endregion
 
         #region Events
@@ -117,13 +130,16 @@ namespace EcoLogTracking.Client.Components
         #region Loader
         private RenderFragment RenderLoadingIndicator() => builder =>
         {
+            PreloadService.Show();
             if (IsLoading)
-            {
+            {               
                 builder.OpenElement(0, "div");
                 builder.AddAttribute(1, "class", "loading-indicator");
                 builder.AddContent(2, "Cargando...");
                 builder.CloseElement();
+
             }
+            PreloadService.Hide();
         };
         #endregion
 

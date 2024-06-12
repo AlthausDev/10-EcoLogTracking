@@ -1,13 +1,12 @@
 ﻿
-.container {
+.log-container {
     overflow: auto;
-    min-width: 100%;
-    max-width: 100%;
+    padding: 0% 1%;
 }
 
 .table {
     margin-bottom: 0px;
-    white-space: pre-wrap;
+    white-space: pre-wrap; 
 }
 
     .table > thead {
@@ -15,13 +14,34 @@
         height:200px;
     }
 
+.table-responsive::-webkit-scrollbar {
+    width: 13px;
+    border-radius: 20px;
+}
+
+
+.table-responsive::-webkit-scrollbar-track {
+    border-radius: 20px;
+    background-color: rgba(31,31,31,1);
+    border: 3px solid #b1b1b163;    
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: rgba(70,70,70,1);
+    border-radius: 20px;
+    border: 3px solid #b1b1b163;
+}
+
+    .table-responsive::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(68,68,68,1);
+    }
+
 .table-responsive {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     border-radius: 17px;
     border: 2px solid #a1f097;
     animation: borderEffect 10s ease-in-out infinite alternate;
-    box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+    box-shadow: 0px 0px 36px -6px rgb(105 235 109);  
 }
 
 .grid-style {
@@ -58,6 +78,7 @@
     box-shadow: 0px 0px 36px -6px rgb(105 235 109);
     background-color: rgba(255,255,255, .6);
     color: white;
+    border-radius: 10px;
 }
 
     .form-select:focus {
@@ -65,30 +86,24 @@
         box-shadow: 0px 0px 36px -6px rgb(105 235 109);       
     }
 
-    .form-select option, 
-    .form-select input {
+    .form-select option {
         background-color: #5a5e5e;
         opacity: .5;
         border-radius: 20px;
     }
-
-    .form-select select option:hover{
-        background-color: #5a5e5e;
-        opacity: .5;
-        border-radius: 20px;
-    }
-
-        .form-select option:hover, 
-        .form-select option:focus {
-            background: #5a5e5e !important;           
+        .form-select option:hover {
+            background-color: transparent !important;
+            border: 2px solid #a1f097 !important;
         }
 
+  
+  
 
     .grid-style th {
         background-color: #00000099;
         font-weight: bold;
         font-size: 20px;
-        text-decoration: underline;
+        /*text-decoration: underline;*/
         min-height: 70px;
     }
 

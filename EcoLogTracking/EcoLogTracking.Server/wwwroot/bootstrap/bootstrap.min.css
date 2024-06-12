@@ -2972,6 +2972,7 @@ textaskitem.form-control-lg {
         color: #fff;
         background-color: #0a58ca;
         border-color: #0a53be
+
     }
 
         .btn-check:active + .btn-primary:focus, .btn-check:checked + .btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show > .btn-primary.dropdown-toggle:focus {
@@ -3057,7 +3058,7 @@ textaskitem.form-control-lg {
 .btn-info {
     color: #000;
     background-color: #0dcaf0;
-    border-color: #0dcaf0
+    border-color: #0dcaf0;    
 }
 
     .btn-info:hover {
@@ -3162,7 +3163,8 @@ textaskitem.form-control-lg {
 .btn-light {
     color: #000;
     background-color: #f8f9fa;
-    border-color: #f8f9fa
+    border-color: #f8f9fa;
+  
 }
 
     .btn-light:hover {
@@ -3542,7 +3544,7 @@ textaskitem.form-control-lg {
 }
 
 .dropdown-toggle {
-    white-space: nowrap
+    white-space: nowrap;     
 }
 
     .dropdown-toggle::after {
@@ -3810,7 +3812,9 @@ textaskitem.form-control-lg {
 
     .dropdown-item:focus, .dropdown-item:hover {
         color: #1e2125;
+        background-color: red;
         background-color: #e9ecef
+
     }
 
     .dropdown-item.active, .dropdown-item:active {
@@ -3861,7 +3865,7 @@ textaskitem.form-control-lg {
 
         .dropdown-menu-dark .dropdown-item.active, .dropdown-menu-dark .dropdown-item:active {
             color: #fff;
-            background-color: #0d6efd
+           /* background-color: #0d6efd*/
         }
 
         .dropdown-menu-dark .dropdown-item.disabled, .dropdown-menu-dark .dropdown-item:disabled {
@@ -4963,7 +4967,7 @@ textaskitem.form-control-lg {
     letter-spacing: 4px;
     background: transparent;
     cursor: pointer;
-    border: none;    
+    border: 2px solid transparent;    
     border-radius: 8px;
     margin: 10px;   
 }
@@ -4985,6 +4989,7 @@ textaskitem.form-control-lg {
 .page-item .page-link:hover {
     background: #b7f8ce;
     color: #fff;
+    border:2px solid white;
     box-shadow: 0px 0px 36px 13px #b7f8ce;
     transition: transform 0.5s ease-in-out;
 }
@@ -5300,7 +5305,7 @@ textaskitem.form-control-lg {
     .list-group-item.active {
         z-index: 2;
         color: #fff;
-        background-color: #0d6efd;
+        /*background-color: #0d6efd;*/
         border-color: #0d6efd
     }
 
@@ -7660,7 +7665,7 @@ textaskitem.form-control-lg {
 }
 
 .me-1 {
-    margin-right: .25rem !important
+    margin-right: .25rem !important;    
 }
 
 .me-2 {
