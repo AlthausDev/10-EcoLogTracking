@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/logger"
 @using EcoLogTracking.Client.Components
 @inject HttpClient Http
 @inject IJSRuntime JS
@@ -20,6 +20,8 @@
     <nav class="header">
         <ul>
             <li @onclick="OnClickExportExcel"><label> Exportar<img src="Icons/excel.png" /></label></li>
+            <li @onclick="OnclickConfig"><label> Configuracion<img src="Icons/config.png" /></label></li>
+            <li @onclick="OnClickLogOut"><label> Desconectar<img src="Icons/logout.png" style="width: 20px; height: 24px;" /></label></li>
         </ul>
     </nav>
 
