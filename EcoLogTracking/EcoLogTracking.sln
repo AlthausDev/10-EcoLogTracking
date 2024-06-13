@@ -9,7 +9,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "EcoLogTracking.Database", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLogTracking.Server", "EcoLogTracking.Server\EcoLogTracking.Server.csproj", "{66CF9E97-ABEE-40CF-BB18-D27EBAC4C02C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequestLoggingMiddleware", "RequestLoggingMiddleware\RequestLoggingMiddleware.csproj", "{7402788C-70D4-440D-B26F-5D39A2FC9635}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestLoggingMiddleware", "RequestLoggingMiddleware\RequestLoggingMiddleware.csproj", "{7402788C-70D4-440D-B26F-5D39A2FC9635}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

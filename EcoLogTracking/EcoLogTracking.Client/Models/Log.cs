@@ -4,9 +4,6 @@ namespace EcoLogTracking.Client.Models
 {
     public class Log
     {
-
-
-
         /// <summary>
         /// Identificador único del log.
         /// </summary>
