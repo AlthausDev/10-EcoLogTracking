@@ -7,7 +7,15 @@ namespace EcoLogTracking.Server.Repository.Impl
 {
     public class UserRepository: IUserRepository
     {
-        string con = "Server=ECO3018;DATABASE=DBEcoLogTracking;User Id=sa; Password=sa;TrustServerCertificate=True";
+
+        private readonly IConfiguration _configuration;
+        private string con => _configuration.GetConnectionString("EcoLogTrackingDB");
+
+        public UserRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public User GetUserByUsernameAndPass(string user, string pass)
         {
             try
@@ -33,7 +41,7 @@ namespace EcoLogTracking.Server.Repository.Impl
                 {
                     string query = @"SELECT Id, UserName, Password FROM Users
                                  WHERE UserName = @user";
-                    return connection.QuerySingle<User>(query, new { user});
+                    return connection.QuerySingleOrDefault<User>(query, new { user});
                 }
             }
             catch (Exception e)

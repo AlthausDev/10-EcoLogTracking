@@ -32,7 +32,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
 
 
         ///https://localhost:7216/api/login
-        [HttpPost("/api/login")]
+        [HttpPost("login")]
         [AllowAnonymous]
         public async Task<IActionResult> GetUserByUsername(User user)
         {
@@ -42,24 +42,21 @@ namespace EcoLogTracking.Server.Controllers.Impl
 
                 if (login == null)
                 {
-                   return BadRequest("Error, el usuario no existe.");
+                    return BadRequest("Error, el usuario no existe.");
                 }
                 if (!login.Password.Equals(user.Password))
                 {
-                   return BadRequest("Error, contraseña no válida.");
+                    return BadRequest("Error, contraseña no válida.");
                 }
 
                 var tokenKey = Encoding.UTF8.GetBytes(jwtConfiguration.GetValue<string>("Key"));
 
-                Claim[] claims = [];
-               
-                    claims = new Claim[] {
+                var claims = new Claim[]
+                {
                     new Claim(ClaimTypes.Role, "admin"),
                     new Claim(ClaimTypes.Name, login.UserName),
                     new Claim(ClaimTypes.NameIdentifier, login.Id.ToString())
                 };
-                
-                
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
@@ -69,17 +66,17 @@ namespace EcoLogTracking.Server.Controllers.Impl
                 };
 
                 var tokenHandler = new JwtSecurityTokenHandler();
-
                 var token = tokenHandler.CreateToken(tokenDescriptor);
-                tokenString = tokenHandler.WriteToken(token);
-                
-                
-                return Ok();
+                var tokenString = tokenHandler.WriteToken(token);
+
+                return Ok(tokenString);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error al procesar el inicio de sesión: {ex.Message}");
                 return BadRequest("Error.");
             }
         }
+
     }
 }

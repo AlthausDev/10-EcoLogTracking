@@ -23,30 +23,21 @@ namespace EcoLogTracking.Client.Pages
             {
                 string getToken = await storageService.GetItemAsStringAsync("token");
 
-                bool IsAnyToken = string.IsNullOrEmpty(getToken);
-
-                if (IsAnyToken)
-                {
-                    NavManager.NavigateTo("/logger");
-                    //NavManager.NavigateTo("/login");
+                bool IsTokenEmpty = string.IsNullOrEmpty(getToken);
+               
+                if (IsTokenEmpty)
+                {                    
+                    NavManager.NavigateTo("/login");
                 }
                 else
                 {
-                    NavManager.NavigateTo("/login");
+                    NavManager.NavigateTo("/logger");
                 }
-                 
-
-                //var handler = new JwtSecurityTokenHandler();
-                //var jwtSecurityToken = handler.ReadJwtToken(getToken);
-                //List<Claim> claims = jwtSecurityToken.Claims.ToList();
-
-                //userId = int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
-                //UserType = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;                
             }
             catch (Exception)
             {
                 _ = Http.DefaultRequestHeaders.Remove("Authorization");
-                NavManager.NavigateTo("/logger");
+                NavManager.NavigateTo("/login");
             }           
         }
     }

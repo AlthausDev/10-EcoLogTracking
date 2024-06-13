@@ -22,8 +22,7 @@ namespace EcoLogTracking.Client.Pages
         #region Login     
         private async Task OnClickLogin()
         {
-            var loginResult = await LoginUser(UserName, Password);
-            LoginResult(loginResult);
+            await LoginUser(UserName, Password);            
         }
 
         private void LoginResult(ActionResult<User> loginResult)
@@ -35,7 +34,7 @@ namespace EcoLogTracking.Client.Pages
                     ShowMessage(ToastType.Danger, "Credenciales incorrectas. Por favor, inténtelo de nuevo.");
                     return;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -43,34 +42,36 @@ namespace EcoLogTracking.Client.Pages
             }
         }
         #endregion
-                
+
 
         #region Api            
-        private async Task<ActionResult<User>> LoginUser(string Username, string Password)
+        private async Task<string> LoginUser(string Username, string Password)
         {
-            //    try
-            //    {
-            //        var credentials = new LoginCredentials(Username, Password);
-            //        var response = await Http.PostAsJsonAsync("api/User/login", credentials);
+            try
+            {
+                var user = new User(Username, Password);
+                var response = await Http.PostAsJsonAsync("api/user/login", user);
 
-            //        if (response.IsSuccessStatusCode)
-            //        {
-            //            LoginResponse loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
-            //            await GenerateTokenAsync(loginResponse.Token);
-            //            return new ActionResult<User>(loginResponse.User);
-            //        }
-            //        else
-            //        {
-            //            return new ActionResult<User>(new NotFoundResult());
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.WriteLine($"Error al intentar iniciar sesión: {ex.Message}");
-            //        return new ActionResult<User>(new StatusCodeResult(500));
-            //    }
-            return null;
+                if (response.IsSuccessStatusCode)
+                {
+                    string loginResponse = await response.Content.ReadAsStringAsync();
+                    await GenerateTokenAsync(loginResponse);
+                    NavManager.NavigateTo("/logger");
+                    return loginResponse;
+                }
+                else
+                {
+                    Console.WriteLine("Usuario no encontrado");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al intentar iniciar sesión: {ex.Message}");
+                return null;
+            }
         }
+
 
 
         #endregion Api     
