@@ -1,8 +1,5 @@
 ﻿using BlazorBootstrap;
 using EcoLogTracking.Client.Models;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
 
@@ -10,31 +7,29 @@ namespace EcoLogTracking.Client.Pages
 {
     public partial class Login
     {
-
         public static User user = new();
-
-       
         private List<ToastMessage> messages = new();
         private string UserName { get; set; } = string.Empty;
         private string Password { get; set; } = string.Empty;
-    
 
         #region Login     
         private async Task OnClickLogin()
         {
-            await LoginUser(UserName, Password);            
+            string? result = await LoginUser(UserName, Password);
+            LoginResult(result);
         }
 
-        private void LoginResult(ActionResult<User> loginResult)
+        private void LoginResult(string? result)
         {
             try
             {
-                if (loginResult == null || loginResult.Value == null)
+                if (string.IsNullOrEmpty(result))
                 {
                     ShowMessage(ToastType.Danger, "Credenciales incorrectas. Por favor, inténtelo de nuevo.");
                     return;
                 }
 
+                NavManager.NavigateTo("/logger");
             }
             catch (Exception ex)
             {
@@ -43,9 +38,8 @@ namespace EcoLogTracking.Client.Pages
         }
         #endregion
 
-
         #region Api            
-        private async Task<string> LoginUser(string Username, string Password)
+        private async Task<string?> LoginUser(string Username, string Password)
         {
             try
             {
@@ -56,7 +50,6 @@ namespace EcoLogTracking.Client.Pages
                 {
                     string loginResponse = await response.Content.ReadAsStringAsync();
                     await GenerateTokenAsync(loginResponse);
-                    NavManager.NavigateTo("/logger");
                     return loginResponse;
                 }
                 else
@@ -71,9 +64,6 @@ namespace EcoLogTracking.Client.Pages
                 return null;
             }
         }
-
-
-
         #endregion Api     
 
         #region Toast

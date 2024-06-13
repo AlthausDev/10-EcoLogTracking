@@ -25,11 +25,23 @@
         </ul>
     </nav>
 
-    <div class="log-container">       
-            <LogViewer />       
+    <div class="log-container">
+        <LogViewer />
+    </div>
+
+    <div class="config-container">
+        <ConfigPanel />
     </div>
 </div>
 
-<section id="bottom" />
-
 <script src="/js/utilidades.js"></script>
+
+<style>
+    .log-container {
+        display: @ShowLogs;
+    }
+
+    .config-container {
+        display: @ShowConfig;
+    }
+</style>

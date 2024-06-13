@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EcoLogTracking.Client.Models
+﻿namespace EcoLogTracking.Client.Models
 {
     public class Log
     {

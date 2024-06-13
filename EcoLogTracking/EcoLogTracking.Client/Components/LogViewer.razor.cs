@@ -1,12 +1,8 @@
 ﻿using BlazorBootstrap;
 using EcoLogTracking.Client.Models;
 using EcoLogTracking.Client.Pages;
-using EcoLogTracking.Client.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.IdentityModel.Tokens;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Net.Http.Json;
 
 
@@ -19,7 +15,7 @@ namespace EcoLogTracking.Client.Components
 
         private Log Log { get; set; } = new();
 
-        private Grid<Log> DataGrid = default!;  
+        private Grid<Log> DataGrid = default!;
 
         public static ObservableCollection<Log> LogList { get; set; } = new ObservableCollection<Log>();
 
@@ -48,7 +44,7 @@ namespace EcoLogTracking.Client.Components
         {
             try
             {
-                IsLoading = true;                
+                IsLoading = true;
                 await GetAllLogData();
             }
             finally
@@ -81,7 +77,7 @@ namespace EcoLogTracking.Client.Components
             filtersTranslation.Add(new("*a*", "Contiene", FilterOperator.Contains));
             filtersTranslation.Add(new("a**", "Comienza con", FilterOperator.StartsWith));
             filtersTranslation.Add(new("**a", "Termina en", FilterOperator.EndsWith));
-            filtersTranslation.Add(new("=", "Igual a", FilterOperator.Equals)); 
+            filtersTranslation.Add(new("=", "Igual a", FilterOperator.Equals));
 
             filtersTranslation.Add(new("x", "Limpiar", FilterOperator.Clear));
 
@@ -93,7 +89,7 @@ namespace EcoLogTracking.Client.Components
         #region Events
         private async Task OnClickShowDetails()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>
+            Dictionary<string, object> parameters = new()
             {
                 { "Id", SelectedLogItem.Id },
                 { "MachineName", SelectedLogItem.MachineName },
@@ -133,7 +129,7 @@ namespace EcoLogTracking.Client.Components
         {
             PreloadService.Show();
             if (IsLoading)
-            {               
+            {
                 builder.OpenElement(0, "div");
                 builder.AddAttribute(1, "class", "loading-indicator");
                 builder.AddContent(2, "Cargando...");

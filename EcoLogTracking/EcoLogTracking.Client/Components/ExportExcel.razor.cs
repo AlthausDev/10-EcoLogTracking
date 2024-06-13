@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace EcoLogTracking.Client.Components
 {
-    partial class ExportExcel
+    public partial class ExportExcel
     {
         [Parameter]
         public DateTime FirstDate { get; set; } = DateTime.Now.Date;

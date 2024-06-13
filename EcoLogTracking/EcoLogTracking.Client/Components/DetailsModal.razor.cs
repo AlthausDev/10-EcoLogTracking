@@ -2,7 +2,7 @@
 
 namespace EcoLogTracking.Client.Components
 {
-    partial class DetailsModal
+    public partial class DetailsModal
     {
         [Parameter]
         public int Id { get; set; }
@@ -38,6 +38,6 @@ namespace EcoLogTracking.Client.Components
         public string? Status_code { get; set; }
 
         [Parameter]
-        public string? Origin{ get; set; }
+        public string? Origin { get; set; }
     }
 }
