@@ -1,0 +1,55 @@
+﻿<div class="main-box" id="mainBox">
+    <div class="core-box">
+        <input type="date"
+               id="expirationDateInput"
+               name="meeting-time"
+               @bind-value="@FirstDate"
+               min="@FirstDate"/>
+        <label for="expirationDateInput">Fecha de expiración</label>
+    </div>
+    <div class="core-box">
+        <input type="date"
+               id="expirationDateInput"
+               name="meeting-time"
+               @bind-value="@LastDate"
+               min="@LastDate"/>
+        <label for="expirationDateInput">Fecha de expiración</label>
+    </div>
+@*     <button type="button" id="form-button" class="button-style" @onclick="OnClickClose">
+        Salir
+    </button>
+    <button type="button" id="form-button" class="button-style" @onclick="OnClickRegistro">
+        Aceptar
+    </button> *@
+</div>
+
+
+<style>
+    h3 {
+        margin-bottom: 7%;
+        text-transform: uppercase;
+    }
+
+    .main-box {
+        table
+
+    {
+        width: 100%;
+        border-collapse: initial;
+        padding-bottom: 5%;
+    }
+
+    td {
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+        td:first-child {
+            width: 150px;
+            color: #b7f8ce;
+            text-transform: uppercase;
+        }
+
+    }
+</style>

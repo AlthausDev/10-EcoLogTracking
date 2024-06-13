@@ -1,7 +1,10 @@
 ﻿using BlazorBootstrap;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using EcoLogTracking.Client.Components;
 using EcoLogTracking.Client.Models;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 
@@ -13,28 +16,45 @@ namespace EcoLogTracking.Client.Pages
         public static Modal ModalInstance = default!;
 
 
+
+        private async Task OnClickTaskForm()
+        {
+            var parameters = new Dictionary<string, object>
+             {
+                { "FirstDate", DateTime.Now.Date},
+                { "Exportar", EventCallback.Factory.Create<MouseEventArgs>(this, OnClickExportExcel) },
+                { "Cerrar", EventCallback.Factory.Create<MouseEventArgs>(this, HideModal) }
+            };
+            await ModalInstance.ShowAsync<ExportExcel>(title: "Exportar", parameters: parameters);
+        }
+
+        private async Task HideModal()
+        {
+            await ModalInstance.HideAsync();
+        }
+
         /*
   * Método que da formato al excel de los usuarios que vamos a exportar
   //*/
-              private async Task OnClickExportExcel()
-              {
-                  using (var libro = new XLWorkbook())
-                  {
-                      IXLWorksheet hoja = libro.Worksheets.Add("Logs");
+        private async Task OnClickExportExcel()
+        {
+            using (var libro = new XLWorkbook())
+            {
+                IXLWorksheet hoja = libro.Worksheets.Add("Logs");
                 List<Log> LogList = LogViewer.LogList.ToList();
-                      hoja.Cell(1, 1).Value = "Id";
-                    hoja.Cell(1, 2).Value = "Fecha y hora";
-                    hoja.Cell(1, 3).Value = "Nivel de log";
-                    hoja.Cell(1, 4).Value = "Nombre";
-                    hoja.Cell(1, 5).Value = "Mensaje";
-                    hoja.Cell(1, 6).Value = "Nombre de la máquina";
-                    hoja.Cell(1, 7).Value = "Método de la solicitud";
-                    hoja.Cell(1, 8).Value = "Traza de la excepción";
-                    hoja.Cell(1, 9).Value = "Nombre del archivo";
-                    hoja.Cell(1, 10).Value = "Propiedades";
-                    hoja.Cell(1, 11).Value = "Código de estado HTTP";
-                
-                int fila = 2; 
+                hoja.Cell(1, 1).Value = "Id";
+                hoja.Cell(1, 2).Value = "Fecha y hora";
+                hoja.Cell(1, 3).Value = "Nivel de log";
+                hoja.Cell(1, 4).Value = "Nombre";
+                hoja.Cell(1, 5).Value = "Mensaje";
+                hoja.Cell(1, 6).Value = "Nombre de la máquina";
+                hoja.Cell(1, 7).Value = "Método de la solicitud";
+                hoja.Cell(1, 8).Value = "Traza de la excepción";
+                hoja.Cell(1, 9).Value = "Nombre del archivo";
+                hoja.Cell(1, 10).Value = "Propiedades";
+                hoja.Cell(1, 11).Value = "Código de estado HTTP";
+
+                int fila = 2;
                 foreach (var log in LogList)
                 {
                     hoja.Cell(fila, 1).Value = log.Id;
@@ -48,7 +68,7 @@ namespace EcoLogTracking.Client.Pages
                     hoja.Cell(fila, 9).Value = log.File_name;
                     hoja.Cell(fila, 10).Value = log.All_event_properties;
                     hoja.Cell(fila, 11).Value = log.Status_code;
-                    fila++; 
+                    fila++;
                 }
 
                 using (var memoria = new MemoryStream())
@@ -65,6 +85,4 @@ namespace EcoLogTracking.Client.Pages
         }
 
     }
-
-   
 }
