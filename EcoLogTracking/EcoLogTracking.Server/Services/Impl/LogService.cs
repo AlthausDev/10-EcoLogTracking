@@ -15,6 +15,8 @@ namespace EcoLogTracking.Server.Services.Impl
             LogRepository = logRepository;
         }
 
+      
+
         /// <summary>
         /// MÉTODO QUE ACCEDE A LA BASE DE DATOS Y OBTIENE TODOS LOS REGISTROS
         /// </summary>
@@ -56,15 +58,36 @@ namespace EcoLogTracking.Server.Services.Impl
         /// </summary>
         /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
         /// <returns>Boolean True si el guardado es satifactorio. False en caso contrario.</returns>
-        public bool PostLog(Log log)
+        public async Task<bool> PostLog(Log log)
         {
             try
             {
-                return  LogRepository.PostLog(log);
+                return  await LogRepository.PostLog(log);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// MÉTODO QUE ELIMINA LOS LOGS ANTERIORES AL NÚMERO DE DÍAS QUE RECIBE EL MÉTODO
+        /// </summary>
+        /// <param name="numDias">Número de días desde los que se quieren mantener los logs</param>
+        /// RECIBE EL NÚMERO DE DÍAS Y OBTIENE LA FECHA HASTA LA CUAL DEBE REALIZARSE EL BORRADO
+        /// <returns>bool (true: si la consulta afecta a alguna tupla; false: caso contrario)</returns>
+        public async Task<bool> DeleteLogsByDate(int numDias)
+        {
+            try {
+                DateTime dateTime = DateTime.Now;
+                DateTime dateTimeFilter = dateTime.AddDays(numDias);
+                bool response = await LogRepository.DeleteLogsByDate(dateTimeFilter);
+                if (response) {
+                    return true;
+                }
+                return false;
+            } catch {
                 return false;
             }
         }

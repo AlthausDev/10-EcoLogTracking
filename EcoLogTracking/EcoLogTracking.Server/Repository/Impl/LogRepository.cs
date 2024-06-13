@@ -9,7 +9,7 @@ namespace EcoLogTracking.Server.Repository.Impl
     public class LogRepository : ILogRepository
     {
         private readonly IConfiguration _configuration;
-        private string _connectionString => _configuration.GetConnectionString("EcoLogTrackingDB");
+        private string? _connectionString => _configuration.GetConnectionString("EcoLogTrackingDB");
 
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -26,8 +26,7 @@ namespace EcoLogTracking.Server.Repository.Impl
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = @"SELECT
-                               *
+                string query = @"SELECT *
                                FROM [dbo].[Log]";
 
                 var logs = await connection.QueryAsync<Log>(query);
@@ -41,7 +40,7 @@ namespace EcoLogTracking.Server.Repository.Impl
         /// </summary>
         /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
         /// <returns>Boolean True si el guardado es satifactorio. False en caso contrario.</returns>
-        public bool PostLog(Log log)
+        public async Task<bool> PostLog(Log log)
         {
             _logger.Info("Entra en Post log");
             using (var connection = new SqlConnection(_connectionString))
@@ -50,10 +49,10 @@ namespace EcoLogTracking.Server.Repository.Impl
                                   VALUES(@Logged, @Level, @Message, @MachineName, @Logger, @Request_method, @Stacktrace, @File_name, @All_event_properties, @status_code,@Origin)";
 
                 return connection.Execute(query, log) > 0;
+                ;
             }
+
         }
-
-
         /// <summary>
         /// MÉTODO QUE FILTRA LOS REGISTROS EN LA BASE DE DATOS EN FUNCIÓN DE SU FECHA
         /// </summary>
@@ -72,6 +71,21 @@ namespace EcoLogTracking.Server.Repository.Impl
 
                 var list = await connection.QueryAsync<Log>(query, parameters);
                 return list.ToList();
+            }
+        }
+
+        /// <summary>
+        /// MÉTODO QUE ELIMINA LOS LOGS ANTERIORES AL NÚMERO DE DÍAS QUE RECIBE EL MÉTODO
+        /// </summary>
+        /// <param name="date">Fecha hasta la cual se quieren eliminar los registros</param>
+        /// <returns>bool (true: si la consulta afecta a alguna tupla; false: caso contrario)</returns>
+        public async Task<bool> DeleteLogsByDate(DateTime date)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                string query = @"DELETE FROM [dbo].[Log]  WHERE Logged <= @DeleteDate";
+                var parameters = new { DeleteDate = date };
+                return  connection.Execute(query, parameters) > 0;
             }
         }
     }
