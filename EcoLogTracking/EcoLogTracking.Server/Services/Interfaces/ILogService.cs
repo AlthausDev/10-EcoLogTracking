@@ -15,7 +15,7 @@ namespace EcoLogTracking.Server.Services.Interfaces
         /// </summary>
         /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
         /// <returns>Boolean True si el guardado es satifactorio. False en caso contrario.</returns>
-        public bool PostLog(Log log);
+        public  Task<bool> PostLog(Log log);
 
         /// <summary>
         /// MÉTODO QUE FILTRA LOS REGISTROS EN LA BASE DE DATOS EN FUNCIÓN DE SU FECHA
@@ -24,5 +24,12 @@ namespace EcoLogTracking.Server.Services.Interfaces
         /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
         /// <returns>IEnumerable con la lista de registros existentes en el rango de fechas proporcionado</returns>
         public Task<IEnumerable<Log>> GetLogsBetween(DateTime start, DateTime end);
+
+        /// <summary>
+        /// MÉTODO QUE ELIMINA LOS LOGS ANTERIORES AL NÚMERO DE DÍAS QUE RECIBE EL MÉTODO
+        /// </summary>
+        /// <param name="numDias">Número de días desde los que se quieren mantener los logs</param>
+        /// <returns>bool (true: si la consulta afecta a alguna tupla; false: caso contrario)</returns>
+        public Task<bool> DeleteLogsByDate(int numDias);
     }
 }

@@ -40,14 +40,14 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// MÉTODO QUE GUARDA EN LA BASE DE DATOS LOS REGISTROS RECIBIDOS
         /// </summary>
         /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
-        /// <returns>Boolean True si el guardado es satifactorio. False en caso contrario.</returns>
+        /// <returns>bool OK() si registro correcto/ BadRequest() si registro incorrecto</returns>
         [HttpPost]
        // [Authorize(Roles = "admin")]
-        public IActionResult PostLog([FromBody] Log log)
+        public async Task<IActionResult> PostLog([FromBody] Log log)
         {
             try
             {             
-                bool success = _logService.PostLog(log);
+                bool success = await _logService.PostLog(log);
 
                 if (success)
                 {                  
@@ -69,7 +69,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <param name="start">Fecha a partir de la cual se quieren obtener los registros</param>
         /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
-        /// <returns>IEnumerable con la lista de registros existentes en el rango de fechas proporcionado</returns>
+        /// <returns>bool OK(lista de logs filtrados) si filtrado correcto/ BadRequest() si filtrado incorrecto</returns>
         [HttpGet("/GetBetween/{start}/{end}")]
         public async Task<IActionResult> GetLogsBetween(DateTime start, DateTime end)
         {
@@ -79,5 +79,26 @@ namespace EcoLogTracking.Server.Controllers.Impl
             }
             return Ok(list);
         }
+
+
+        /// <summary>
+        /// MÉTODO QUE ELIMINA LOS LOGS ANTERIORES AL NÚMERO DE DÍAS QUE RECIBE EL MÉTODO
+        /// </summary>
+        /// <param name="numDias">Número de días desde los que se quieren mantener los logs</param>
+        /// <returns>bool OK() si borrado correcto/ BadRequest() si borrado incorrecto</returns>
+        [HttpDelete]
+        [AllowAnonymous]
+        public async Task<IActionResult> DeleteLogsByDate(int numDias)
+        {
+            try {
+                bool result = await _logService.DeleteLogsByDate(numDias);
+                if (result) {
+                    return Ok("Registros borrados correctamente");
+                } return BadRequest("Error durante el borrado de los registros.");
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }  
     }
 }
