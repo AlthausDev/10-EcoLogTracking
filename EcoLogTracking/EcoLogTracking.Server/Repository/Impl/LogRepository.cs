@@ -46,8 +46,8 @@ namespace EcoLogTracking.Server.Repository.Impl
             _logger.Info("Entra en Post log");
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = @$"INSERT INTO [dbo].[Log](Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Status_code) 
-                                  VALUES(@Logged, @Level, @Message, @MachineName, @Logger, @Request_method, @Stacktrace, @File_name, @All_event_properties, @status_code)";
+                string query = @$"INSERT INTO [dbo].[Log](Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Status_code,Origin) 
+                                  VALUES(@Logged, @Level, @Message, @MachineName, @Logger, @Request_method, @Stacktrace, @File_name, @All_event_properties, @status_code,@Origin)";
 
                 return connection.Execute(query, log) > 0;
             }
@@ -64,7 +64,7 @@ namespace EcoLogTracking.Server.Repository.Impl
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = @"SELECT Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Status_code 
+                string query = @"SELECT Id, Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Status_code 
                          FROM [dbo].[Log] 
                          WHERE Logged BETWEEN @StartDate AND @EndDate";
 

@@ -10,6 +10,7 @@
     [File_name] NVARCHAR(250) NULL,
     [All_event_properties] NVARCHAR(MAX) NULL,
     [Status_code] NVARCHAR(MAX) NULL,
+    [Origin] NVARCHAR(250) NULL,
     CONSTRAINT [PK_dbo.Log] PRIMARY KEY CLUSTERED ([Id] ASC)
         WITH (
             PAD_INDEX = OFF, 

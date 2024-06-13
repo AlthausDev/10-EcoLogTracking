@@ -4,6 +4,7 @@ using EcoLogTracking.Server.Services.Impl;
 using EcoLogTracking.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using NLog;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -68,9 +69,13 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
         /// <returns>IEnumerable con la lista de registros existentes en el rango de fechas proporcionado</returns>
         [HttpGet("/GetBetween/{start}/{end}")]
-        public async Task<IEnumerable<Log>> GetLogsBetween(DateTime start, DateTime end)
+        public async Task<IActionResult> GetLogsBetween(DateTime start, DateTime end)
         {
-            return await _logService.GetLogsBetween(start,end);
+            var list = await _logService.GetLogsBetween(start,end);
+            if (list.IsNullOrEmpty()) {
+                return BadRequest("No logs found.");
+            }
+            return Ok(list);
         }
     }
 }
