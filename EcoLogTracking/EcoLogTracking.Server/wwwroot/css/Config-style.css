@@ -1,0 +1,22 @@
+﻿/* Estilos para el contenedor principal */
+.settings-container {
+    background: rgba(0,0,0,0.5);
+    border-bottom: 2px solid #a1f097;
+    border-radius: 15px;
+    box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+    display: grid;
+    margin: 0% 1%;
+    min-height: 80vh;
+    justify-content: center;
+    align-items: center;
+    animation: moreOpacity 10s ease-in-out infinite alternate;
+}
+
+
+
+/* Estilos para el perfil de usuario */
+.account-settings .user-profile {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}

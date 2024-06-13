@@ -1,7 +1,139 @@
 ﻿@page "/config"
 
-<div class="main-container">
-    <div class="table grid-style">
+@* <div class="main-container">
+    <div class="settings-container">
+        <h3>Configuracion</h3>
+        <table>
+            <tr>
+                <td>Frecuencia de borrado</td>
+                <td>
+                    <select @bind="@DeleteFrecuencyDays" id="DeleteFrecuencyDays" name="DeleteFrecuencyDays">
+                        <option value="" disabled selected hidden>Estado de la tarea</option>
+                        <option value="1">30</option>
+                        <option value="2">60</option>
+                        <option value="3">90</option>
+                        <option value="4">120</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Nivel:</td>
+                <td>"Texto de prueba"</td>
+            </tr>
+            <tr>
+                <td>Solicitud:</td>
+                <td>"Texto de prueba"</td>
+            </tr>
+            <tr>
+                <td>Mensaje:</td>
+                <td>"Texto de prueba"</td>
+            </tr>
+            <tr>
+                <td>Logger:</td>
+                <td>"Texto de prueba"</td>
+            </tr>
+            <tr>
+                <td>Equipo:</td>
+                <td>"Texto de prueba"</td>
+            </tr>
+            <tr>
+                <td>Stacktrace:</td>
+                <td>"Texto de prueba"</td>
+            </tr>
+            <tr>
+                <td>Archivo:</td>
+                <td>"Texto de prueba"</td>
+            </tr>
+            <tr>
+                <td>Código de estado:</td>
+                 <td>"Texto de prueba"</td>
+            </tr>
+            <tr>
+                <td>Origen:</td>
+                <td>"Texto de prueba"</td>
+            </tr>
+        </table>
         <p>Config flag</p>
+    </div>
+</div> *@
+
+<div class="main-container">
+    <div class="settings-container">
+        <div class="row gutters">
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                <div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h6>Detalles Personales</h6>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="fullName" class="col-form-label">Nombre Completo</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="Ingrese nombre completo">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="eMail" class="col-form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="eMail" placeholder="Ingrese correo electrónico">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="phone" class="col-form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="phone" placeholder="Ingrese número de teléfono">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="website" class="col-form-label">URL del Sitio Web</label>
+                            <input type="url" class="form-control" id="website" placeholder="Ingrese URL del sitio web">
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h6>Dirección</h6>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="street" class="col-form-label">Calle</label>
+                            <input type="text" class="form-control" id="street" placeholder="Ingrese la calle">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="city" class="col-form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="city" placeholder="Ingrese la ciudad">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="state" class="col-form-label">Estado</label>
+                            <input type="text" class="form-control" id="state" placeholder="Ingrese el estado">
+                        </div>
+                        <div class="core-box">
+                            <label for="zip" class="col-form-label">Código Postal</label>
+                            <input type="text" class="form-control" id="zip" placeholder="Ingrese el código postal">
+                        </div>
+                    </div>
+
+                    <div class="row gutters">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="text-right">
+                                <button type="button" id="cancel" name="cancel" class="button-style">Cancelar</button>
+                                <button type="button" id="update" name="update" class="button-style">Actualizar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div>
+                    <div class="account-settings">
+                        <div class="user-profile">
+                            <h5 class="user-name">NombreUsuario</h5>
+                            <h6 class="user-email">correo@correo.com</h6>
+                        </div>
+                        <div class="about">
+                            <h5>Acerca de</h5>
+                            <p>Usuario1</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -14,8 +14,11 @@ namespace EcoLogTracking.Client.Pages
         private bool isLoading = true;
         public static Modal ModalInstance = default!;
 
-        private string ShowLogs = "block";
-        private string ShowConfig = "none";
+        //private string ShowLogs = "block";
+        //private string ShowConfig = "none";
+
+        private string ShowLogs = "none";
+        private string ShowConfig = "block";
 
         private async Task OnClickExportExcel()
         {
