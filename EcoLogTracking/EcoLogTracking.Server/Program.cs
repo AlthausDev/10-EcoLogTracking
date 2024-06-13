@@ -10,16 +10,28 @@ using NLog;
 using NLog.Web;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using todoAPI.Helpers;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
 
+#region Configuración de servicios
+
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-#region Añadir servicios
+// Registrar servicios
+builder.Services.AddTransient<EncryptionHelper>();
+builder.Services.AddTransient<ILogRepository, LogRepository>();
+builder.Services.AddTransient<ILogService, LogService>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddSingleton<MockLogService>();
+
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddHttpClient();
 builder.Services.AddControllers();
@@ -28,30 +40,63 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:KEY"])),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header using the Bearer scheme."
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
 #endregion
 
 #region Configuración de CORS
+
 builder.Services.AddCors(options => options.AddPolicy("corsPolicy", builder =>
 {
-    _ = builder.AllowAnyMethod()
+    builder.AllowAnyMethod()
            .AllowAnyHeader()
            .SetIsOriginAllowed(origin => true)
            .AllowAnyOrigin();
-
 }));
-
-
-
 
 #endregion
 
 #region Configura componentes de Blazor
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
@@ -60,9 +105,11 @@ builder.Services.AddScoped(client => new HttpClient
 {
     BaseAddress = new Uri("https://localhost:7216/"),
 });
+
 #endregion
 
 #region Configuración de HttpClient
+
 var apiBaseUrl = builder.Configuration.GetValue<string>("ApiSettings:BaseUrl");
 if (string.IsNullOrEmpty(apiBaseUrl))
 {
@@ -73,30 +120,27 @@ builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri(apiBaseUrl)
 });
-#endregion
 
-
-#region Configura repositorios y servicios
-
-builder.Services.AddTransient<ILogRepository, LogRepository>();
-builder.Services.AddTransient<ILogService, LogService>();
 #endregion
 
 var app = builder.Build();
 
 #region Configuración del entorno
+
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
 }
 else
 {
-    _ = app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    _ = app.UseHsts();
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
+
 #endregion
 
 #region Configuración de middleware
+
 app.UseCors("corsPolicy");
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
@@ -120,15 +164,18 @@ app.UseSwaggerUI(c =>
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+
 #endregion
 
 #region Mapea páginas y controladores
+
 app.MapRazorPages();
 app.MapControllers();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(EcoLogTracking.Client._Imports).Assembly);
+
 #endregion
 
 app.Run();

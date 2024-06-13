@@ -29,6 +29,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <returns>Lista _connectionString los registros obtenidos de la base de datos: EcoLogTrackingDB</returns>
         [HttpGet]
+       // [Authorize(Roles = "admin")]
         public async Task<IEnumerable<Log>> GetAll()
         {
             return await _logService.GetAll();
@@ -41,6 +42,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
         /// <returns>Boolean True si el guardado es satifactorio. False en caso contrario.</returns>
         [HttpPost]
+       // [Authorize(Roles = "admin")]
         public IActionResult PostLog([FromBody] Log log)
         {
             try

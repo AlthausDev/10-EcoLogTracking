@@ -1,6 +1,11 @@
-﻿namespace EcoLogTracking.Server.Repository.Interfaces
+﻿using EcoLogTracking.Server.Models;
+
+namespace EcoLogTracking.Server.Repository.Interfaces
 {
-    public class IUserRepository
+    public interface IUserRepository
     {
+        public User GetUserByUsernameAndPass(string user, string pass);
+
+        public User GetUserByUsername(string user);
     }
 }

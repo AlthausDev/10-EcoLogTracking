@@ -19,5 +19,6 @@
             Password = pass;
         }
 
+        public User() { }
     }
 }
