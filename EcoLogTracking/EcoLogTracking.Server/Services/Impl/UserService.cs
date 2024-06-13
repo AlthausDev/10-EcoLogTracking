@@ -34,10 +34,27 @@ namespace EcoLogTracking.Server.Services.Impl
             User userDecrypt = new User { 
                 Id = userData.Id,
                 UserName = userData.UserName,
-                //Password = encryptionHelper.Decrypt(userData.Password)
-                Password = userData.Password
+                Password = encryptionHelper.Decrypt(userData.Password)
             };
             return userDecrypt;
+
+        }
+
+        public bool PostUser(User user)
+        {
+            var userData = userRepository.GetUserByUsername(user.UserName);
+            if (userData == null)
+            {
+                User userEncrypt = new User
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Password = encryptionHelper.Encrypt(user.Password)
+                };
+                return userRepository.PostUser(userEncrypt);
+            }
+
+            return false;
 
         }
     }

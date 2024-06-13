@@ -56,7 +56,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
                     claims = new Claim[] {
                     new Claim(ClaimTypes.Role, "admin"),
                     new Claim(ClaimTypes.Name, login.UserName),
-                    new Claim(ClaimTypes.NameIdentifier, login.Id.ToString())
+                    new Claim(ClaimTypes.NameIdentifier,login.Id.ToString())
                 };
                 
                 
@@ -74,11 +74,28 @@ namespace EcoLogTracking.Server.Controllers.Impl
                 tokenString = tokenHandler.WriteToken(token);
                 
                 
-                return Ok();
+                return Ok(tokenString);
             }
             catch
             {
                 return BadRequest("Error.");
+            }
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> PostUser(User user)
+        {
+            try
+            {
+                if (userService.PostUser(user)) {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            catch {
+                return BadRequest();
             }
         }
     }

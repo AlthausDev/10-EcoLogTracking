@@ -41,5 +41,22 @@ namespace EcoLogTracking.Server.Repository.Impl
                 return null;
             }
         }
+
+
+        public bool PostUser(User user)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(con))
+                {
+                    string query = @"INSERT INTO Users(UserName, Password) Values(@name,@pass)";
+                    return connection.Execute(query, new { name = user.UserName, pass = user.Password}) > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
     }
 }

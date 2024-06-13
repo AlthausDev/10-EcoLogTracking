@@ -7,6 +7,8 @@ namespace EcoLogTracking.Server.Services.Interfaces
         public User GetUserByUsernameAndPass(string user, string pass);
 
         public User GetUserByUsername(string user);
+
+        public bool PostUser(User user);
     }
 
 }
