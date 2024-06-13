@@ -5,13 +5,11 @@ using EcoLogTracking.Server.Repository.Impl;
 using EcoLogTracking.Server.Repository.Interfaces;
 using EcoLogTracking.Server.Services.Impl;
 using EcoLogTracking.Server.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
-using System.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using todoAPI.Helpers;
 
@@ -87,7 +85,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options => options.AddPolicy("corsPolicy", builder =>
 {
-    builder.AllowAnyMethod()
+    _ = builder.AllowAnyMethod()
            .AllowAnyHeader()
            .SetIsOriginAllowed(origin => true)
            .AllowAnyOrigin();
@@ -133,8 +131,8 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
+    _ = app.UseExceptionHandler("/Error");
+    _ = app.UseHsts();
 }
 
 #endregion

@@ -27,7 +27,7 @@ namespace EcoLogTracking.Server.Services.Impl
         /// <returns>Devuelve objeto usuario con nombre, contraseña e id del usuario (si existe)</returns>
         public async Task<User> GetUserByUsernameAndPass(string user, string pass)
         {
-            return await userRepository.GetUserByUsernameAndPass(user,pass); 
+            return await userRepository.GetUserByUsernameAndPass(user, pass);
         }
 
 
@@ -39,12 +39,13 @@ namespace EcoLogTracking.Server.Services.Impl
         /// <returns>Objeto usuario con los datos del usuario cuyo UserName coincide con el introducido</returns>
         public async Task<User> GetUserByUsername(string user)
         {
-            var userData =  await userRepository.GetUserByUsername(user);
+            var userData = await userRepository.GetUserByUsername(user);
             if (userData == null)
             {
                 return null;
             }
-            User userDecrypt = new User { 
+            User userDecrypt = new()
+            {
                 Id = userData.Id,
                 UserName = userData.UserName,
                 Password = encryptionHelper.Decrypt(userData.Password)
@@ -62,10 +63,10 @@ namespace EcoLogTracking.Server.Services.Impl
         {
             try
             {
-                var userData = userRepository.GetUserByUsername(user.UserName);
+                var userData = await userRepository.GetUserByUsername(user.UserName);
                 if (userData == null)
                 {
-                    User userEncrypt = new User
+                    User userEncrypt = new()
                     {
                         Id = user.Id,
                         UserName = user.UserName,
@@ -76,8 +77,9 @@ namespace EcoLogTracking.Server.Services.Impl
 
                 return false;
             }
-            catch(Exception e)  {
-               Debug.WriteLine(e.StackTrace);
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.StackTrace);
             }
             return false;
         }
@@ -90,10 +92,13 @@ namespace EcoLogTracking.Server.Services.Impl
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: no afecta a ninguna tupla)</returns>
         public async Task<bool> DeleteUser(int id)
         {
-            try {
+            try
+            {
                 bool response = await userRepository.DeleteUser(id);
                 return response;
-            } catch (Exception e) {
+            }
+            catch (Exception)
+            {
                 return false;
             }
         }
@@ -110,15 +115,16 @@ namespace EcoLogTracking.Server.Services.Impl
         {
             try
             {
-                User userToUpdate = new User { 
-                Id = user.Id,
-                UserName = user.UserName,
-                Password = encryptionHelper.Encrypt(user.Password)
+                User userToUpdate = new()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Password = encryptionHelper.Encrypt(user.Password)
                 };
                 bool response = await userRepository.UpdateUser(userToUpdate);
                 return response;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }

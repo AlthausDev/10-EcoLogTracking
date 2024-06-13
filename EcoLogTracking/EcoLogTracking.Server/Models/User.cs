@@ -3,10 +3,11 @@
     public class User
     {
         public int Id { get; set; }
-        public string? UserName {  get; set; }
+        public string? UserName { get; set; }
         public string? Password { get; set; }
 
-        public User(int id, string username, string pass) { 
+        public User(int id, string username, string pass)
+        {
             Id = id;
             UserName = username;
             Password = pass;
@@ -18,7 +19,7 @@
             Password = pass;
         }
 
-        public User(){}
+        public User() { }
 
     }
 }

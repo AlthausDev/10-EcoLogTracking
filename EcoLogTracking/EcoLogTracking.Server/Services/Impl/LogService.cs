@@ -15,7 +15,7 @@ namespace EcoLogTracking.Server.Services.Impl
             LogRepository = logRepository;
         }
 
-      
+
 
         /// <summary>
         /// MÉTODO QUE ACCEDE A LA BASE DE DATOS Y OBTIENE TODOS LOS REGISTROS
@@ -27,7 +27,7 @@ namespace EcoLogTracking.Server.Services.Impl
             {
                 return await LogRepository.GetAll();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -44,13 +44,13 @@ namespace EcoLogTracking.Server.Services.Impl
         {
             try
             {
-                return  LogRepository.GetLogsBetween(start, end);
+                return LogRepository.GetLogsBetween(start, end);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace);
                 return null;
-           }
+            }
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace EcoLogTracking.Server.Services.Impl
         {
             try
             {
-                return  await LogRepository.PostLog(log);
+                return await LogRepository.PostLog(log);
             }
             catch (Exception ex)
             {
@@ -79,15 +79,15 @@ namespace EcoLogTracking.Server.Services.Impl
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: caso contrario)</returns>
         public async Task<bool> DeleteLogsByDate(int numDias)
         {
-            try {
+            try
+            {
                 DateTime dateTime = DateTime.Now;
                 DateTime dateTimeFilter = dateTime.AddDays(numDias);
                 bool response = await LogRepository.DeleteLogsByDate(dateTimeFilter);
-                if (response) {
-                    return true;
-                }
-                return false;
-            } catch {
+                return response;
+            }
+            catch
+            {
                 return false;
             }
         }

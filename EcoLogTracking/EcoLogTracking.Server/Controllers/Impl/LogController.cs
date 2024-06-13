@@ -1,17 +1,13 @@
-﻿using EcoLogTracking.Server.Controllers.Interfaces;
-using EcoLogTracking.Server.Models;
-using EcoLogTracking.Server.Services.Impl;
+﻿using EcoLogTracking.Server.Models;
 using EcoLogTracking.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace EcoLogTracking.Server.Controllers.Impl
 {
-    
+
     [ApiController]
     [Route("api/[controller]")]
     public class LogController : ControllerBase
@@ -20,7 +16,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public LogController(ILogService logService)
-        {            
+        {
             _logService = logService;
         }
 
@@ -29,7 +25,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <returns>Lista _connectionString los registros obtenidos de la base de datos: EcoLogTrackingDB</returns>
         [HttpGet]
-       // [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         public async Task<IEnumerable<Log>> GetAll()
         {
             return await _logService.GetAll();
@@ -42,24 +38,17 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
         /// <returns>bool OK() si registro correcto/ BadRequest() si registro incorrecto</returns>
         [HttpPost]
-       // [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         public async Task<IActionResult> PostLog([FromBody] Log log)
         {
             try
-            {             
+            {
                 bool success = await _logService.PostLog(log);
 
-                if (success)
-                {                  
-                    return Ok();
-                }
-                else
-                {                   
-                    return StatusCode(500, "Error al insertar el log en la base de datos");
-                }
+                return success ? Ok() : StatusCode(500, "Error al insertar el log en la base de datos");
             }
-            catch (Exception ex)
-            {               
+            catch (Exception)
+            {
                 return StatusCode(500, "Error interno del servidor");
             }
         }
@@ -73,11 +62,8 @@ namespace EcoLogTracking.Server.Controllers.Impl
         [HttpGet("/GetBetween/{start}/{end}")]
         public async Task<IActionResult> GetLogsBetween(DateTime start, DateTime end)
         {
-            var list = await _logService.GetLogsBetween(start,end);
-            if (list.IsNullOrEmpty()) {
-                return BadRequest("No logs found.");
-            }
-            return Ok(list);
+            var list = await _logService.GetLogsBetween(start, end);
+            return list.IsNullOrEmpty() ? BadRequest("No logs found.") : Ok(list);
         }
 
 
@@ -90,15 +76,15 @@ namespace EcoLogTracking.Server.Controllers.Impl
         [AllowAnonymous]
         public async Task<IActionResult> DeleteLogsByDate(int numDias)
         {
-            try {
+            try
+            {
                 bool result = await _logService.DeleteLogsByDate(numDias);
-                if (result) {
-                    return Ok("Registros borrados correctamente");
-                } return BadRequest("Error durante el borrado de los registros.");
-            }catch (Exception ex)
+                return result ? Ok("Registros borrados correctamente") : BadRequest("Error durante el borrado de los registros.");
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-        }  
+        }
     }
 }

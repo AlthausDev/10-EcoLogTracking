@@ -1,5 +1,4 @@
 ﻿using EcoLogTracking.Server.Models;
-using EcoLogTracking.Server.Services.Impl;
 using EcoLogTracking.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +14,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class UserController: Controller
+    public class UserController : Controller
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -57,9 +56,9 @@ namespace EcoLogTracking.Server.Controllers.Impl
 
                 var claims = new Claim[]
                 {
-                    new Claim(ClaimTypes.Role, "admin"),
-                    new Claim(ClaimTypes.Name, login.UserName),
-                    new Claim(ClaimTypes.NameIdentifier,login.Id.ToString())
+                    new(ClaimTypes.Role, "admin"),
+                    new(ClaimTypes.Name, login.UserName),
+                    new(ClaimTypes.NameIdentifier,login.Id.ToString())
                 };
 
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -72,8 +71,8 @@ namespace EcoLogTracking.Server.Controllers.Impl
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 tokenString = tokenHandler.WriteToken(token);
-                
-                
+
+
                 return Ok(tokenString);
             }
             catch (Exception e)
@@ -89,18 +88,17 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: no afecta a ninguna tupla)</returns>
         /// https://localhost:7216/api/User
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> PostUser(User user)
         {
             try
             {
-                if (await userService.PostUser(user)) {
-                    return Ok();
-                }
-                return BadRequest();
+                return await userService.PostUser(user) ? Ok() : BadRequest();
             }
-            catch (Exception e){
-                return BadRequest(e.Message +" || "+e.StackTrace);
+            catch (Exception e)
+            {
+                return BadRequest(e.Message + " || " + e.StackTrace);
             }
         }
 
@@ -116,11 +114,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         {
             try
             {
-                if (await userService.DeleteUser(id))
-                {
-                    return Ok();
-                }
-                return BadRequest();
+                return await userService.DeleteUser(id) ? Ok() : BadRequest();
             }
             catch (Exception e)
             {
@@ -141,11 +135,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         {
             try
             {
-                if (await userService.UpdateUser(user))
-                {
-                    return Ok();
-                }
-                return BadRequest();
+                return await userService.UpdateUser(user) ? Ok() : BadRequest();
             }
             catch (Exception e)
             {

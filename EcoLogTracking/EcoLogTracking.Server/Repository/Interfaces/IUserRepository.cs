@@ -40,6 +40,6 @@ namespace EcoLogTracking.Server.Repository.Interfaces
         /// <param name="user">Objeto usuario con mismo id( para poder filtrar la tabla) pero con los nuevos datos del usuario</param>
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: no afecta a ninguna tupla)</returns>
         public Task<bool> UpdateUser(User user);
-    
+
     }
 }

@@ -2,6 +2,6 @@
 {
     public partial class ConfigPanel
     {
-        public int DeleteFrecuencyDays {  get; set; }
+        public int DeleteFrecuencyDays { get; set; }
     }
 }

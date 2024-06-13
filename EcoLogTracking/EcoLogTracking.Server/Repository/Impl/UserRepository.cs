@@ -2,11 +2,10 @@
 using EcoLogTracking.Server.Models;
 using EcoLogTracking.Server.Repository.Interfaces;
 using Microsoft.Data.SqlClient;
-using System.Diagnostics;
 
 namespace EcoLogTracking.Server.Repository.Impl
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
 
         private readonly IConfiguration _configuration;
@@ -30,12 +29,12 @@ namespace EcoLogTracking.Server.Repository.Impl
             {
                 using (var connection = new SqlConnection(con))
                 {
-                    string query = @"SELECT IdUser, UserName, Password FROM Users
+                    string query = @"SELECT Id, UserName, Password FROM Users
                                  WHERE UserName = @user AND Password = @pass";
-                    return  connection.QuerySingle<User>(query, new { user, pass });
+                    return connection.QuerySingle<User>(query, new { user, pass });
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -47,22 +46,25 @@ namespace EcoLogTracking.Server.Repository.Impl
         /// </summary>
         /// <param name="user">Nombre de usuario introducido por teclado</param>
         /// <returns>Objeto usuario con los datos del usuario cuyo UserName coincide con el introducido</returns>
-        public async Task<User>? GetUserByUsername(string user)
+        public async Task<User>? GetUserByUsername(string userName)
         {
             try
             {
                 using (var connection = new SqlConnection(con))
                 {
                     string query = @"SELECT Id, UserName, Password FROM Users
-                                 WHERE UserName = @user";
-                    return connection.QuerySingleOrDefault<User>(query, new { user});
+                             WHERE UserName = @UserName";
+                    return await connection.QuerySingleOrDefaultAsync<User>(query, new { UserName = userName });
                 }
             }
             catch (Exception e)
             {
+                // Aquí sería útil registrar la excepción para futuras investigaciones
+                Console.WriteLine($"Error al obtener el usuario por nombre de usuario: {e.Message}");
                 return null;
             }
         }
+
 
         /// <summary>
         /// MÉTODO PARA REGISTRAR UN NUEVO USUARIO
@@ -76,10 +78,10 @@ namespace EcoLogTracking.Server.Repository.Impl
                 using (var connection = new SqlConnection(con))
                 {
                     string query = @"INSERT INTO Users(UserName, Password) Values(@name,@pass)";
-                    return connection.Execute(query, new { name = user.UserName, pass = user.Password}) > 0;
+                    return connection.Execute(query, new { name = user.UserName, pass = user.Password }) > 0;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -90,13 +92,18 @@ namespace EcoLogTracking.Server.Repository.Impl
         /// </summary>
         /// <param name="id">Id del usuario que está borrando su cuenta</param>
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: no afecta a ninguna tupla)</returns>
-        public async Task<bool> DeleteUser(int id) {
-            try {
-                using (var connection = new SqlConnection(con)) {
+        public async Task<bool> DeleteUser(int id)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(con))
+                {
                     string query = "UPDATE Users SET Deleted = 1,DeletedDate = GETDATE() WHERE Id = @id";
-                    return connection.Execute(query, new {id}) > 0;
+                    return connection.Execute(query, new { id }) > 0;
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception)
+            {
                 return false;
             }
         }
@@ -111,12 +118,14 @@ namespace EcoLogTracking.Server.Repository.Impl
         {
             try
             {
-                using (var connection = new SqlConnection(con)) {
+                using (var connection = new SqlConnection(con))
+                {
                     string query = "UPDATE Users SET UserName = @username, Password = @pass WHERE Id = @id";
-                    return connection.Execute(query, new {username = user.UserName,pass = user.Password, id = user.Id}) > 0;
+                    return connection.Execute(query, new { username = user.UserName, pass = user.Password, id = user.Id }) > 0;
                 }
             }
-            catch (Exception e) { 
+            catch (Exception)
+            {
                 return false;
             }
         }

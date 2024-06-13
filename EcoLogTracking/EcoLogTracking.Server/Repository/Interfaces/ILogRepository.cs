@@ -1,9 +1,8 @@
-﻿using EcoLogTracking.Server.Repository.Interfaces;
-using EcoLogTracking.Server.Models;
+﻿using EcoLogTracking.Server.Models;
 
 namespace EcoLogTracking.Server.Repository.Interfaces
 {
-    public interface ILogRepository 
+    public interface ILogRepository
     {
         /// <summary>
         /// MÉTODO QUE ACCEDE A LA BASE DE DATOS Y OBTIENE TODOS LOS REGISTROS

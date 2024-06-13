@@ -2,7 +2,7 @@
 
 namespace EcoLogTracking.Server.Services.Interfaces
 {
-    public interface ILogService 
+    public interface ILogService
     {
         /// <summary>
         /// MÉTODO QUE ACCEDE A LA BASE DE DATOS Y OBTIENE TODOS LOS REGISTROS
@@ -15,7 +15,7 @@ namespace EcoLogTracking.Server.Services.Interfaces
         /// </summary>
         /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
         /// <returns>Boolean True si el guardado es satifactorio. False en caso contrario.</returns>
-        public  Task<bool> PostLog(Log log);
+        public Task<bool> PostLog(Log log);
 
         /// <summary>
         /// MÉTODO QUE FILTRA LOS REGISTROS EN LA BASE DE DATOS EN FUNCIÓN DE SU FECHA

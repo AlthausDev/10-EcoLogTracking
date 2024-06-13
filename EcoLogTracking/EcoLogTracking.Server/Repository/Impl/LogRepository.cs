@@ -30,7 +30,7 @@ namespace EcoLogTracking.Server.Repository.Impl
                                FROM [dbo].[Log]";
 
                 var logs = await connection.QueryAsync<Log>(query);
-                
+
                 return logs.ToList();
             }
         }
@@ -85,7 +85,7 @@ namespace EcoLogTracking.Server.Repository.Impl
             {
                 string query = @"DELETE FROM [dbo].[Log]  WHERE Logged <= @DeleteDate";
                 var parameters = new { DeleteDate = date };
-                return  connection.Execute(query, parameters) > 0;
+                return connection.Execute(query, parameters) > 0;
             }
         }
     }
