@@ -105,7 +105,8 @@ namespace EcoLogTracking.Client.Components
                 { "Stacktrace", SelectedLogItem.Stacktrace },
                 { "File_name", SelectedLogItem.File_name },
                 { "All_event_properties", SelectedLogItem.All_event_properties },
-                { "Status_code", SelectedLogItem.Status_code }
+                { "Status_code", SelectedLogItem.Status_code },
+                { "Origin", SelectedLogItem.Origin }
             };
             await MainPanel.ModalInstance.ShowAsync<DetailsModal>(title: "Detalles del Registro", parameters: parameters);
         }

@@ -36,5 +36,8 @@ namespace EcoLogTracking.Client.Components
 
         [Parameter]
         public string? Status_code { get; set; }
+
+        [Parameter]
+        public string? Origin{ get; set; }
     }
 }
