@@ -22,6 +22,8 @@ namespace EcoLogTracking.Client.Pages
         private string ShowLogs = "none";
         private string ShowConfig = "block";
 
+        private bool IsActiveLogsButton = false;
+
 
         private async Task OnClickExportExcel()
         {
@@ -34,11 +36,27 @@ namespace EcoLogTracking.Client.Pages
             await ModalInstance.ShowAsync<ExportExcel>(title: "Exportar", parameters: parameters);
         }
 
-        private void OnclickConfig()
+        private void OnClickToggle()
         {
-            ShowLogs = "none";
-            ShowConfig = "block";
+            if (ShowLogs == "block")
+            {
+                ShowLogs = "none";
+                ShowConfig = "block";
+            }
+            else
+            {
+                ShowLogs = "block";
+                ShowConfig = "none";
+            }
+
+            UpdateButtonState();
         }
+
+        private void UpdateButtonState()
+        {
+            IsActiveLogsButton = ShowLogs == "block";
+        }
+
 
         private async Task OnClickLogOut()
         {

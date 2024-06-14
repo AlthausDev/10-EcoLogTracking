@@ -31,6 +31,13 @@
         transition: all .2s ease-in-out;
     }
 
+    .nav-button.active {
+        background-color: #5a5e5e; /* Color de fondo cuando está en estado active */
+        border: 2px solid #a1f097;
+        box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+        transition: all .2s ease-in-out;
+    }
+
 img {
     width: 40px;
     height: 40px;
