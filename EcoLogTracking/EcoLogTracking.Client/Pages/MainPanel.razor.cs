@@ -5,6 +5,7 @@ using EcoLogTracking.Client.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System.Diagnostics;
 
 
 namespace EcoLogTracking.Client.Pages
@@ -14,11 +15,13 @@ namespace EcoLogTracking.Client.Pages
         private bool isLoading = true;
         public static Modal ModalInstance = default!;
 
+        public static User User { get; set; } = new();
         //private string ShowLogs = "block";
         //private string ShowConfig = "none";
 
         private string ShowLogs = "none";
         private string ShowConfig = "block";
+
 
         private async Task OnClickExportExcel()
         {

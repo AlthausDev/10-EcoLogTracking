@@ -1,4 +1,9 @@
-﻿namespace EcoLogTracking.Client.Pages
+﻿using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+
+namespace EcoLogTracking.Client.Pages
 {
     public partial class StartUp
     {
@@ -10,26 +15,45 @@
         private async Task CheckToken()
         {
             try
-            {
-                // Obtener el token desde el almacenamiento local
+            {   
                 string? token = await storageService.GetItemAsStringAsync("token");
-
-                // Determinar si el token está presente
                 bool isTokenPresent = !string.IsNullOrEmpty(token);
 
-                // Decidir a qué página navegar basándose en la presencia del token
                 string nextPage = isTokenPresent ? "/logger" : "/login";
 
-                //TEMP: comentado temporalmente para facilitar las pruebas de desarrollo
-                //NavManager.NavigateTo(nextPage);
-                NavManager.NavigateTo("/logger");
+                if (isTokenPresent)
+                {
+                   
+                    var handler = new JwtSecurityTokenHandler();
+                    var jwtSecurityToken = handler.ReadJwtToken(token);
+               
+                    List<Claim> claims = jwtSecurityToken.Claims.ToList();
+                   
+                    MainPanel.User.Id = int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
+                    MainPanel.User.UserName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value ?? string.Empty;
+              
 
+                    Console.WriteLine($"User ID: {MainPanel.User.Id}, UserName: {MainPanel.User.UserName}");
+                    Debug.WriteLine($"User ID: {MainPanel.User.Id}, UserName: {MainPanel.User.UserName}");
+                    Debug.WriteLine($"User ID: {MainPanel.User.Id}, UserName: {MainPanel.User.UserName}");
+                    Debug.WriteLine($"User ID: {MainPanel.User.Id}, UserName: {MainPanel.User.UserName}");
+                }
+              
+                NavManager.NavigateTo(nextPage);
             }
-            catch (Exception)
-            {
+            catch (SecurityTokenException ex)
+            {               
+                Console.WriteLine($"SecurityTokenException: {ex.Message}");
+                _ = Http.DefaultRequestHeaders.Remove("Authorization");
+                NavManager.NavigateTo("/login");
+            }
+            catch (Exception ex)
+            {               
+                Console.WriteLine($"Exception: {ex.Message}");
                 _ = Http.DefaultRequestHeaders.Remove("Authorization");
                 NavManager.NavigateTo("/login");
             }
         }
+
     }
 }

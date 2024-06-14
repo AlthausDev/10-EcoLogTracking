@@ -72,7 +72,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <param name="numDias">Número de días desde los que se quieren mantener los logs</param>
         /// <returns>bool OK() si borrado correcto/ BadRequest() si borrado incorrecto</returns>
-        [HttpDelete]
+        [HttpDelete("/{numDias}")]
         [AllowAnonymous]
         public async Task<IActionResult> DeleteLogsByDate(int numDias)
         {

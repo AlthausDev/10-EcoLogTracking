@@ -1,6 +1,9 @@
 ﻿@page "/config"
 
+@inject HttpClient Http
+@inject NavigationManager NavManager
 @inject IJSRuntime JS
+@inject ILocalStorageService storageService
 
 <div class="main-container">
     <div class="settings-container">
@@ -39,8 +42,8 @@
                                 </div>
 
                                 <div class="text-right">
-                                    <button type="button" id="cancel" name="cancel" class="button-style">Cancelar</button>
-                                    <button type="button" id="update" name="update" class="button-style">Actualizar</button>
+                                   @*  <button type="button" id="cancel" name="cancel" class="button-style">Cancelar</button> *@
+                                    <button type="button" @onclick="OnClickUpdate" id="update" name="update" class="button-style">Actualizar</button>
                                 </div>
                             </div>
 
@@ -80,8 +83,8 @@
                         </div>
 
                         <div class="text-right">
-                            <button type="button" id="cancelNew" name="cancelNew" class="button-style">Cancelar</button>
-                            <button type="button" id="create" name="create" class="button-style">Crear</button>
+                                <button type="button" @onclick="OnClickClear" id="cancelNew" name="cancelNew" class="button-style">Limpiar campos</button>
+                                <button type="button" @onclick="OnClickRegister" id="create" name="create" class="button-style">Crear</button>
                         </div>
                         </div>
                     </Content>
@@ -89,8 +92,8 @@
                 <Tab Title="Danger Zone" Class="danger-tab">
                     <Content>
                         <div class="text-right">
-                            <button type="button" id="cancel" name="cancel" class="button-style">Eliminar todos los registros</button>
-                            <button type="button" id="update" name="update" class="button-style">Elimninar Usuario</button>
+                            <button type="button" @onclick="OnClickDeleteAllLogs" id="cancel" name="cancel" class="button-style">Eliminar todos los registros</button>
+                            <button type="button" @onclick="OnClickDeteleUserAsync"  id="update" name="update" class="button-style">Elimninar Usuario</button>
                         </div>
                     </Content>
                 </Tab>

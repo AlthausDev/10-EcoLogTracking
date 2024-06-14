@@ -120,7 +120,7 @@ namespace EcoLogTracking.Server.Repository.Impl
             {
                 using (var connection = new SqlConnection(con))
                 {
-                    string query = "UPDATE Users SET UserName = @username, Password = @pass WHERE Id = @id";
+                    string query = "UPDATE Users SET UserName = @username WHERE Id = @id";
                     return connection.Execute(query, new { username = user.UserName, pass = user.Password, id = user.Id }) > 0;
                 }
             }
