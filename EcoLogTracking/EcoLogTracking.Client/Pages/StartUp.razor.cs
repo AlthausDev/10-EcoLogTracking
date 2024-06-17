@@ -33,8 +33,7 @@ namespace EcoLogTracking.Client.Pages
                     List<Claim> claims = jwtSecurityToken.Claims.ToList();
 
                     int Id = int.Parse(claims.ElementAtOrDefault(2)?.Value ?? "0");
-                    MainPanel.User = await Http.GetFromJsonAsync<User>($"/user/{Id}");                 
-
+                    MainPanel.User = await Http.GetFromJsonAsync<User>($"/user/{Id}");  
                 }
 
                 NavManager.NavigateTo(nextPage);

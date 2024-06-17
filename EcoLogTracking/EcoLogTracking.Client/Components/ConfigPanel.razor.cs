@@ -43,33 +43,28 @@ namespace EcoLogTracking.Client.Components
             => messages.Add(new("OnHidden", args.ActiveTabTitle, args.PreviousActiveTabTitle));
      
         private async Task OnClickDeteleUserAsync()
-        {            
-            await Http.DeleteAsync($"/user/{MainPanel.User.Id}");
-            await MainPanelInstance.OnClickLogOut();
+        {
+            string Message = "¿Está seguro de que desea eliminar este usuario?";
+
+
+            if (await ConfirmDialogAsync(Message))
+            {
+                var response = await Http.DeleteAsync($"User/{MainPanel.User.Id}");
+                Debug.WriteLine(response);
+                await MainPanelInstance.OnClickLogOut();
+            }
+            else
+            {
+                ShowMessage(ToastType.Secondary, "Acción de eliminación cancelada.");
+            }
         }
 
         private async Task OnClickDeleteAllLogs()
         {
-            var parameters = new Dictionary<string, object?>
-            {             
-                { "Message", "¿Está seguro de que desea eliminar todos los registros de la base de datos?" }
-            };
+            string Message = "¿Está seguro de que desea eliminar todos los registros de la base de datos?";
 
-            var options = new ConfirmDialogOptions
-            {
-                YesButtonColor = ButtonColor.Danger,
-                YesButtonText = "Eliminar",
-                NoButtonText = "Cancelar",
-                IsVerticallyCentered = true,
-                Dismissable = true
-            };
 
-            var DialogResponse = await dialog.ShowAsync<ConfirmDialogComponent>(
-                title: "Confirmar Eliminación",
-                parameters,
-                confirmDialogOptions: options);
-
-            if (DialogResponse)
+            if (await ConfirmDialogAsync(Message))
             {
                 try
                 {
@@ -166,6 +161,29 @@ namespace EcoLogTracking.Client.Components
             newPassword = string.Empty;
         }
 
+        private async Task<bool> ConfirmDialogAsync(string Message)
+        {
+            var parameters = new Dictionary<string, object?>
+            {
+                { "Message", Message }
+            };
+
+            var options = new ConfirmDialogOptions
+            {
+                YesButtonColor = ButtonColor.Danger,
+                YesButtonText = "Eliminar",
+                NoButtonText = "Cancelar",
+                IsVerticallyCentered = true,
+                Dismissable = true
+            };
+
+            var DialogResponse = await dialog.ShowAsync<ConfirmDialogComponent>(
+                title: "Confirmar Eliminación",
+                parameters,
+                confirmDialogOptions: options);
+
+            return DialogResponse;
+        }
 
         #region Toast
         private void ShowMessage(ToastType toastType, string message) => toastMessages.Add(CreateToastMessage(toastType, message));

@@ -111,9 +111,9 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="id">id de usuario</param>
         /// <returns>Devuelve objeto usuario con id, nombre, contraseña e email(si existe)</returns>
         [HttpGet("/user/{id}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         //https://localhost:7216/UserById/1
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<User>> GetuserById(int id)
         {           
                 User user = await userService.GetUserById(id);
@@ -131,6 +131,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// https://localhost:7216/api/User
         [HttpDelete("/user/{id}")]
         [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         public async Task<IActionResult> DeleteUser(int id)
         {
             try
