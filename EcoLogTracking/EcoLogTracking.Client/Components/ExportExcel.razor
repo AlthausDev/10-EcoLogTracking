@@ -1,55 +1,40 @@
-﻿<div class="main-box" id="mainBox">
+﻿@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Web
+
+@inject HttpClient Http
+@inject NavigationManager NavManager
+@inject IJSRuntime JS
+@inject ILocalStorageService storageService
+
+<div class="main-box date-box" id="mainBox">
     <div class="core-box">
+        <label for="firstDateInput">Fecha de inicio</label>
         <input type="date"
-               id="expirationDateInput"
-               name="meeting-time"
-               @bind-value="@FirstDate"
-               min="@FirstDate"/>
-        <label for="expirationDateInput">Fecha de expiración</label>
+               id="firstDateInput"
+               @bind="FirstDate"/>
     </div>
     <div class="core-box">
+        <label for="lastDateInput">Fecha de fin</label>
         <input type="date"
-               id="expirationDateInput"
-               name="meeting-time"
-               @bind-value="@LastDate"
-               min="@LastDate"/>
-        <label for="expirationDateInput">Fecha de expiración</label>
+               id="lastDateInput"
+               @bind="LastDate"
+               min="@FirstDate.ToString("yyyy-MM-dd")" />
     </div>
-@*     <button type="button" id="form-button" class="button-style" @onclick="OnClickClose">
+    <button type="button" id="form-button" class="button-style" @onclick="OnClickHide">
         Salir
     </button>
-    <button type="button" id="form-button" class="button-style" @onclick="OnClickRegistro">
+    <button type="button" id="form-button" class="button-style" @onclick="OnClickExport">
         Aceptar
-    </button> *@
+    </button>
 </div>
 
-
 <style>
-    h3 {
-        margin-bottom: 7%;
-        text-transform: uppercase;
+    .date-box{
+        max-width: 600px !important;
     }
 
-    .main-box {
-        table
-
-    {
-        width: 100%;
-        border-collapse: initial;
-        padding-bottom: 5%;
-    }
-
-    td {
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
-        text-align: left;
-    }
-
-        td:first-child {
-            width: 150px;
-            color: #b7f8ce;
-            text-transform: uppercase;
-        }
-
+    .main-box .core-box label {
+        top:-5px;
+        color: #caf9ca;
     }
 </style>

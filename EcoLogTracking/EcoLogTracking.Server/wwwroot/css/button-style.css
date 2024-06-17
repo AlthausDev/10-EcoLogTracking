@@ -18,12 +18,10 @@
     box-shadow: 0 8px 22px rgba(105, 235, 109, .5);
     border: 2px solid #a1f097 !important;
     border-radius: 8px;
+    transition: all .5s ease-in-out;
 }
 
-    .button-style:hover,
-    .button-style:focus,
-    .button-style.active,
-    .button-style:visited {
+    .button-style:hover{    
         border-radius: 8px;
         z-index: 2;
         background: #a1f097;

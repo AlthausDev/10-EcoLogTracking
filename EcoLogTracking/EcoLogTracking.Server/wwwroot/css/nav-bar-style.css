@@ -1,51 +1,50 @@
-﻿
-.header {
-    background: rgba(0,0,0,0.5);
+﻿.header {
+    background: rgba(0, 0, 0, 0.5);
     z-index: 100;
     border-bottom: 2px solid #a1f097;
     border-radius: 15px;
     box-shadow: 0px 0px 36px -6px rgb(105 235 109);
-    align-items: center;
     display: flex;
-    Justify-content: flex-end; 
-    animation: borderEffect 10s ease-in-out infinite alternate;    
-    margin: 0% 1%;
+    justify-content: flex-end;
+    align-items: center;
+    animation: borderEffect 10s ease-in-out infinite alternate;
+    margin: 0 1%;
 }
 
-    .header ul {
-        list-style: none;
-        overflow: hidden; 
-        margin-bottom: 0px;
+.nav-button {
+    color: white;
+    font-size: 17px;
+    border-radius: 15px;
+    padding: 8px;
+    background-color: transparent;
+    border: 2px solid transparent;
+    display: inline-block;
+    margin: 20px;
+    height: 60px;
+    transition: all .5s ease-in-out;
+}
+
+    .nav-button:hover {
+        background-color: #5a5e5e;
+        border: 2px solid #a1f097;
+        box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+        transition: all .2s ease-in-out;
     }
 
-        .header ul li {
-            font-size: 17px;
-            border-radius: 15px;
-            padding: 8px;
-            border: 2px solid transparent;
-            display: inline-block;
-            margin: 15px 15px;
-            height: 60px !important;
-        }
-
-        .header ul li label {
-            display: ruby;
-            padding: 15px;
-            color: #fff;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-
-        .header ul li:hover {
-            background-color: #5a5e5e;
-            color: black;
-            border: 2px solid #a1f097;
-            box-shadow: 0px 0px 36px -6px rgb(105 235 109);
-            padding: 8px;
-        }
+    .nav-button.active {
+        background-color: #5a5e5e; /* Color de fondo cuando está en estado active */
+        border: 2px solid #a1f097;
+        box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+        transition: all .2s ease-in-out;
+    }
 
 img {
     width: 40px;
     height: 40px;
     margin-left: 10px;
+}
+
+.nav-button img[src*="logout.png"] {
+    width: 20px;
+    height: 24px;
 }

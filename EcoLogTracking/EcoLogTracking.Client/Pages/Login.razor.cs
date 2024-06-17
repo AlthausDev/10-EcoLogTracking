@@ -1,7 +1,13 @@
 ﻿using BlazorBootstrap;
 using EcoLogTracking.Client.Models;
+using Irony.Parsing;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.JSInterop;
+using Newtonsoft.Json.Linq;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Json;
+using System.Security.Claims;
 
 namespace EcoLogTracking.Client.Pages
 {
@@ -13,6 +19,14 @@ namespace EcoLogTracking.Client.Pages
         private string Password { get; set; } = string.Empty;
 
         #region Login     
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await JS.InvokeVoidAsync("addEnterEventListener", "loginButton");
+            }
+        }
+
         private async Task OnClickLogin()
         {
             string? result = await LoginUser(UserName, Password);
@@ -27,7 +41,8 @@ namespace EcoLogTracking.Client.Pages
                 {
                     ShowMessage(ToastType.Danger, "Credenciales incorrectas. Por favor, inténtelo de nuevo.");
                     return;
-                }
+
+                }                
 
                 NavManager.NavigateTo("/logger");
             }
@@ -50,6 +65,18 @@ namespace EcoLogTracking.Client.Pages
                 {
                     string loginResponse = await response.Content.ReadAsStringAsync();
                     await GenerateTokenAsync(loginResponse);
+
+                    var handler = new JwtSecurityTokenHandler();
+                    var jwtSecurityToken = handler.ReadJwtToken(loginResponse);
+                    List<Claim> claims = jwtSecurityToken.Claims.ToList();
+
+                    string userIdClaim = jwtSecurityToken.Claims.ElementAtOrDefault(2)?.Value ?? "0"; // Index 0 is NameIdentifier
+                    string userNameClaim = jwtSecurityToken.Claims.ElementAtOrDefault(1)?.Value ?? string.Empty; // Index 1 is Name
+
+
+
+                    MainPanel.User.Id = int.Parse(userIdClaim); // Ensure the conversion is correct
+                    MainPanel.User.UserName = userNameClaim.ToString();
                     return loginResponse;
                 }
                 else

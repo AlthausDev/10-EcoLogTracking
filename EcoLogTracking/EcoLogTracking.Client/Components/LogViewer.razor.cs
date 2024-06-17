@@ -3,6 +3,7 @@ using EcoLogTracking.Client.Models;
 using EcoLogTracking.Client.Pages;
 using Microsoft.AspNetCore.Components;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net.Http.Json;
 
 
@@ -18,6 +19,7 @@ namespace EcoLogTracking.Client.Components
         private Grid<Log> DataGrid = default!;
 
         public static ObservableCollection<Log> LogList { get; set; } = new ObservableCollection<Log>();
+        public static DateTime FirstLogDate { get; set; } = DateTime.Now.Date;
 
         private bool IsLoading = true;
 
@@ -121,6 +123,8 @@ namespace EcoLogTracking.Client.Components
                 log.Status_code = log.Message.Substring(0, index + 1);
                 log.Message = log.Message.Substring(index + 1);
             }
+
+            FirstLogDate = LogList.Min(log => log.Logged);          
         }
         #endregion
 

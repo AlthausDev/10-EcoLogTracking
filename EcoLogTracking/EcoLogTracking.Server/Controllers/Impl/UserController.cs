@@ -139,7 +139,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="id">Id del usuario que está borrando su cuenta</param>
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: no afecta a ninguna tupla)</returns>
         /// https://localhost:7216/api/User
-        [HttpDelete]
+        [HttpDelete("/user/{id}")]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {

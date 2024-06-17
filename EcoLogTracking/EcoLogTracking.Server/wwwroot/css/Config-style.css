@@ -1,22 +1,173 @@
-﻿/* Estilos para el contenedor principal */
+﻿/* Estilos generales */
 .settings-container {
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     border-bottom: 2px solid #a1f097;
     border-radius: 15px;
     box-shadow: 0px 0px 36px -6px rgb(105 235 109);
-    display: grid;
-    margin: 0% 1%;
+    display: block;
+    margin: 0 1%;
+    padding: 4%;
     min-height: 80vh;
     justify-content: center;
     align-items: center;
-    animation: moreOpacity 10s ease-in-out infinite alternate;
+    animation: borderEffect 10s ease-in-out infinite alternate;
 }
 
+.form-group, .core-box, .grid-item {
+    position: relative;
+    margin-bottom: 36px;
+}
 
+    .core-box .form-control {       
+        padding: 10px 15px;
+        font-size: 16px;
+        color: #fff;
+        outline: none;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+        border: 2px solid #a1f097;
+        transition: border-color 0.3s ease;
+    }
 
-/* Estilos para el perfil de usuario */
-.account-settings .user-profile {
-    margin: 0 0 1rem 0;
-    padding-bottom: 1rem;
+.form-control:focus {
+    border-color: white;
+}
+
+.core-box label {
+    position: absolute;
+    top: 6px;
+    left: 15px;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: top 0.3s ease, left 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+}
+
+.form-control:focus ~ label,
+.form-control:not(:placeholder-shown) ~ label {
+    top: -30px;
+    font-size: 14px;
+    color: #caf9ca;
+}
+
+.no-border {
+    border: none;
+}
+
+.account-settings {
     text-align: center;
 }
+
+    .account-settings .user-profile,
+    .account-settings .about {
+        margin-bottom: 1rem;
+        font-size: 0.8rem;        
+        text-align: right;
+    }
+
+.grid-container-settings {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;  
+}
+
+.grid-item,
+.new-user-form {    
+    margin: 5% 0px;
+}
+
+.tab-content h3 {
+    text-align: right;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom:5%;
+}
+
+.text-right {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.new-user-form {
+    max-width: 500px;
+    margin: 0 auto;   
+}
+
+.nav-link {
+    color: white !important;
+    border-radius: 10px 10px 0px 0px !important;
+    border-width: 2px !important;
+    transition: all .5s ease-in-out;    
+}
+
+    .nav-link:hover {
+        background: #b7f8ce;
+        color: #fff;
+        border: 2px solid white;
+        box-shadow: 0px 0px 36px 13px #b7f8ce;
+        transition: transform 0.5s ease-in-out;
+        transition: all .2s ease-in-out;
+    }
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    background: #6fef88;  
+    color: #fff !important;
+    border-radius: 10px 10px 0px 0px;
+    box-shadow: 0 0 5px #a1f097, 0 0 19px #a1f097, 0 0 19px #a1f097, 0 0 15px #a1f097;
+    border: 2px solid white !important;
+    margin-right: 40vw !important; 
+    transition: all 1s ease-in-out;
+}
+
+
+.danger-tab .nav-link {
+    background-color: red !important;
+    transition: all 0.5s ease-in-out;
+}
+
+.danger-tab .nav-link:hover {
+    background-color: #ff6347 !important;
+}
+
+
+.range-input > * {
+    /* Estilos generales */
+    width: 100%;
+    height: 1.5rem;
+    font-size: 17px;
+    /* --track-color: #a1f097;*/
+    --thumb-color: #41e160;
+    --range-track-width: 100%;
+    --range-track-height: 10px;
+    --range-track-border-radius: 5px;
+}
+
+    .range-input > * ::-webkit-slider-runnable-track {
+        width: var(--range-track-width);
+        height: var(--range-track-height);       
+        border-radius: var(--range-track-border-radius);
+    }
+
+.range-input ::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: var(--thumb-color);
+    border-radius: 50%;
+    box-shadow: none !important;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+        .range-input ::-webkit-slider-thumb:active,
+        .range-input ::-webkit-slider-thumb:hover,     
+        .range-input ::-webkit-slider-thumb:focus {
+            background-color: var(--thumb-color);            
+            border: 2px solid white;
+            box-shadow: 0 0 5px #a1f097, 0 0 19px #a1f097, 0 0 19px #a1f097, 0 0 15px #a1f097 !important;
+        }
+
+
+
