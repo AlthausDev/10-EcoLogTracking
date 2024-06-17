@@ -19,6 +19,14 @@ namespace EcoLogTracking.Client.Pages
         private string Password { get; set; } = string.Empty;
 
         #region Login     
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await JS.InvokeVoidAsync("addEnterEventListener", "loginButton");
+            }
+        }
+
         private async Task OnClickLogin()
         {
             string? result = await LoginUser(UserName, Password);

@@ -22,7 +22,7 @@ namespace EcoLogTracking.Client.Pages
         private string ShowLogs = "none";
         private string ShowConfig = "block";
 
-        private bool IsActiveLogsButton = false;
+        private bool IsActiveConfigButton = false;
 
 
         private async Task OnClickExportExcel()
@@ -54,7 +54,7 @@ namespace EcoLogTracking.Client.Pages
 
         private void UpdateButtonState()
         {
-            IsActiveLogsButton = ShowLogs == "block";
+            IsActiveConfigButton = ShowConfig == "block";
         }
 
 
