@@ -28,6 +28,8 @@ builder.Services.AddTransient<ILogRepository, LogRepository>();
 builder.Services.AddTransient<ILogService, LogService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IConfigurationRepository, ConfigurationRepository>();
+builder.Services.AddTransient<IConfigurationService, ConfigurationService>();
 builder.Services.AddSingleton<MockLogService>();
 
 builder.Services.AddBlazorBootstrap();

@@ -12,6 +12,13 @@ namespace EcoLogTracking.Server.Services.Interfaces
         /// <returns>Devuelve objeto usuario con nombre, contraseña e id del usuario (si existe)</returns>
         public Task<User> GetUserByUsernameAndPass(string user, string pass);
 
+        /// <summary>
+        /// MÉTODO QUE OBTIENE DE LA BASE DE DATOS LOS DATOS DE UN USUARIO A PARTIR DE SU ID
+        /// </summary>
+        /// <param name="id">id de usuario</param>
+        /// <returns>Devuelve objeto usuario con id, nombre, contraseña e email(si existe)</returns>
+        public Task<User> GetUserById(int id);
+
 
         /// <summary>
         /// MÉTODO QUE OBTIENE LOS DATOS DE UN USUARIO EN FUNCIÓN DEL NOMBRE DE USUARIO

@@ -25,6 +25,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <returns>Lista _connectionString los registros obtenidos de la base de datos: EcoLogTrackingDB</returns>
         [HttpGet]
+        [AllowAnonymous]
         // [Authorize(Roles = "admin")]
         public async Task<IEnumerable<Log>> GetAll()
         {
@@ -38,6 +39,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
         /// <returns>bool OK() si registro correcto/ BadRequest() si registro incorrecto</returns>
         [HttpPost]
+        [AllowAnonymous]
         // [Authorize(Roles = "admin")]
         public async Task<IActionResult> PostLog([FromBody] Log log)
         {
@@ -60,6 +62,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
         /// <returns>bool OK(lista de logs filtrados) si filtrado correcto/ BadRequest() si filtrado incorrecto</returns>
         [HttpGet("/GetBetween/{start}/{end}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLogsBetween(DateTime start, DateTime end)
         {
             var list = await _logService.GetLogsBetween(start, end);
@@ -72,7 +75,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <param name="numDias">Número de días desde los que se quieren mantener los logs</param>
         /// <returns>bool OK() si borrado correcto/ BadRequest() si borrado incorrecto</returns>
-        [HttpDelete]
+        [HttpDelete("/{numDias}")]
         [AllowAnonymous]
         public async Task<IActionResult> DeleteLogsByDate(int numDias)
         {

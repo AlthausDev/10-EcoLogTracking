@@ -30,8 +30,27 @@ namespace EcoLogTracking.Server.Repository.Impl
                 using (var connection = new SqlConnection(con))
                 {
                     string query = @"SELECT Id, UserName, Password FROM Users
-                                 WHERE UserName = @user AND Password = @pass";
+                                 WHERE UserName = @user AND Password = @pass AND Deleted = 0";
                     return connection.QuerySingle<User>(query, new { user, pass });
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
+
+        public async Task<User>? GetUserById(int id)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(con))
+                {
+                    string query = @"SELECT Id, UserName, Password, Mail FROM Users
+                                 WHERE Users.Id = @id AND Deleted = 0";
+                    return connection.QuerySingle<User>(query, new { id });
                 }
             }
             catch (Exception)
@@ -52,8 +71,8 @@ namespace EcoLogTracking.Server.Repository.Impl
             {
                 using (var connection = new SqlConnection(con))
                 {
-                    string query = @"SELECT Id, UserName, Password FROM Users
-                             WHERE UserName = @UserName";
+                    string query = @"SELECT Id, UserName, Password, Mail FROM Users
+                             WHERE UserName = @UserName AND Deleted = 0";
                     return await connection.QuerySingleOrDefaultAsync<User>(query, new { UserName = userName });
                 }
             }
@@ -77,8 +96,8 @@ namespace EcoLogTracking.Server.Repository.Impl
             {
                 using (var connection = new SqlConnection(con))
                 {
-                    string query = @"INSERT INTO Users(UserName, Password) Values(@name,@pass)";
-                    return connection.Execute(query, new { name = user.UserName, pass = user.Password }) > 0;
+                    string query = @"INSERT INTO Users(UserName, Password, Mail) Values(@name,@pass,@mail)";
+                    return connection.Execute(query, new { name = user.UserName, pass = user.Password, mail = user.Mail }) > 0;
                 }
             }
             catch (Exception)
@@ -120,8 +139,8 @@ namespace EcoLogTracking.Server.Repository.Impl
             {
                 using (var connection = new SqlConnection(con))
                 {
-                    string query = "UPDATE Users SET UserName = @username, Password = @pass WHERE Id = @id";
-                    return connection.Execute(query, new { username = user.UserName, pass = user.Password, id = user.Id }) > 0;
+                    string query = "UPDATE Users SET UserName = @username, Password = @pass, Mail = @mail WHERE Id = @id";
+                    return connection.Execute(query, new { username = user.UserName, pass = user.Password, id = user.Id, mail = user.Mail }) > 0;
                 }
             }
             catch (Exception)
@@ -129,5 +148,7 @@ namespace EcoLogTracking.Server.Repository.Impl
                 return false;
             }
         }
+
+        
     }
 }

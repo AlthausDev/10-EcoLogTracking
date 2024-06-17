@@ -103,6 +103,37 @@ namespace EcoLogTracking.Server.Controllers.Impl
         }
 
         /// <summary>
+        /// MÉTODO QUE OBTIENE DE LA BASE DE DATOS LOS DATOS DE UN USUARIO A PARTIR DE SU ID
+        /// </summary>
+        /// <param name="id">id de usuario</param>
+        /// <returns>Devuelve objeto usuario con id, nombre, contraseña e email(si existe)</returns>
+        [HttpGet("/UserById/{id}")]
+        [AllowAnonymous]
+        //https://localhost:7216/UserById/1
+        //[Authorize(Roles = "admin")]
+        public async Task<IActionResult> GetuserById(int id)
+        {
+            try
+            {
+                User user = await userService.GetUserById(id);
+                if (user != null)
+                {
+                   return Ok(user);
+                }
+                else {
+                    return BadRequest("No existe ningún registro con el id seleccionado.");
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message + " || " + e.StackTrace);
+            }
+        }
+
+
+
+
+        /// <summary>
         /// MÉTODO QUE ELIMINA LA CUENTA DEL PROPIO USUARIO A PARTIR DE SU ID
         /// </summary>
         /// <param name="id">Id del usuario que está borrando su cuenta</param>
