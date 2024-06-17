@@ -1,5 +1,26 @@
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;  
+}
+
+:root {
+    --primary-color: #a1f097;
+    --secondary-color: lime;
+    --main-box-color: #03e9f4;
+    --button-background-color: #6fef88;
+    --button-background-hover-color: #b7f8ce;
+    --shadow-color: rgb(105 235 109);
+    --less-opaque-shadow-color:  rgba(105, 235, 109, .5);
+
+    
+
+    /*--primary-color: #ff6347;
+    --secondary-color: red;
+    --main-box-color: #ff6347;
+    --button-background-color: #ff6347;
+    --button-background-hover-color: #ff6347;
+    --shadow-color: #ff6347;
+    --less-opaque-shadow-color: #ff6347;
+    Pendiente verde de las letras de formularios*/
 }
 
 a, .btn-link {

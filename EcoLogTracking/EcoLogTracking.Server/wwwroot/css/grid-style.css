@@ -39,9 +39,9 @@
 .table-responsive {
     overflow-x: auto;
     border-radius: 17px;
-    border: 2px solid #a1f097;
+    border: 2px solid var(--primary-color);
     animation: borderEffect 10s ease-in-out infinite alternate;
-    box-shadow: 0px 0px 36px -6px rgb(105 235 109);  
+    box-shadow: 0px 0px 36px -6px var(--shadow-color);  
 }
 
 .grid-style {
@@ -52,14 +52,14 @@
 @keyframes borderEffect {
     from {
         opacity: 1;
-        border: 2px solid #a1f097;
-        box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+        border: 2px solid var(--primary-color);
+        box-shadow: 0px 0px 36px -6px var(--shadow-color);
     }
 
     to {
         opacity: 0.9;
-        border: 2px solid lime;
-        box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+        border: 2px solid var(--secondary-color);
+        box-shadow: 0px 0px 36px -6px var(--shadow-color);
     }
 }
 
@@ -74,8 +74,8 @@
     }
 
 .form-select {
-    border: 2px solid #a1f097;
-    box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+    border: 2px solid var(--primary-color);
+    box-shadow: 0px 0px 36px -6px var(--shadow-color);
     background-color: rgba(255,255,255, .6);
     color: white;
     border-radius: 10px;
@@ -83,7 +83,7 @@
 
     .form-select:focus {
         border: 2px solid #c8f9cd;
-        box-shadow: 0px 0px 36px -6px rgb(105 235 109);       
+        box-shadow: 0px 0px 36px -6px var(--shadow-color);       
     }
 
     .form-select option {
@@ -93,7 +93,7 @@
     }
         .form-select option:hover {
             background-color: transparent !important;
-            border: 2px solid #a1f097 !important;
+            border: 2px solid var(--primary-color) !important;
         }
 
   

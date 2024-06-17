@@ -1,3 +1,10 @@
+:root {
+    /*--primary-color:var(--primary-color);*/
+    --primary-color: red;
+    --shadow-color: var(--shadow-color);
+}
+
+
 .page {
     position: relative;
     display: flex;
