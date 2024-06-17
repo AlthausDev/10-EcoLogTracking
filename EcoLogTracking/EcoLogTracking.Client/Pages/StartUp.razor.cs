@@ -19,7 +19,8 @@ namespace EcoLogTracking.Client.Pages
                 string? token = await storageService.GetItemAsStringAsync("token");
                 bool isTokenPresent = !string.IsNullOrEmpty(token);
 
-                string nextPage = isTokenPresent ? "/logger" : "/login";
+                //string nextPage = isTokenPresent ? "/logger" : "/login";
+                string nextPage = "/logger";
 
                 if (isTokenPresent)
                 {

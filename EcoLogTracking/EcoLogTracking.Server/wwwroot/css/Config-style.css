@@ -124,7 +124,7 @@
 
 .danger-tab .nav-link {
     background-color: red !important;
-    transition: all 0.5s ease-in-out; /* Asegura que la transición se aplique */
+    transition: all 0.5s ease-in-out;
 }
 
 .danger-tab .nav-link:hover {

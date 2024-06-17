@@ -21,10 +21,7 @@
     transition: all .5s ease-in-out;
 }
 
-    .button-style:hover,
-    .button-style:focus,
-    .button-style.active,
-    .button-style:visited {
+    .button-style:hover{    
         border-radius: 8px;
         z-index: 2;
         background: #a1f097;

@@ -10,7 +10,7 @@
 <Modal @ref="ModalInstance" ShowCloseButton=" true" IsVerticallyCentered="true" IsScrollable="true" />
 
 <div class="mainContainer">
-    @if (isLoading)
+    @if (IsLoading)
     {
         <div class="spinner-overlay">
             <div class="spinner"></div>
@@ -30,11 +30,11 @@
     </nav>
 
     <div class="log-container">
-        <LogViewer />
+        <LogViewer  />
     </div>
 
     <div class="config-container">
-        <ConfigPanel />
+        <ConfigPanel MainPanelInstance="this" />
     </div>
 </div>
 

@@ -1,6 +1,7 @@
 ﻿using BlazorBootstrap;
 using EcoLogTracking.Client.Models;
 using EcoLogTracking.Client.Pages;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -11,6 +12,8 @@ namespace EcoLogTracking.Client.Components
 {
     public partial class ConfigPanel
     {
+        [Parameter]
+        public MainPanel MainPanelInstance { get; set; }
         public int DeleteFrecuencyDays { get; set; }
         public string UserName { get; set; } = MainPanel.User.UserName;
         public string Email { get; set; } = "Default@ecoalgo.com";
@@ -36,14 +39,15 @@ namespace EcoLogTracking.Client.Components
             => messages.Add(new("OnHidden", args.ActiveTabTitle, args.PreviousActiveTabTitle));
      
         private async Task OnClickDeteleUserAsync()
-        {
-            throw new NotImplementedException();
+        {            
+            await Http.DeleteAsync($"/user/{MainPanel.User.Id}");
+            await MainPanelInstance.OnClickLogOut();
         }
+
         private async Task OnClickDeleteAllLogs()
         {
             try
-            {              
-                int numDias = 0;                 
+            {                 
                 var response = await Http.DeleteAsync("/" + 0);
               
                 if (response.IsSuccessStatusCode)
