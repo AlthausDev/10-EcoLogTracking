@@ -15,7 +15,7 @@ namespace EcoLogTracking.Client.Pages
     {
         private bool IsLoading { get; set; } = true;
         public static Modal ModalInstance { get; set; } = default!;
-        public static User User { get; set; }
+        public static User User { get; set; } = new();
 
         //private string ShowLogs { get; set; } = "none";
         //private string ShowConfig { get; set; } = "block";
