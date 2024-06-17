@@ -74,13 +74,8 @@ namespace EcoLogTracking.Server.Services.Impl
                 var userData = await userRepository.GetUserByUsername(user.UserName);
                 if (userData == null)
                 {
-                    User userEncrypt = new()
-                    {
-                        Id = user.Id,
-                        UserName = user.UserName,
-                        Password = encryptionHelper.Encrypt(user.Password)
-                    };
-                    return await userRepository.PostUser(userEncrypt);
+                    user.Password = encryptionHelper.Encrypt(user.Password);             
+                    return await userRepository.PostUser(user);
                 }
 
                 return false;

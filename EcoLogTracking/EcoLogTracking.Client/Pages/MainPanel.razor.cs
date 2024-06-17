@@ -1,11 +1,13 @@
 ﻿using BlazorBootstrap;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using EcoLogTracking.Client.Components;
 using EcoLogTracking.Client.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System.Diagnostics;
+using System.Net.Http.Json;
 
 namespace EcoLogTracking.Client.Pages
 {
@@ -13,7 +15,7 @@ namespace EcoLogTracking.Client.Pages
     {
         private bool IsLoading { get; set; } = true;
         public static Modal ModalInstance { get; set; } = default!;
-        public static User User { get; set; } = new();
+        public static User User { get; set; }
 
         //private string ShowLogs { get; set; } = "none";
         //private string ShowConfig { get; set; } = "block";
@@ -23,14 +25,14 @@ namespace EcoLogTracking.Client.Pages
 
         private bool IsActiveConfigButton { get; set; } = false;
 
-              
+        
         /// <summary>
         /// Maneja la exportación a Excel.
         /// </summary>
         private async Task OnClickExportExcel()
         {
             var parameters = new Dictionary<string, object>
-            {              
+            {
                 { "Cerrar", EventCallback.Factory.Create<MouseEventArgs>(this, HideModal) }
             };
             await ModalInstance.ShowAsync<ExportExcel>(title: "Exportar", parameters: parameters);
@@ -81,6 +83,6 @@ namespace EcoLogTracking.Client.Pages
         private async Task HideModal()
         {
             await ModalInstance.HideAsync();
-        }     
+        }
     }
 }

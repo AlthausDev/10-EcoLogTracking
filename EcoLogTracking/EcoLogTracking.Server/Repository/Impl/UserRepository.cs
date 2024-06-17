@@ -42,15 +42,15 @@ namespace EcoLogTracking.Server.Repository.Impl
 
 
 
-        public async Task<User>? GetUserById(int id)
+        public async Task<User?> GetUserById(int id)
         {
             try
             {
                 using (var connection = new SqlConnection(con))
                 {
-                    string query = @"SELECT Id, UserName, Password, Mail FROM Users
-                                 WHERE Users.Id = @id AND Deleted = 0";
-                    return connection.QuerySingle<User>(query, new { id });
+                    string query = @"SELECT * FROM Users
+                                 WHERE Id = @Id AND Deleted = 0";
+                    return connection.QuerySingle<User>(query, new { Id = id });
                 }
             }
             catch (Exception)
@@ -139,7 +139,7 @@ namespace EcoLogTracking.Server.Repository.Impl
             {
                 using (var connection = new SqlConnection(con))
                 {
-                    string query = "UPDATE Users SET UserName = @username, Password = @pass, Mail = @mail WHERE Id = @id";
+                    string query = "UPDATE Users SET UserName = @username, Mail = @mail WHERE Id = @id";
                     return connection.Execute(query, new { username = user.UserName, pass = user.Password, id = user.Id, mail = user.Mail }) > 0;
                 }
             }

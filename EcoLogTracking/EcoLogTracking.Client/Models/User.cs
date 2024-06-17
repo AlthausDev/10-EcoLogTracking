@@ -27,5 +27,15 @@
 
         public User() { }
 
+        public override string ToString()
+        {
+            return $"Id: {Id}\n" +
+                   $"UserName: {UserName}\n" +
+                   $"Password: {Password}\n" +
+                   $"Mail: {Mail}\n" +
+                   $"Deleted: {Deleted}\n" +
+                   $"DeletedDate: {DeletedDate:yyyy-MM-dd HH:mm:ss}";
+        }
+
     }
 }

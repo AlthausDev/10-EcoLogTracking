@@ -1,10 +1,12 @@
 ﻿using EcoLogTracking.Server.Models;
+using EcoLogTracking.Server.Services.Impl;
 using EcoLogTracking.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -37,11 +39,11 @@ namespace EcoLogTracking.Server.Controllers.Impl
         ///https://localhost:7216/api/login
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetUserByUsernameAndPass(User user)
+        public async Task<ActionResult<LoginResponse>> GetUserByUsernameAndPass(User user)
         {
             try
             {
-                var login = await userService.GetUserByUsername(user.UserName);
+                User login = await userService.GetUserByUsername(user.UserName);
 
                 if (login == null)
                 {
@@ -72,8 +74,9 @@ namespace EcoLogTracking.Server.Controllers.Impl
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 tokenString = tokenHandler.WriteToken(token);
 
+                var result = new LoginResponse(login, tokenString);
 
-                return Ok(tokenString);
+                return Ok(result);
             }
             catch (Exception e)
             {
@@ -107,27 +110,14 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <param name="id">id de usuario</param>
         /// <returns>Devuelve objeto usuario con id, nombre, contraseña e email(si existe)</returns>
-        [HttpGet("/UserById/{id}")]
+        [HttpGet("/user/{id}")]
         [AllowAnonymous]
         //https://localhost:7216/UserById/1
         //[Authorize(Roles = "admin")]
-        public async Task<IActionResult> GetuserById(int id)
-        {
-            try
-            {
+        public async Task<ActionResult<User>> GetuserById(int id)
+        {           
                 User user = await userService.GetUserById(id);
-                if (user != null)
-                {
-                   return Ok(user);
-                }
-                else {
-                    return BadRequest("No existe ningún registro con el id seleccionado.");
-                }
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message + " || " + e.StackTrace);
-            }
+                return user == null ? (ActionResult<User>)NotFound() : (ActionResult<User>)user;
         }
 
 

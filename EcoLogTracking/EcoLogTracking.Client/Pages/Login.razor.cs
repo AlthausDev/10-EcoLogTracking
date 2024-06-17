@@ -1,4 +1,5 @@
 ﻿using BlazorBootstrap;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using EcoLogTracking.Client.Models;
 using Irony.Parsing;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.JSInterop;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Claims;
 
@@ -30,11 +32,11 @@ namespace EcoLogTracking.Client.Pages
         private async Task OnClickLogin()
         {
             string? result = await LoginUser(UserName, Password);
-            LoginResult(result);
+            await LoginResult(result);
         }
 
-        private void LoginResult(string? result)
-        {
+        private async Task LoginResult(string? result)
+        {          
             try
             {
                 if (string.IsNullOrEmpty(result))
@@ -54,34 +56,32 @@ namespace EcoLogTracking.Client.Pages
         #endregion
 
         #region Api            
-        private async Task<string?> LoginUser(string Username, string Password)
+        private async Task<string?> LoginUser(string username, string password)
         {
             try
             {
-                var user = new User(Username, Password);
+                var user = new User(username, password);
                 var response = await Http.PostAsJsonAsync("api/user/login", user);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string loginResponse = await response.Content.ReadAsStringAsync();
-                    await GenerateTokenAsync(loginResponse);
+                    var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
 
-                    var handler = new JwtSecurityTokenHandler();
-                    var jwtSecurityToken = handler.ReadJwtToken(loginResponse);
-                    List<Claim> claims = jwtSecurityToken.Claims.ToList();
+                    if (loginResponse != null)
+                    {        
+                        MainPanel.User = await Http.GetFromJsonAsync<User>($"/user/{loginResponse.User.Id}");
 
-                    string userIdClaim = jwtSecurityToken.Claims.ElementAtOrDefault(2)?.Value ?? "0"; // Index 0 is NameIdentifier
-                    string userNameClaim = jwtSecurityToken.Claims.ElementAtOrDefault(1)?.Value ?? string.Empty; // Index 1 is Name
-
-
-
-                    MainPanel.User.Id = int.Parse(userIdClaim); // Ensure the conversion is correct
-                    MainPanel.User.UserName = userNameClaim.ToString();
-                    return loginResponse;
+                        return loginResponse.Token;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error al leer la respuesta de inicio de sesión.");
+                        return null;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Usuario no encontrado");
+                    Console.WriteLine("Usuario no encontrado o credenciales incorrectas.");
                     return null;
                 }
             }
@@ -91,6 +91,7 @@ namespace EcoLogTracking.Client.Pages
                 return null;
             }
         }
+
         #endregion Api     
 
         #region Toast

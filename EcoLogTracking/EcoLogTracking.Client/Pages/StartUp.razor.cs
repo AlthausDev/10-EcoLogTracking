@@ -1,6 +1,8 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using EcoLogTracking.Client.Models;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Json;
 using System.Security.Claims;
 
 namespace EcoLogTracking.Client.Pages
@@ -19,8 +21,8 @@ namespace EcoLogTracking.Client.Pages
                 string? token = await storageService.GetItemAsStringAsync("token");
                 bool isTokenPresent = !string.IsNullOrEmpty(token);
 
-                //string nextPage = isTokenPresent ? "/logger" : "/login";
-                string nextPage = "/logger";
+                string nextPage = isTokenPresent ? "/logger" : "/login";
+                //string nextPage = "/logger";
 
                 if (isTokenPresent)
                 {
@@ -29,17 +31,12 @@ namespace EcoLogTracking.Client.Pages
                     var jwtSecurityToken = handler.ReadJwtToken(token);
                
                     List<Claim> claims = jwtSecurityToken.Claims.ToList();
-                   
-                    MainPanel.User.Id = int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
-                    MainPanel.User.UserName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value ?? string.Empty;
-              
 
-                    Console.WriteLine($"User ID: {MainPanel.User.Id}, UserName: {MainPanel.User.UserName}");
-                    Debug.WriteLine($"User ID: {MainPanel.User.Id}, UserName: {MainPanel.User.UserName}");
-                    Debug.WriteLine($"User ID: {MainPanel.User.Id}, UserName: {MainPanel.User.UserName}");
-                    Debug.WriteLine($"User ID: {MainPanel.User.Id}, UserName: {MainPanel.User.UserName}");
+                    int Id = int.Parse(claims.ElementAtOrDefault(2)?.Value ?? "0");
+                    MainPanel.User = await Http.GetFromJsonAsync<User>($"/user/{Id}");                 
+
                 }
-              
+
                 NavManager.NavigateTo(nextPage);
             }
             catch (SecurityTokenException ex)

@@ -15,13 +15,13 @@ namespace EcoLogTracking.Client.Components
         [Parameter]
         public MainPanel MainPanelInstance { get; set; }
         public int DeleteFrecuencyDays { get; set; }
-        public string UserName { get; set; } = MainPanel.User.UserName;
-        public string Email { get; set; } = "Default@ecoalgo.com";
+        public string? UserName { get; set; } = MainPanel.User.UserName;
+        public string? Email { get; set; } = MainPanel.User.Mail;
 
 
-        public string newUserName { get; set; }
-        public string newEmail { get; set; }
-        public string newPassword { get; set; }
+        public string newUserName { get; set; } = String.Empty;
+        public string newEmail { get; set; } = String.Empty;
+        public string newPassword { get; set; } = String.Empty;
 
         record TabMessage(string Event, string ActiveTabTitle, string PreviousActiveTabTitle);
         List<TabMessage> messages = new List<TabMessage>();
@@ -72,6 +72,7 @@ namespace EcoLogTracking.Client.Components
             {               
                 User userToUpdate = MainPanel.User;
                 userToUpdate.UserName = UserName;
+                userToUpdate.Mail = Email;
 
                 var response = await Http.PutAsJsonAsync("api/User", userToUpdate);
 
@@ -96,13 +97,12 @@ namespace EcoLogTracking.Client.Components
         {
             try
             {
-                // Construye el objeto User con los datos del nuevo usuario a registrar
+                
                 User newUser = new User
                 {
                     UserName = newUserName,
-                    //Email = newEmail,
-                    Password = newPassword,
-                    // Incluir otros campos necesarios para el registro
+                    Mail = newEmail,
+                    Password = newPassword                   
                 };
 
                 var response = await Http.PostAsJsonAsync("api/User", newUser);
@@ -110,7 +110,7 @@ namespace EcoLogTracking.Client.Components
                 if (response.IsSuccessStatusCode)
                 {
                     var message = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(message); // Opcional: puedes imprimir el mensaje de éxito
+                    Console.WriteLine(message);
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace EcoLogTracking.Client.Components
             }
         }
 
-        private void OnClickClear(Microsoft.AspNetCore.Components.Web.MouseEventArgs e)
+        private void OnClickClear()
         {
             newUserName = string.Empty;
             newEmail = string.Empty;
