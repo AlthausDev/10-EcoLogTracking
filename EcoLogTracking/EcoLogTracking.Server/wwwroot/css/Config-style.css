@@ -121,17 +121,6 @@
     transition: all 1s ease-in-out;
 }
 
-
-.danger-tab .nav-link {
-    background-color: red !important;
-    transition: all 0.5s ease-in-out;
-}
-
-.danger-tab .nav-link:hover {
-    background-color: #ff6347 !important;
-}
-
-
 .range-input > * {
     /* Estilos generales */
     width: 100%;
@@ -169,5 +158,7 @@
             box-shadow: 0 0 5px var(--primary-color), 0 0 19px var(--primary-color), 0 0 19px var(--primary-color), 0 0 15px var(--primary-color) !important;
         }
 
-
-
+.range-input {
+    border: none !important;
+    background: transparent !important;
+}

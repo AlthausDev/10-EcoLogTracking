@@ -40,7 +40,7 @@
 
                                     <div class="d-flex mb-3 no-border">
                                         <div class="flex-fill">
-                                            <RangeInput TValue="int" @bind-Value="DeleteFrecuencyDays" Min="30" Max="120" Step="15" />
+                                            <RangeInput TValue="int" class="range-input" @bind-Value="DeleteFrecuencyDays" Min="30" Max="120" Step="15" />
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                 </Tab>
                 <Tab Title="Danger Zone" Class="danger-tab">
                     <Content>
-                        <div class="text-right">
+                        <div Class="danger-div">
                             <button type="button" @onclick="OnClickDeleteAllLogs" id="cancel" name="cancel" class="button-style danger-button">Eliminar todos los registros</button>
                             <button type="button" @onclick="OnClickDeteleUserAsync" id="update" name="update" class="button-style danger-button">Eliminar Usuario</button>
                         </div>

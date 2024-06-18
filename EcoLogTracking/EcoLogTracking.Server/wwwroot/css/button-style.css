@@ -15,7 +15,7 @@
     cursor: pointer;
     min-width: 180px;
     justify-content: space-between;
-    box-shadow: 0 8px 22px var(--less-opaque-shadow-color);
+    box-shadow: 0 8px 22px var(--shadow-color);
     border: 2px solid var(--primary-color) !important;
     border-radius: 8px;
     transition: all .5s ease-in-out;
@@ -32,10 +32,32 @@
         transition: all 0.25s ease-in-out;
     }
 
-@keyframes btn-anim1
+.danger-button,
+.danger-tab {
+    color: var(--danger-primary-color);
+    box-shadow: 0 0px 22px var(--danger-primary-color);
+    border: 2px solid var(--danger-primary-color) !important;
+    display: flex;
+    justify-content: center;
+}
 
-,
-btn-anim2, btn-anim3, btn-anim4 {
+    .danger-button:hover,
+    .danger-tab:hover {
+        background: var(--danger-primary-color);
+        box-shadow: 0 0 5px var(--danger-primary-color), 0 0 19px var(--danger-primary-color), 0 0 19px var(--danger-primary-color), 0 0 15px var(--danger-primary-color);
+    }
+
+/*.nav-tabs .nav-item.show .nav-link .danger-tab, .nav-tabs .nav-link.active .danger-tab {
+    background: var(--danger-primary-color) !important;
+}*/
+    .danger-div {
+    padding: 5%;
+    display: inline-grid;
+}
+
+
+    @keyframes btn-anim1
+    , btn-anim2, btn-anim3, btn-anim4 {
     0%
 
 {

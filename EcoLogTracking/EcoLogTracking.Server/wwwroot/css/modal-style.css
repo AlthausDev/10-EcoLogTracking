@@ -90,9 +90,7 @@
 
         .core-box input:focus ~ label,
         .core-box input:valid ~ label {
-            top: -5px;
-            left: 12px;
-            color:var(--primary-color);
+            left: 12px;     
             font-size: 14px;
         }
    
