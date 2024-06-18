@@ -1,64 +1,44 @@
-﻿namespace EcoLogTracking.Client.Models
+﻿using System.Text.Json.Serialization;
+
+namespace EcoLogTracking.Client.Models
 {
     public class Log
     {
-        /// <summary>
-        /// Identificador único del log.
-        /// </summary>
+        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        /// <summary>
-        /// Fecha y hora en que se registró el log.
-        /// </summary>
+        [JsonPropertyName("logged")]
         public DateTime Logged { get; set; }
 
-        /// <summary>
-        /// Nivel de log (e.g., Info, Debug, Error).
-        /// </summary>
+        [JsonPropertyName("level")]
         public string Level { get; set; }
 
-        /// <summary>
-        /// Nombre del logger que generó el log. Puede ser nulo.
-        /// </summary>
-        public string? Logger { get; set; }
+        [JsonPropertyName("logger")]
+        public string Logger { get; set; }
 
-        /// <summary>
-        /// Mensaje del log.
-        /// </summary>
+        [JsonPropertyName("message")]
         public string Message { get; set; }
 
-        /// <summary>
-        /// Nombre de la máquina donde se generó el log.
-        /// </summary>
+        [JsonPropertyName("machineName")]
         public string MachineName { get; set; }
 
-        /// <summary>
-        /// Método de la solicitud que generó el log. Puede ser nulo.
-        /// </summary>
-        public string? Request_method { get; set; }
+        [JsonPropertyName("request_method")]
+        public string Request_method { get; set; }
 
-        /// <summary>
-        /// Traza de la pila en caso de una excepción. Puede ser nula.
-        /// </summary>
-        public string? Stacktrace { get; set; }
+        [JsonPropertyName("stacktrace")]
+        public string Stacktrace { get; set; }
 
-        /// <summary>
-        /// Nombre del archivo asociado con el log. Puede ser nulo.
-        /// </summary>
-        public string? File_name { get; set; }
+        [JsonPropertyName("file_name")]
+        public string File_name { get; set; }
 
-        /// <summary>
-        /// Propiedades adicionales del evento en formato JSON. Puede ser nulo.
-        /// </summary>
-        public string? All_event_properties { get; set; }
+        [JsonPropertyName("all_event_properties")]
+        public string All_event_properties { get; set; }
 
-        /// <summary>
-        /// Código de estado HTTP asociado con la solicitud que generó el log. Puede ser nulo.
-        /// </summary>
-        public string? Status_code { get; set; }
+        [JsonPropertyName("status_code")]
+        public string Status_code { get; set; }
 
-
-        public string? Origin { get; set; }
+        [JsonPropertyName("origin")]
+        public string Origin { get; set; }
 
         public Log() { }
 

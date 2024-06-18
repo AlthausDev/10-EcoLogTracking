@@ -1,7 +1,9 @@
 ﻿using Dapper;
 using EcoLogTracking.Server.Repository.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.SqlClient;
 using NLog;
+using System.Diagnostics;
 
 namespace EcoLogTracking.Server.Repository.Impl
 {
@@ -31,6 +33,25 @@ namespace EcoLogTracking.Server.Repository.Impl
             catch 
             {
                 return false;
+            }
+        }
+
+
+        public int getPeriod()
+        {
+            try
+            {
+                using (var connection = new SqlConnection(con))
+                {
+                    string query = @"SELECT Period FROM Configuration";
+                    int period = connection.QuerySingle<int>(query);
+                    return period;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                return 10;
             }
         }
     }

@@ -40,11 +40,11 @@ namespace EcoLogTracking.Server.Services.Impl
         /// <param name="start">Fecha a partir de la cual se quieren obtener los registros</param>
         /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
         /// <returns>IEnumerable con la lista de registros existentes en el rango de fechas proporcionado</returns>
-        public Task<IEnumerable<Log>> GetLogsBetween(DateTime start, DateTime end)
+        public Task<IEnumerable<Log>> GetLogsBetween(DateFilter dates)
         {
             try
             {
-                return LogRepository.GetLogsBetween(start, end);
+                return LogRepository.GetLogsBetween(dates);
             }
             catch (Exception ex)
             {
@@ -90,6 +90,11 @@ namespace EcoLogTracking.Server.Services.Impl
             {
                 return false;
             }
+        }
+
+
+        public async Task<IEnumerable<Log>> GetLogsByDate(DateTime date) { 
+            return await LogRepository.GetLogsByDate(date);
         }
     }
 }

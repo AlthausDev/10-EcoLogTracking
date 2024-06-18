@@ -28,5 +28,15 @@ namespace EcoLogTracking.Server.Services.Impl
                 return false;
             }
         }
+
+        public int getPeriod()
+        {
+            try {
+            int response = configurationRepository.getPeriod();
+                return response;
+            } catch (Exception E) {
+                return 0;
+            }
+        }
     }
 }

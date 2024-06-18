@@ -59,11 +59,28 @@ namespace EcoLogTracking.Server.Repository.Impl
         /// <param name="start">Fecha a partir de la cual se quieren obtener los registros</param>
         /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
         /// <returns>IEnumerable con la lista de registros existentes en el rango de fechas proporcionado</returns>
-        public async Task<IEnumerable<Log>> GetLogsBetween(DateTime start, DateTime end)
+        //public async Task<IEnumerable<Log>> GetLogsBetween(DateTime start, DateTime end)
+        //{
+        //    using (var connection = new SqlConnection(_connectionString))
+        //    {
+        //        string query = @"SELECT Id, Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Status_code 
+        //                 FROM [dbo].[Log] 
+        //                 WHERE Logged BETWEEN @StartDate AND @EndDate";
+
+        //        var parameters = new { StartDate = start, EndDate = end };
+
+        //        var list = await connection.QueryAsync<Log>(query, parameters);
+        //        return list.ToList();
+        //    }
+        //}
+
+        public async Task<IEnumerable<Log>> GetLogsBetween(DateFilter dates)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
-                string query = @"SELECT Id, Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Status_code 
+                DateTime? start = dates.DateStart;
+                DateTime? end = dates.DateEnd;
+                string query = @"SELECT Id, Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Status_code, Origin
                          FROM [dbo].[Log] 
                          WHERE Logged BETWEEN @StartDate AND @EndDate";
 
@@ -73,6 +90,10 @@ namespace EcoLogTracking.Server.Repository.Impl
                 return list.ToList();
             }
         }
+
+
+
+
 
         /// <summary>
         /// MÉTODO QUE ELIMINA LOS LOGS ANTERIORES AL NÚMERO DE DÍAS QUE RECIBE EL MÉTODO
@@ -86,6 +107,18 @@ namespace EcoLogTracking.Server.Repository.Impl
                 string query = @"DELETE FROM [dbo].[Log]  WHERE Logged <= @DeleteDate";
                 var parameters = new { DeleteDate = date };
                 return connection.Execute(query, parameters) > 0;
+            }
+        }
+
+        public async Task<IEnumerable<Log>> GetLogsByDate(DateTime date) {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                string query = @"SELECT Id, Logged, Level, Message, MachineName, Logger, Request_method, Stacktrace, File_name, All_event_properties, Status_code 
+                         FROM [dbo].[Log] 
+                         WHERE Logged = @date";
+                var parameters = new { date };
+                var list = await connection.QueryAsync<Log>(query, parameters);
+                return list.ToList();
             }
         }
     }

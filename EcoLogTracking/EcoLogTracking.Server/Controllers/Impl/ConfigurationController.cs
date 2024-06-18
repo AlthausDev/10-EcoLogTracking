@@ -31,5 +31,28 @@ namespace EcoLogTracking.Server.Controllers.Impl
             }
 
         }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> getPeriod()
+        {
+            try
+            {
+                var response =  configurationService.getPeriod();
+                if (response != 0)
+                {
+                    return Ok(response);
+                }
+                else {
+                    return BadRequest("Ha ocurrido algún error durante la configuración del período.");
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message + " || " + e.StackTrace);
+            }
+
+        }
     }
 }

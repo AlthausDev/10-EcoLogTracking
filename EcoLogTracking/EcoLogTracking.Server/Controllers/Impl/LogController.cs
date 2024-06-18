@@ -61,11 +61,11 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="start">Fecha a partir de la cual se quieren obtener los registros</param>
         /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
         /// <returns>bool OK(lista de logs filtrados) si filtrado correcto/ BadRequest() si filtrado incorrecto</returns>
-        [HttpGet("/GetBetween/{start}/{end}")]
+        [HttpPost("/GetBetween")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetLogsBetween(DateTime start, DateTime end)
+        public async Task<IActionResult> GetLogsBetween(DateFilter dates)
         {
-            var list = await _logService.GetLogsBetween(start, end);
+            var list = await _logService.GetLogsBetween(dates);
             return list.IsNullOrEmpty() ? BadRequest("No logs found.") : Ok(list);
         }
 
@@ -88,6 +88,15 @@ namespace EcoLogTracking.Server.Controllers.Impl
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+
+        [HttpGet("/GetByDate/{date}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLogsByDay(DateTime date)
+        {
+            var list = await _logService.GetLogsByDate(date);
+            return list.IsNullOrEmpty() ? BadRequest("No logs found.") : Ok(list);
         }
     }
 }

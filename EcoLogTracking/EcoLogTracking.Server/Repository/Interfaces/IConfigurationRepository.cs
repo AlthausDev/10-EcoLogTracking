@@ -4,5 +4,7 @@
     {
 
         public Task<bool> updateConfig(int time);
+
+        public int getPeriod();
     }
 }

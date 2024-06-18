@@ -23,7 +23,7 @@ namespace EcoLogTracking.Server.Services.Interfaces
         /// <param name="start">Fecha a partir de la cual se quieren obtener los registros</param>
         /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
         /// <returns>IEnumerable con la lista de registros existentes en el rango de fechas proporcionado</returns>
-        public Task<IEnumerable<Log>> GetLogsBetween(DateTime start, DateTime end);
+        public Task<IEnumerable<Log>> GetLogsBetween(DateFilter dates);
 
         /// <summary>
         /// MÉTODO QUE ELIMINA LOS LOGS ANTERIORES AL NÚMERO DE DÍAS QUE RECIBE EL MÉTODO
@@ -31,5 +31,9 @@ namespace EcoLogTracking.Server.Services.Interfaces
         /// <param name="numDias">Número de días desde los que se quieren mantener los logs</param>
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: caso contrario)</returns>
         public Task<bool> DeleteLogsByDate(int numDias);
+
+
+
+        public Task<IEnumerable<Log>> GetLogsByDate(DateTime date);
     }
 }
