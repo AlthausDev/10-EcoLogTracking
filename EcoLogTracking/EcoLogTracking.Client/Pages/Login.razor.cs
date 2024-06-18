@@ -70,6 +70,7 @@ namespace EcoLogTracking.Client.Pages
                     if (loginResponse != null)
                     {        
                         MainPanel.User = await Http.GetFromJsonAsync<User>($"/user/{loginResponse.User.Id}");
+                       await GenerateTokenAsync(loginResponse.Token);
 
                         return loginResponse.Token;
                     }

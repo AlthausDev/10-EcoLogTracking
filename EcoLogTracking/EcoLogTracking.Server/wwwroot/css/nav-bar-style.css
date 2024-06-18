@@ -1,15 +1,30 @@
 ﻿.header {
     background: rgba(0, 0, 0, 0.5);
     z-index: 100;
-    border-bottom: 2px solid #a1f097;
+    border-bottom: 2px solid var(--primary-color);
     border-radius: 15px;
-    box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+    box-shadow: 0px 0px 36px -6px var(--shadow-color);
     display: flex;
-    justify-content: flex-end;
     align-items: center;
     animation: borderEffect 10s ease-in-out infinite alternate;
+    justify-content: space-between;
     margin: 0 1%;
+    align-items: center;
 }
+
+
+.left-container {
+    display: ruby;   
+}
+
+    .left-container input {
+        margin-bottom: 0px !important;
+        width: 200px;
+    }
+
+    .left-container .core-box {
+        margin: 0px 20px;
+    }
 
 .nav-button {
     color: white;
@@ -19,22 +34,23 @@
     background-color: transparent;
     border: 2px solid transparent;
     display: inline-block;
-    margin: 20px;
+    margin: 20px 10px;
     height: 60px;
     transition: all .5s ease-in-out;
+    width: 205px;
 }
 
     .nav-button:hover {
         background-color: #5a5e5e;
-        border: 2px solid #a1f097;
-        box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+        border: 2px solid var(--primary-color);
+        box-shadow: 0px 0px 36px -6px var(--shadow-color);
         transition: all .2s ease-in-out;
     }
 
     .nav-button.active {
         background-color: #5a5e5e; /* Color de fondo cuando está en estado active */
-        border: 2px solid #a1f097;
-        box-shadow: 0px 0px 36px -6px rgb(105 235 109);
+        border: 2px solid var(--primary-color);
+        box-shadow: 0px 0px 36px -6px var(--shadow-color);
         transition: all .2s ease-in-out;
     }
 

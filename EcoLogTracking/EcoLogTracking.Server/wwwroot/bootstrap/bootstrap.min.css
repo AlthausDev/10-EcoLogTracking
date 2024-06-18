@@ -4978,19 +4978,19 @@ textaskitem.form-control-lg {
 
 
 .page-item.active .page-link {
-    background: #6fef88;    
+    background: var(--button-background-color);    
     color: #fff;
     border-radius: 10px;
-    border: 2px solid #b7f8ce;
-    box-shadow: 0px 0px 36px 13px #b7f8ce;
+    border: 2px solid var(--button-background-hover-color);
+    box-shadow: 0px 0px 36px 13px var(--button-background-hover-color);
 }
 
 .page-link:focus,
 .page-item .page-link:hover {
-    background: #b7f8ce;
+    background: var(--button-background-hover-color);
     color: #fff;
     border:2px solid white;
-    box-shadow: 0px 0px 36px 13px #b7f8ce;
+    box-shadow: 0px 0px 36px 13px var(--button-background-hover-color);
     transition: transform 0.5s ease-in-out;
 }
 

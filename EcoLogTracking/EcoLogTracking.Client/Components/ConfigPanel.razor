@@ -5,6 +5,10 @@
 @inject IJSRuntime JS
 @inject ILocalStorageService storageService
 
+<Toasts class="p-3" Messages="toastMessages" AutoHide="true" Delay="6000" StackLength="5" Placement="ToastsPlacement.TopRight" />
+
+<ConfirmDialog @ref="dialog" />
+
 <div class="main-container">
     <div class="settings-container">
         <div class="row gutters">
@@ -91,8 +95,8 @@
                 <Tab Title="Danger Zone" Class="danger-tab">
                     <Content>
                         <div class="text-right">
-                            <button type="button" @onclick="OnClickDeleteAllLogs" id="cancel" name="cancel" class="button-style">Eliminar todos los registros</button>
-                            <button type="button" @onclick="OnClickDeteleUserAsync"  id="update" name="update" class="button-style">Elimninar Usuario</button>
+                            <button type="button" @onclick="OnClickDeleteAllLogs" id="cancel" name="cancel" class="button-style danger-button">Eliminar todos los registros</button>
+                            <button type="button" @onclick="OnClickDeteleUserAsync" id="update" name="update" class="button-style danger-button">Eliminar Usuario</button>
                         </div>
                     </Content>
                 </Tab>

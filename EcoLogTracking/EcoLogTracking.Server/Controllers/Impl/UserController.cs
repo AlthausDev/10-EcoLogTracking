@@ -131,6 +131,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// https://localhost:7216/api/User
         [HttpDelete("/user/{id}")]
         [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
         public async Task<IActionResult> DeleteUser(int id)
         {
             try

@@ -23,6 +23,10 @@ namespace EcoLogTracking.Client.Components
         public string newEmail { get; set; } = String.Empty;
         public string newPassword { get; set; } = String.Empty;
 
+        private List<ToastMessage> toastMessages = new();
+        private ConfirmDialog dialog = default!;
+
+
         record TabMessage(string Event, string ActiveTabTitle, string PreviousActiveTabTitle);
         List<TabMessage> messages = new List<TabMessage>();
 
@@ -39,32 +43,56 @@ namespace EcoLogTracking.Client.Components
             => messages.Add(new("OnHidden", args.ActiveTabTitle, args.PreviousActiveTabTitle));
      
         private async Task OnClickDeteleUserAsync()
-        {            
-            await Http.DeleteAsync($"/user/{MainPanel.User.Id}");
-            await MainPanelInstance.OnClickLogOut();
+        {
+            string Message = "¿Está seguro de que desea eliminar este usuario?";
+
+
+            if (await ConfirmDialogAsync(Message))
+            {
+                var response = await Http.DeleteAsync($"User/{MainPanel.User.Id}");
+                Debug.WriteLine(response);
+                await MainPanelInstance.OnClickLogOut();
+            }
+            else
+            {
+                ShowMessage(ToastType.Secondary, "Acción de eliminación cancelada.");
+            }
         }
 
         private async Task OnClickDeleteAllLogs()
         {
-            try
-            {                 
-                var response = await Http.DeleteAsync("/" + 0);
-              
-                if (response.IsSuccessStatusCode)
-                {                   
-                    var message = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(message);
-                }
-                else
-                {           
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Error: {errorMessage}");
-                }
-            }
-            catch (Exception ex)
+            string Message = "¿Está seguro de que desea eliminar todos los registros de la base de datos?";
+
+
+            if (await ConfirmDialogAsync(Message))
             {
-                Console.WriteLine($"Error en la petición HTTP: {ex.Message}");
+                try
+                {
+                    var response = await Http.DeleteAsync("/" + 0);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var message = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine(message);
+                    }
+                    else
+                    {
+                        var errorMessage = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine($"Error: {errorMessage}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error en la petición HTTP: {ex.Message}");
+                }
             }
+            else
+            {    
+                ShowMessage(ToastType.Secondary, "Acción de eliminación cancelada.");
+            }
+
+
+
         }
         private async Task OnClickUpdate()
         {
@@ -79,6 +107,7 @@ namespace EcoLogTracking.Client.Components
                 if (response.IsSuccessStatusCode)
                 {
                     var message = await response.Content.ReadAsStringAsync();
+                    ShowMessage(ToastType.Success, "Usuario actualizado correctamente.");
                     Console.WriteLine(message); 
                 }
                 else
@@ -110,7 +139,8 @@ namespace EcoLogTracking.Client.Components
                 if (response.IsSuccessStatusCode)
                 {
                     var message = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(message);
+                    ShowMessage(ToastType.Success, "Usuario creado correctamente.");
+                    OnClickClear();                  
                 }
                 else
                 {
@@ -130,5 +160,42 @@ namespace EcoLogTracking.Client.Components
             newEmail = string.Empty;
             newPassword = string.Empty;
         }
+
+        private async Task<bool> ConfirmDialogAsync(string Message)
+        {
+            var parameters = new Dictionary<string, object?>
+            {
+                { "Message", Message }
+            };
+
+            var options = new ConfirmDialogOptions
+            {
+                YesButtonColor = ButtonColor.Danger,
+                YesButtonText = "Eliminar",
+                NoButtonText = "Cancelar",
+                IsVerticallyCentered = true,
+                Dismissable = true
+            };
+
+            var DialogResponse = await dialog.ShowAsync<ConfirmDialogComponent>(
+                title: "Confirmar Eliminación",
+                parameters,
+                confirmDialogOptions: options);
+
+            return DialogResponse;
+        }
+
+        #region Toast
+        private void ShowMessage(ToastType toastType, string message) => toastMessages.Add(CreateToastMessage(toastType, message));
+
+        private ToastMessage CreateToastMessage(ToastType toastType, string message)
+        {
+            var toastMessage = new ToastMessage();
+            toastMessage.Type = toastType;
+            toastMessage.Message = message;
+
+            return toastMessage;
+        }
+        #endregion Toast
     }
 }
