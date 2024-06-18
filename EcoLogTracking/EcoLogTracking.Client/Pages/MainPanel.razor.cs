@@ -1,16 +1,17 @@
-﻿using BlazorBootstrap;
+﻿using Azure.Core;
+using BlazorBootstrap;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Presentation;
 using EcoLogTracking.Client.Components;
 using EcoLogTracking.Client.Models;
+using EcoLogTracking.Client.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EcoLogTracking.Client.Pages
 {
@@ -29,7 +30,6 @@ namespace EcoLogTracking.Client.Pages
 
         public static DateTime FirstDate { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
         public static DateTime LastDate { get; set; } = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
-
 
         /// <summary>
         /// Maneja la exportación a Excel.
@@ -90,15 +90,42 @@ namespace EcoLogTracking.Client.Pages
         #region ApiCalls
         public async Task GetLogDataBetweenDates()
         {
-            LogViewer.LogList = new ObservableCollection<Log>(await Http.GetFromJsonAsync<List<Log>>($"api/GetBetween/{FirstDate}/{LastDate}"));
+            DateFilter Date = new(FirstDate, LastDate);
 
-            foreach (var log in LogViewer.LogList)
+            var response = await Http.PostAsJsonAsync($"/GetBetween", Date);
+
+            if (response.IsSuccessStatusCode)
             {
-                int index = log.Message.IndexOf("]");
-                log.Status_code = log.Message.Substring(0, index + 1);
-                log.Message = log.Message.Substring(index + 1);
+                var logs = await response.Content.ReadFromJsonAsync<List<Log>>();
+
+                if (logs != null)
+                {
+                    LogViewer.LogList = new ObservableCollection<Log>(logs);
+
+                    foreach (var log in LogViewer.LogList)
+                    {
+                        int index = log.Message.IndexOf("]");
+                        log.Status_code = log.Message.Substring(0, index + 1);
+                        log.Message = log.Message.Substring(index + 1);
+                    }
+
+                    await LogViewer.DataGrid.RefreshDataAsync();
+                }
+                else
+                {
+                    LogViewer.LogList = new();
+                    await LogViewer.DataGrid.RefreshDataAsync();
+                    Console.WriteLine("La respuesta de logs fue null.");
+                }
+            }
+            else
+            {
+                LogViewer.LogList = new();
+                await LogViewer.DataGrid.RefreshDataAsync();
+                Console.WriteLine($"Error al obtener los logs. Código de estado: {response.StatusCode}");
             }
         }
+
         #endregion
 
         /// <summary>
