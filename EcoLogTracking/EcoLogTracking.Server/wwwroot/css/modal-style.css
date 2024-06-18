@@ -52,8 +52,9 @@
         transition: all ease-in-out 10s;
     }
 
-        .main-box .core-box input,
-        .main-box .core-box select {
+        .core-box input,
+        .core-box select
+        {
             width: 100%;
             padding: 10px 15px;
             font-size: 16px;
@@ -67,12 +68,12 @@
             border: 2px solid var(--main-box-color);*/
         }
 
-        .main-box .core-box input:focus,
-        .main-box .core-box select:focus {
+        .core-box input:focus,
+        .core-box select:focus {
             border: 2px solid white;
         }
 
-        .main-box .core-box select option {
+        .core-box select option {
             background: rgba(0, 0, 0, .8) !important;
         }
 
@@ -87,8 +88,8 @@
             transition: .5s;
         }
 
-        .main-box .core-box input:focus ~ label,
-        .main-box .core-box input:valid ~ label {
+        .core-box input:focus ~ label,
+        .core-box input:valid ~ label {
             top: -5px;
             left: 12px;
             color:var(--primary-color);

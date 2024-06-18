@@ -66,7 +66,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         public async Task<IActionResult> GetLogsBetween(DateTime start, DateTime end)
         {
             var list = await _logService.GetLogsBetween(start, end);
-            return list.IsNullOrEmpty() ? BadRequest("No logs found.") : Ok(list);
+            return list.IsNullOrEmpty() ? NotFound("No se han encontrado registros.") : Ok(list);
         }
 
 

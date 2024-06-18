@@ -18,19 +18,39 @@
     }
 
     <nav class="header">
-        <button type="button" class="nav-button" @onclick="OnClickExportExcel">
-            Exportar <img src="Icons/excel.png" />
-        </button>
-        <button type="button" class="nav-button @((IsActiveConfigButton) ? "active" : "")" @onclick="OnClickToggle">
-            Configuración <img src="Icons/config.png" />
-        </button>
-        <button type="button" class="nav-button" @onclick="OnClickLogOut">
-            Desconectar <img src="Icons/logout.png"/>
-        </button>     
+        <div class="left-container">
+            <div class="core-box">
+                <label for="firstDateInput">Fecha Incial</label>
+                <input type="date"
+                       id="firstDateInput"
+                       @bind="FirstDate" />
+            </div>
+            <div class="core-box">
+                <label for="lastDateInput">Fecha Final</label>
+                <input type="date"
+                       id="lastDateInput"
+                       @bind="LastDate"
+                       min="@FirstDate.ToString("yyyy-MM-dd")" />
+            </div>
+            <button type="button" class="nav-button" @onclick="OnClickSearch">
+                Buscar<img src="Icons/search.png" />
+            </button>
+        </div>
+        <div class="right-container">
+            <button type="button" class="nav-button" @onclick="OnClickExportExcel">
+                Exportar <img src="Icons/excel.png" />
+            </button>
+            <button type="button" class="nav-button @((IsActiveConfigButton) ? "active" : "")" @onclick="OnClickToggle">
+                Configuración <img src="Icons/config.png" />
+            </button>
+            <button type="button" class="nav-button" @onclick="OnClickLogOut">
+                Desconectar <img src="Icons/logout.png" />
+            </button>
+        </div>
     </nav>
 
     <div class="log-container">
-        <LogViewer  />
+        <LogViewer />
     </div>
 
     <div class="config-container">

@@ -1,13 +1,16 @@
 ﻿using BlazorBootstrap;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Presentation;
 using EcoLogTracking.Client.Components;
 using EcoLogTracking.Client.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net.Http.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace EcoLogTracking.Client.Pages
 {
@@ -22,10 +25,12 @@ namespace EcoLogTracking.Client.Pages
 
         private string ShowLogs { get; set; } = "block";
         private string ShowConfig { get; set; } = "none";
-
         private bool IsActiveConfigButton { get; set; } = false;
 
-        
+        public static DateTime FirstDate { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        public static DateTime LastDate { get; set; } = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+
         /// <summary>
         /// Maneja la exportación a Excel.
         /// </summary>
@@ -48,12 +53,9 @@ namespace EcoLogTracking.Client.Pages
             UpdateButtonState();
         }
 
-        /// <summary>
-        /// Actualiza el estado del botón de configuración.
-        /// </summary>
-        private void UpdateButtonState()
+        private async void OnClickSearch()
         {
-            IsActiveConfigButton = ShowConfig == "block";
+           await GetLogDataBetweenDates();
         }
 
         /// <summary>
@@ -78,11 +80,33 @@ namespace EcoLogTracking.Client.Pages
         }
 
         /// <summary>
+        /// Actualiza el estado del botón de configuración.
+        /// </summary>
+        private void UpdateButtonState()
+        {
+            IsActiveConfigButton = ShowConfig == "block";
+        }
+
+        #region ApiCalls
+        public async Task GetLogDataBetweenDates()
+        {
+            LogViewer.LogList = new ObservableCollection<Log>(await Http.GetFromJsonAsync<List<Log>>($"api/GetBetween/{FirstDate}/{LastDate}"));
+
+            foreach (var log in LogViewer.LogList)
+            {
+                int index = log.Message.IndexOf("]");
+                log.Status_code = log.Message.Substring(0, index + 1);
+                log.Message = log.Message.Substring(index + 1);
+            }
+        }
+        #endregion
+
+        /// <summary>
         /// Oculta el modal.
         /// </summary>
         private async Task HideModal()
         {
             await ModalInstance.HideAsync();
-        }
+        }   
     }
 }

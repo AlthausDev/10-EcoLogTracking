@@ -14,12 +14,9 @@ namespace EcoLogTracking.Client.Components
         #region Atributes
         [Inject] protected PreloadService PreloadService { get; set; } = default!;
 
-        private Log Log { get; set; } = new();
-
         private Grid<Log> DataGrid = default!;
 
         public static ObservableCollection<Log> LogList { get; set; } = new ObservableCollection<Log>();
-        public static DateTime FirstLogDate { get; set; } = DateTime.Now.Date;
 
         private bool IsLoading = true;
 
@@ -39,7 +36,6 @@ namespace EcoLogTracking.Client.Components
                 }
             }
         }
-        #endregion
 
         #region Initialize
         protected override async Task OnInitializedAsync()
@@ -47,7 +43,7 @@ namespace EcoLogTracking.Client.Components
             try
             {
                 IsLoading = true;
-                await GetAllLogData();
+                //await GetAllLogData();
             }
             finally
             {
@@ -56,7 +52,7 @@ namespace EcoLogTracking.Client.Components
                 PreloadService.Hide();
             }
         }
-
+        #endregion
 
         private async Task<GridDataProviderResult<Log>> LogsDataProvider(GridDataProviderRequest<Log> request)
         {
@@ -123,8 +119,6 @@ namespace EcoLogTracking.Client.Components
                 log.Status_code = log.Message.Substring(0, index + 1);
                 log.Message = log.Message.Substring(index + 1);
             }
-
-            FirstLogDate = LogList.Min(log => log.Logged);          
         }
         #endregion
 

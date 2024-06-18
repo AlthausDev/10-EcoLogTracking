@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using EcoLogTracking.Client.Models;
+using EcoLogTracking.Client.Pages;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -14,7 +15,7 @@ namespace EcoLogTracking.Client.Components
     public partial class ExportExcel
     {
         [Parameter]
-        public DateTime FirstDate { get; set; } = LogViewer.FirstLogDate;
+        public DateTime FirstDate { get; set; } = MainPanel.FirstDate;
 
         public DateTime LastDate { get; set; } = DateTime.Now;
 
