@@ -1,4 +1,6 @@
 ﻿CREATE TABLE [dbo].[Configuration]
 (
-	[Id] INT NOT NULL PRIMARY KEY
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+	[Period] INT NULL,
+	[DeletedDay] DATETIME DEFAULT GETDATE()
 )

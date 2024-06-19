@@ -90,7 +90,7 @@ namespace EcoLogTracking.Client.Pages
         #region ApiCalls
         public async Task GetLogDataBetweenDates()
         {
-            DateFilter Date = new(FirstDate, LastDate);
+            DateFilter Date = new(FirstDate, LastDate.Date.AddHours(23).AddMinutes(59).AddSeconds(59));
 
             var response = await Http.PostAsJsonAsync($"/GetBetween", Date);
 
