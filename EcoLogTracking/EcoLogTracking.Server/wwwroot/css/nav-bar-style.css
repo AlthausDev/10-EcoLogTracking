@@ -2,7 +2,7 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 100;
     border-bottom: 2px solid var(--primary-color);
-    border-radius: 15px;
+    border-radius: var(--border-radius);
     box-shadow: 0px 0px 36px -6px var(--shadow-color);
     display: flex;   
     animation: borderEffect 10s ease-in-out infinite alternate;
@@ -29,7 +29,7 @@
 .nav-button {
     color: white;
     font-size: 17px;
-    border-radius: 15px;
+    border-radius: var(--border-radius);
     padding: 8px;
     background-color: transparent;
     border: 2px solid transparent;
