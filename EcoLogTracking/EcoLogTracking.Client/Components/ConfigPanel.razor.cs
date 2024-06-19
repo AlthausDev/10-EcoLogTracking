@@ -28,10 +28,23 @@ namespace EcoLogTracking.Client.Components
         private List<ToastMessage> toastMessages = new();
         private ConfirmDialog dialog = default!;
 
+        private Configuration Configuration { get; set; }
+
         public static bool IsDangerTabActive = false;
 
         record TabMessage(string Event, string ActiveTabTitle, string PreviousActiveTabTitle);
         List<TabMessage> messages = new List<TabMessage>();
+
+
+        protected override async void OnInitialized()
+        {         
+            base.OnInitialized();
+
+            Configuration = await Http.GetFromJsonAsync<Configuration>("/api/Configuration");
+            DeleteFrecuencyDays = Configuration.Period;
+
+            StateHasChanged();
+        }
 
         private void OnTabShowingAsync(TabsEventArgs args)
             => messages.Add(new("OnShowing", args.ActiveTabTitle, args.PreviousActiveTabTitle));
@@ -123,7 +136,11 @@ namespace EcoLogTracking.Client.Components
                 userToUpdate.UserName = UserName;
                 userToUpdate.Mail = Email;
 
+                Configuration.Period = DeleteFrecuencyDays;
+
                 var response = await Http.PutAsJsonAsync("api/User", userToUpdate);
+                _ = await Http.PutAsJsonAsync("api/Configuration", Configuration);
+
 
                 if (response.IsSuccessStatusCode)
                 {

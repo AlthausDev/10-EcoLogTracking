@@ -2,11 +2,11 @@
 {
     public class Configuration
     {
-        int Id { get; set; }
+        public int Id { get; set; }
 
-        int Period { get; set; }
+        public int Period { get; set; }
 
-        DateTime DeletedDate { get; set; }
+        public DateTime DeletedDate { get; set; }
 
         public Configuration() { }
 

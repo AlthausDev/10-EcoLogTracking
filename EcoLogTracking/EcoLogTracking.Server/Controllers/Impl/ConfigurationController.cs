@@ -33,9 +33,6 @@ namespace EcoLogTracking.Server.Controllers.Impl
 
         }
 
-
-
-
         [HttpGet]
         public async Task<IActionResult> getConfiguration()
         {

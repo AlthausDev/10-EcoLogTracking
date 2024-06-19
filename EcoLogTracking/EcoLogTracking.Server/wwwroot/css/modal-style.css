@@ -68,14 +68,11 @@
             border: 2px solid var(--main-box-color);*/
         }
 
-        .core-box input:focus,
-        .core-box select:focus {
-            border: 2px solid white;
-        }
+            .core-box input:focus,
+            .core-box select:focus {
+                border: 2px solid white;                
+            }
 
-        .core-box select option {
-            background: rgba(0, 0, 0, .8) !important;
-        }
 
         .main-box .core-box label {
             position: absolute;
@@ -88,11 +85,11 @@
             transition: .5s;
         }
 
-        .core-box input:focus ~ label,
-        .core-box input:valid ~ label {
-            left: 12px;     
-            font-size: 14px;
-        }
+.core-box input:focus ~ label,
+.core-box input:valid ~ label {
+    left: 10px;
+    font-size: 14px;
+}
    
 
     .main-box form a {

@@ -11,14 +11,14 @@
 
 <div class="main-box" style="background: rgba(0,0,0,.5); max-width: 600px;">
     @* <h2>LOGIN</h2> *@
-    <img src="Icons/EcoLog.png" alt="EcoLog Logo" style="width: 100px; height: 100px;">
+    <img src="Icons/EcoLog-icon.ico" alt="EcoLog Logo" class="app-icon">
 
     <form>
-        <div class="core-box">
+        <div class="core-box login-input">
             <input autofocus type="text" name="" required="true" @bind="UserName" @bind:event="oninput">
             <label>Username</label>
         </div>
-        <div class="core-box">
+        <div class="core-box login-input">
             <input type="password" name="" required="true" @bind="Password" @bind:event="oninput" autocomplete="current-password">
             <label>Contraseña</label>
         </div>  
@@ -51,3 +51,21 @@
         };
     })();
 </script>
+
+<style>
+    .app-icon{
+        width: 100px;
+        height: 100px;
+        margin-bottom: 2%;
+    }
+
+    .login-input{
+        margin: 1% 0%;           
+    }
+
+    .login-input input:focus ~ label,
+    .login-input input:valid ~ label {
+        top: -5px;
+        color: #caf9ca;
+    }
+</style>
