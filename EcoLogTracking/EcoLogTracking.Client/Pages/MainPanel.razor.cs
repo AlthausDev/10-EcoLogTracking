@@ -50,6 +50,7 @@ namespace EcoLogTracking.Client.Pages
         {
             ShowLogs = ShowLogs == "block" ? "none" : "block";
             ShowConfig = ShowConfig == "block" ? "none" : "block";
+            ConfigPanel.ShowFirstTabAsync();
             UpdateButtonState();
         }
 

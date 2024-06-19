@@ -9,14 +9,6 @@ html, body {
     --button-background-color: #6fef88;
     --button-background-hover-color: #b7f8ce;
     --shadow-color: rgb(105 235 109);
-   
-    --danger-primary-color: #ff6347;
-    --danger-secondary-color: red;
-    --danger-main-box-color: #ff6347;
-    --danger-button-background-color: #ff6347;
-    --danger-button-background-hover-color: #ff6347;
-    --danger-shadow-color: #ff6347;
-  
 }
 
 a, .btn-link {
