@@ -14,6 +14,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'" />
 
   <ItemGroup>
+    <Content Remove="wwwroot\Icons\stack-of-wooden-logs-png.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Icons\stack-of-wooden-logs-png.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazor.Bootstrap" Version="2.2.0" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageReference Include="Blazored.Modal" Version="7.3.1" />

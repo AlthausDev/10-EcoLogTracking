@@ -21,6 +21,11 @@ namespace ConsolaBackService
         private readonly HttpClient _httpClient;
         private Timer _timerEmail;
 
+        public Service(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         /// <summary>
         /// MÉTODO QUE OBTIENE EL PERIODO Y LA FECHA DEL ULTIMO BORRADO
         /// </summary>
@@ -52,7 +57,7 @@ namespace ConsolaBackService
         {
             try
             {
-                StreamWriter sw = new StreamWriter("C:\\DiegoRP\\LogRecap.txt");
+                StreamWriter sw = new StreamWriter("C:\\Althaus\\LogRecap.txt");
                 DateTime date = DateTime.Now;
                 DateTime secondDate = date.AddDays(-1);
                 DateFilter dateFilter = new DateFilter {
@@ -82,7 +87,7 @@ namespace ConsolaBackService
                     TextBody = "Recap error logs [Date: "+secondDate.DayOfWeek+", " +
                     secondDate.Date.Day+"/" + secondDate.Month +"/" +secondDate.Year+"]"};
 
-                bodyBuilder.Attachments.Add("C:\\DiegoRP\\LogRecap.txt");
+                bodyBuilder.Attachments.Add("C:\\Althaus\\LogRecap.txt");
                 message.Body = bodyBuilder.ToMessageBody();
 
                 using (var client = new SmtpClient())
@@ -146,9 +151,16 @@ namespace ConsolaBackService
             }, null, (int)tickTime, Timeout.Infinite);
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        public override Task StartAsync(CancellationToken stoppingToken)
         {
-            TaskEmail(12,33); 
+            TaskEmail(13,30); 
+            return Task.CompletedTask;
+            //TaskEmail(13,13); 
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
