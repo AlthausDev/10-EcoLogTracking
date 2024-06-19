@@ -44,8 +44,8 @@ namespace EcoLogTracking.Client.Pages
                     ShowMessage(ToastType.Danger, "Credenciales incorrectas. Por favor, inténtelo de nuevo.");
                     return;
 
-                }                
-
+                }
+                MainPanel.IsLogged = true;
                 NavManager.NavigateTo("/logger");
             }
             catch (Exception ex)

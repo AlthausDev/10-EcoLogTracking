@@ -5,60 +5,63 @@
 @inject NavigationManager NavManager
 @inject ILocalStorageService storageService
 
-<PageTitle>EcoLog Tracker</PageTitle>
 
-<Modal @ref="ModalInstance" ShowCloseButton=" true" IsVerticallyCentered="true" IsScrollable="true" />
+@if (IsLogged)
+{
+    <PageTitle>EcoLog Tracker</PageTitle>
 
-<div class="mainContainer">
-    @if (IsLoading)
-    {
-        <div class="spinner-overlay">
-            <div class="spinner"></div>
-        </div>
-    }
+    <Modal @ref="ModalInstance" ShowCloseButton=" true" IsVerticallyCentered="true" IsScrollable="true" />
 
-    <nav class="header">
-        <div class="left-container">
-            <div class="core-box">
-                <label for="firstDateInput">Fecha Incial</label>
-                <input type="date"
-                       id="firstDateInput"
-                       @bind="FirstDate" />
+    <div class="mainContainer">
+        @if (IsLoading)
+        {
+            <div class="spinner-overlay">
+                <div class="spinner"></div>
             </div>
-            <div class="core-box">
-                <label for="lastDateInput">Fecha Final</label>
-                <input type="date"
-                       id="lastDateInput"
-                       @bind="LastDate"
-                       min="@FirstDate.ToString("yyyy-MM-dd")" />
+        }
+
+        <nav class="header">
+            <div class="left-container">
+                <div class="core-box">
+                    <label for="firstDateInput">Fecha Incial</label>
+                    <input type="date"
+                    id="firstDateInput"
+                    @bind="FirstDate" />
+                </div>
+                <div class="core-box">
+                    <label for="lastDateInput">Fecha Final</label>
+                    <input type="date"
+                    id="lastDateInput"
+                    @bind="LastDate"
+                    min="@FirstDate.ToString("yyyy-MM-dd")" />
+                </div>
+                <button type="button" class="nav-button" @onclick="OnClickSearch">
+                    Buscar<img src="Icons/search.png" />
+                </button>
             </div>
-            <button type="button" class="nav-button" @onclick="OnClickSearch">
-                Buscar<img src="Icons/search.png" />
-            </button>
+            <div class="right-container">
+                <button type="button" class="nav-button" @onclick="OnClickExportExcel">
+                    Exportar <img src="Icons/excel.png" />
+                </button>
+                <!--TODO: Agregar ayuda contextual para que se entienda mejor el funcionamiento del boton-->
+                <button type="button" class="nav-button @((IsActiveConfigButton) ? "active" : "")" @onclick="OnClickToggle">
+                    Configuración <img src="Icons/config.png" />
+                </button>
+                <button type="button" class="nav-button" @onclick="OnClickLogOut">
+                    Desconectar <img src="Icons/logout.png" />
+                </button>
+            </div>
+        </nav>
+
+        <div class="log-container">
+            <LogViewer />
         </div>
-        <div class="right-container">
-            <button type="button" class="nav-button" @onclick="OnClickExportExcel">
-                Exportar <img src="Icons/excel.png" />
-            </button>
-            <!--TODO: Agregar ayuda contextual para que se entienda mejor el funcionamiento del boton-->
-            <button type="button" class="nav-button @((IsActiveConfigButton) ? "active" : "")" @onclick="OnClickToggle">
-                Configuración <img src="Icons/config.png" />
-            </button>
-            <button type="button" class="nav-button" @onclick="OnClickLogOut">
-                Desconectar <img src="Icons/logout.png" />
-            </button>
+
+        <div class="config-container">
+            <ConfigPanel MainPanelInstance="this" />
         </div>
-    </nav>
-
-    <div class="log-container">
-        <LogViewer />
     </div>
-
-    <div class="config-container">
-        <ConfigPanel MainPanelInstance="this" />
-    </div>
-</div>
-
+}
 <script src="/js/utilidades.js"></script>
 
 <style>

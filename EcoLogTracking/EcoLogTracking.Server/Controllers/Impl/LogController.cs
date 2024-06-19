@@ -25,8 +25,8 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <returns>Lista _connectionString los registros obtenidos de la base de datos: EcoLogTrackingDB</returns>
         [HttpGet]
-        [AllowAnonymous]
-        // [Authorize(Roles = "admin")]
+        //[AllowAnonymous]
+        [Authorize(Roles = "admin")]
         public async Task<IEnumerable<Log>> GetAll()
         {
             return await _logService.GetAll();
@@ -40,7 +40,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <returns>bool OK() si registro correcto/ BadRequest() si registro incorrecto</returns>
         [HttpPost]
         [AllowAnonymous]
-        // [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> PostLog([FromBody] Log log)
         {
             try
@@ -62,7 +62,9 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="end">Fecha hasta la cual se quieren obtener los registros</param>
         /// <returns>bool OK(lista de logs filtrados) si filtrado correcto/ BadRequest() si filtrado incorrecto</returns>
         [HttpPost("/GetBetween")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "admin")]
+
         public async Task<IActionResult> GetLogsBetween(DateFilter dates)
         {
             var list = await _logService.GetLogsBetween(dates);
@@ -76,7 +78,9 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="numDias">Número de días desde los que se quieren mantener los logs</param>
         /// <returns>bool OK() si borrado correcto/ BadRequest() si borrado incorrecto</returns>
         [HttpDelete("/{numDias}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "admin")]
+
         public async Task<IActionResult> DeleteLogsByDate(int numDias)
         {
             try
@@ -92,7 +96,8 @@ namespace EcoLogTracking.Server.Controllers.Impl
 
 
         [HttpGet("/GetByDate/{date}")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetLogsByDay(DateTime date)
         {
             var list = await _logService.GetLogsByDate(date);

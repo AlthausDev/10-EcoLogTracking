@@ -1,7 +1,7 @@
 Origin:          ECOCOMPUTER
 MachineName:     ECO3042
-Id:              113
-Logged:          19/06/2024 9:23:04
+Id:              200
+Logged:          19/06/2024 14:30:33
 Level:           ERROR
 Message:         [401 - No Autorizado]Request: POST /api/User/login
 Logger:          TODO_V2.Server.RequestLoggingMiddleware
@@ -9,8 +9,8 @@ Logger:          TODO_V2.Server.RequestLoggingMiddleware
 
 Origin:          ECOCOMPUTER
 MachineName:     ECO3042
-Id:              114
-Logged:          19/06/2024 9:23:04
+Id:              201
+Logged:          19/06/2024 14:30:36
 Level:           ERROR
 Message:         [401 - No Autorizado]Request: POST /api/User/login
 Logger:          TODO_V2.Server.RequestLoggingMiddleware
@@ -18,8 +18,8 @@ Logger:          TODO_V2.Server.RequestLoggingMiddleware
 
 Origin:          ECOCOMPUTER
 MachineName:     ECO3042
-Id:              115
-Logged:          19/06/2024 9:23:05
+Id:              202
+Logged:          19/06/2024 14:30:36
 Level:           ERROR
 Message:         [401 - No Autorizado]Request: POST /api/User/login
 Logger:          TODO_V2.Server.RequestLoggingMiddleware
@@ -27,8 +27,8 @@ Logger:          TODO_V2.Server.RequestLoggingMiddleware
 
 Origin:          ECOCOMPUTER
 MachineName:     ECO3042
-Id:              116
-Logged:          19/06/2024 9:23:05
+Id:              203
+Logged:          19/06/2024 14:30:36
 Level:           ERROR
 Message:         [401 - No Autorizado]Request: POST /api/User/login
 Logger:          TODO_V2.Server.RequestLoggingMiddleware
@@ -36,8 +36,8 @@ Logger:          TODO_V2.Server.RequestLoggingMiddleware
 
 Origin:          ECOCOMPUTER
 MachineName:     ECO3042
-Id:              117
-Logged:          19/06/2024 9:23:05
+Id:              204
+Logged:          19/06/2024 14:30:36
 Level:           ERROR
 Message:         [401 - No Autorizado]Request: POST /api/User/login
 Logger:          TODO_V2.Server.RequestLoggingMiddleware
@@ -45,8 +45,17 @@ Logger:          TODO_V2.Server.RequestLoggingMiddleware
 
 Origin:          ECOCOMPUTER
 MachineName:     ECO3042
-Id:              118
-Logged:          19/06/2024 9:23:06
+Id:              205
+Logged:          19/06/2024 14:30:36
+Level:           ERROR
+Message:         [401 - No Autorizado]Request: POST /api/User/login
+Logger:          TODO_V2.Server.RequestLoggingMiddleware
+--------------------------------------
+
+Origin:          ECOCOMPUTER
+MachineName:     ECO3042
+Id:              206
+Logged:          19/06/2024 14:30:37
 Level:           ERROR
 Message:         [401 - No Autorizado]Request: POST /api/User/login
 Logger:          TODO_V2.Server.RequestLoggingMiddleware

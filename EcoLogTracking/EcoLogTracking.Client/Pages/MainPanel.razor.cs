@@ -7,17 +7,22 @@ using EcoLogTracking.Client.Components;
 using EcoLogTracking.Client.Models;
 using EcoLogTracking.Client.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.JSInterop;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Json;
+using System.Security.Claims;
 
 namespace EcoLogTracking.Client.Pages
 {
     public partial class MainPanel
-    {
+    {    
         private bool IsLoading { get; set; } = true;
+        public static bool IsLogged { get; set; } = false;
         public static Modal ModalInstance { get; set; } = default!;
         public static User User { get; set; } = new();
 
@@ -30,6 +35,46 @@ namespace EcoLogTracking.Client.Pages
 
         public static DateTime FirstDate { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
         public static DateTime LastDate { get; set; } = DateTime.Now.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            try
+            {
+                string? token = await storageService.GetItemAsStringAsync("token");
+                bool isTokenPresent = !string.IsNullOrEmpty(token);
+
+                if (!isTokenPresent)
+                {
+                    NavManager.NavigateTo("/login");
+                }
+            }
+            catch (Exception ex) { }
+
+            //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            //var user = authState.User;
+
+            //if (!user.Identity.IsAuthenticated)
+            //{
+            //    NavManager.NavigateTo("/login");
+            //}
+        }
+
+        //protected override async void OnInitialized()
+        //{
+        //    try
+        //    {
+        //        string? token = await storageService.GetItemAsStringAsync("token");
+        //        bool isTokenPresent = !string.IsNullOrEmpty(token);
+
+        //        if (!isTokenPresent)
+        //        {
+        //            NavManager.NavigateTo("/login");
+        //        }               
+        //    } catch (Exception ex) { }
+
+        //    base.OnInitialized();
+        //}
 
         /// <summary>
         /// Maneja la exportación a Excel.
