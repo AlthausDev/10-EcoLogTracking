@@ -1,4 +1,5 @@
-﻿using EcoLogTracking.Server.Services.Impl;
+﻿using EcoLogTracking.Server.Models;
+using EcoLogTracking.Server.Services.Impl;
 using EcoLogTracking.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +19,12 @@ namespace EcoLogTracking.Server.Controllers.Impl
             this.configurationService = configurationService;
         }
 
-        [HttpPut("/{time}")]
-        public async Task<IActionResult> UpdateConfig(int time)
+        [HttpPut]
+        public async Task<IActionResult> UpdateConfiguration(Configuration configuration)
         {
             try
             {
-                return await configurationService.updateConfig(time) ? Ok() : BadRequest();
+                return await configurationService.updateConfiguration(configuration) ? Ok() : BadRequest();
             }
             catch (Exception e)
             {
@@ -34,18 +35,21 @@ namespace EcoLogTracking.Server.Controllers.Impl
 
 
 
+
         [HttpGet]
-        public async Task<IActionResult> getPeriod()
+        public async Task<IActionResult> getConfiguration()
         {
             try
             {
-                var response =  configurationService.getPeriod();
-                if (response != 0)
+                Configuration response = await configurationService.getConfiguration();
+                
+                if (response != null)
                 {
                     return Ok(response);
                 }
-                else {
-                    return BadRequest("Ha ocurrido algún error durante la configuración del período.");
+                else
+                {
+                    return BadRequest("Ha ocurrido algún error durante la configuración.");
                 }
             }
             catch (Exception e)

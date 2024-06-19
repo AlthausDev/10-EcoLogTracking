@@ -1,4 +1,5 @@
-﻿using EcoLogTracking.Server.Repository.Impl;
+﻿using EcoLogTracking.Server.Models;
+using EcoLogTracking.Server.Repository.Impl;
 using EcoLogTracking.Server.Repository.Interfaces;
 using EcoLogTracking.Server.Services.Interfaces;
 using todoAPI.Helpers;
@@ -16,11 +17,11 @@ namespace EcoLogTracking.Server.Services.Impl
             this.encryptionHelper = encryptionHelper;
         }
 
-        public async Task<bool> updateConfig(int time)
+        public async Task<bool> updateConfiguration(Configuration configuration)
         {
             try
             {
-                bool response = await configurationRepository.updateConfig(time);
+                bool response = await configurationRepository.updateConfiguration(configuration);
                 return response;
             }
             catch (Exception)
@@ -29,13 +30,17 @@ namespace EcoLogTracking.Server.Services.Impl
             }
         }
 
-        public int getPeriod()
+
+        public async Task<Configuration> getConfiguration()
         {
-            try {
-            int response = configurationRepository.getPeriod();
+            try
+            {
+                Configuration response = configurationRepository.getConfiguration();
                 return response;
-            } catch (Exception E) {
-                return 0;
+            }
+            catch (Exception E)
+            {
+                return null;
             }
         }
     }

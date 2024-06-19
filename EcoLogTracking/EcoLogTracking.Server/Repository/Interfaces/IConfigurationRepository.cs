@@ -1,10 +1,12 @@
-﻿namespace EcoLogTracking.Server.Repository.Interfaces
+﻿using EcoLogTracking.Server.Models;
+
+namespace EcoLogTracking.Server.Repository.Interfaces
 {
     public interface IConfigurationRepository
     {
 
-        public Task<bool> updateConfig(int time);
+        public Task<bool> updateConfiguration(Configuration configuration);
 
-        public int getPeriod();
+        public Configuration getConfiguration();
     }
 }
