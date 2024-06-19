@@ -33,13 +33,13 @@ namespace EcoLogTracking.Client.Pages
                 try
                 {
                     IsLoading = true;
-                    PreloadService.Show(spinnerColor:SpinnerColor.Success);
+                    PreloadService.Show(spinnerColor:SpinnerColor.Success, "Cargando...");
                     await JS.InvokeVoidAsync("addEnterEventListener", "loginButton");
                 }
                 finally
                 {
                     await Task.Delay(1000);
-                    IsLoading = false;                    
+                    IsLoading = false;
                     PreloadService.Hide();
                     StateHasChanged();
                 }
@@ -76,12 +76,12 @@ namespace EcoLogTracking.Client.Pages
 
         private RenderFragment RenderLoadingIndicator() => builder =>
         {
-            PreloadService.Show();
+            PreloadService.Show(spinnerColor: SpinnerColor.Success, "Cargando...");
             if (IsLoading)
             {
                 builder.OpenElement(0, "div");
                 builder.AddAttribute(1, "class", "loading-indicator");
-                builder.AddContent(2, "Cargando...");
+                builder.AddContent(2, "");
                 builder.CloseElement();
 
             }

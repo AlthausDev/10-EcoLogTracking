@@ -11,6 +11,13 @@ html, body {
     --shadow-color: rgb(105 235 109);
 }
 
+
+    .app-icon{
+        width: 100px;
+        height: 100px;
+        margin-bottom: 2%;
+    }
+
 a, .btn-link {
     color: #006bb7;
 }
@@ -57,4 +64,36 @@ h1:focus {
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
+}
+
+
+.text-success {
+    color: var(--primary-color) !important;
+    font-family: monospace;
+    font-size: 18px;
+}
+
+
+.spinner-border {
+    --bs-spinner-width: 2rem;
+    --bs-spinner-height: 2rem;
+    --bs-spinner-vertical-align: 3em;
+    --bs-spinner-border-width: 0.25em;
+    border: var(--bs-spinner-border-width) solid currentcolor;
+    border-right-color: none;
+    background-color: var(--primary-color);
+    box-shadow: 0px 0px 26px 7px var(--shadow-color);
+    animation: grow-shrink-container 4s linear infinite;
+}
+
+
+/* Container grow-shrink animation */
+@keyframes grow-shrink-container {
+    0%, 100% {
+        transform: scale(1.05);
+    }
+
+    50% {
+        transform: scale(2);
+    }
 }

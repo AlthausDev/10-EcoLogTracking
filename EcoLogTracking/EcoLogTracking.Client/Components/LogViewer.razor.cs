@@ -127,8 +127,8 @@ namespace EcoLogTracking.Client.Components
 
         #region Loader
         private RenderFragment RenderLoadingIndicator() => builder =>
-        {
-            PreloadService.Show();
+        {            
+            PreloadService.Show(spinnerColor: SpinnerColor.Success, "Cargando...");
             if (IsLoading)
             {
                 builder.OpenElement(0, "div");
