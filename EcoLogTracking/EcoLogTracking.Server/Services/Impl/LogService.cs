@@ -82,7 +82,7 @@ namespace EcoLogTracking.Server.Services.Impl
             try
             {
                 DateTime dateTime = DateTime.Now;
-                DateTime dateTimeFilter = dateTime.AddDays(numDias);
+                DateTime dateTimeFilter = dateTime.AddDays(-numDias);
                 bool response = await LogRepository.DeleteLogsByDate(dateTimeFilter);
                 return response;
             }

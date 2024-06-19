@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcoLogTracking.Server", "Ec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RequestLoggingMiddleware", "RequestLoggingMiddleware\RequestLoggingMiddleware.csproj", "{7402788C-70D4-440D-B26F-5D39A2FC9635}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolaBackService", "ConsolaBackService\ConsolaBackService.csproj", "{BA44EA6E-DA24-49FF-BBFD-2A9EBE8C58CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{7402788C-70D4-440D-B26F-5D39A2FC9635}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7402788C-70D4-440D-B26F-5D39A2FC9635}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7402788C-70D4-440D-B26F-5D39A2FC9635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA44EA6E-DA24-49FF-BBFD-2A9EBE8C58CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA44EA6E-DA24-49FF-BBFD-2A9EBE8C58CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA44EA6E-DA24-49FF-BBFD-2A9EBE8C58CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA44EA6E-DA24-49FF-BBFD-2A9EBE8C58CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
