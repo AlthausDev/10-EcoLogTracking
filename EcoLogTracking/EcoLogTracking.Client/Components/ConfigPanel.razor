@@ -12,18 +12,21 @@
 <div class="main-container">
     <div class="settings-container">
         <div class="row gutters">
-            <Tabs EnableFadeEffect="true"
+            <Tabs @ref="tabs" EnableFadeEffect="true"
                   OnShowing="@(args => OnTabShowingAsync(args))"
                   OnShown="@(args => OnTabShownAsync(args))"
                   OnHiding="@(args => OnTabHidingAsync(args))"
                   OnHidden="@(args => OnTabHiddenAsync(args))">
 
-                <Tab Title="Detalles de Usuario" Active="true">
+                <Tab Title="" Active="true">
+                    <TitleTemplate>
+                        <Icon Name="IconName.PersonCircle" /> Perfil
+                    </TitleTemplate>
                     <Content>
                         <h3>Perfil de usuario</h3>
-                        <div class="grid-container-settings">                            
+                        <div class="grid-container-settings">
                             <!-- Detalles de Usuario -->
-                            <div class="grid-item">                                
+                            <div class="grid-item">
                                 <div class="core-box">
                                     <input type="text" class="form-control" id="userName" @bind="@UserName" placeholder="">
                                     <label for="userName" class="col-form-label">Nombre de Usuario</label>
@@ -45,7 +48,7 @@
                                     </div>
                                 </div>
 
-                                <div class="text-right">                                 
+                                <div class="text-right">
                                     <button type="button" @onclick="OnClickUpdate" id="update" name="update" class="button-style">Actualizar</button>
                                 </div>
                             </div>
@@ -56,43 +59,50 @@
                                     <div class="user-profile">
                                         <h5 class="user-name">Username</h5>
                                         <h6 class="user-name">@UserName</h6>
-                                        <br/>
+                                        <br />
                                         <h5 class="user-email">Mail</h5>
                                         <h6 class="user-email">@Email</h6>
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </Content>
                 </Tab>
-                <Tab Title="Crear nuevo Usuario">
+                <Tab Title="">
+                    <TitleTemplate>
+                        <Icon Name="IconName.PersonPlus" />  Agregar Usuario
+                    </TitleTemplate>
                     <Content>
                         <h3>Creación de nuevo usuario</h3>
-                        <!-- Formulario de Crear Nuevo Usuario -->    
+                        <!-- Formulario de Crear Nuevo Usuario -->
                         <div class="new-user-form">
-                        <div class="core-box">
-                            <input type="text" class="form-control" id="newUserName" @bind="@newUserName" placeholder=" ">
-                            <label for="newUserName" class="col-form-label">Nombre de Usuario</label>
-                        </div>
+                            <div class="core-box">
+                                <input type="text" class="form-control" id="newUserName" @bind="@newUserName" placeholder=" ">
+                                <label for="newUserName" class="col-form-label">Nombre de Usuario</label>
+                            </div>
 
-                        <div class="core-box">
-                            <input type="email" class="form-control" id="newEmail" @bind="@newEmail" placeholder=" ">
-                            <label for="newEmail" class="col-form-label">Correo Electrónico</label>
-                        </div>
+                            <div class="core-box">
+                                <input type="email" class="form-control" id="newEmail" @bind="@newEmail" placeholder=" ">
+                                <label for="newEmail" class="col-form-label">Correo Electrónico</label>
+                            </div>
 
-                        <div class="core-box">
-                            <input type="password" class="form-control" id="newPassword" @bind="@newPassword" placeholder=" ">
-                            <label for="newPassword" class="col-form-label">Contraseña</label>
-                        </div>
+                            <div class="core-box">
+                                <input type="password" class="form-control" id="newPassword" @bind="@newPassword" placeholder=" ">
+                                <label for="newPassword" class="col-form-label">Contraseña</label>
+                            </div>
 
-                        <div class="text-right">
+                            <div class="text-right">
                                 <button type="button" @onclick="OnClickClear" id="cancelNew" name="cancelNew" class="button-style">Limpiar campos</button>
                                 <button type="button" @onclick="OnClickRegister" id="create" name="create" class="button-style">Crear</button>
-                        </div>
+                            </div>
                         </div>
                     </Content>
-                </Tab>
-                <Tab Title="Danger Zone" Class="danger-tab">
+                </Tab>            
+                <Tab Title="Danger Zone">
+                    <TitleTemplate>
+                        <Icon Name="IconName.ExclamationTriangle" /> Danger Zone
+                        @* <Icon Name="IconName.Fire" /> Danger Zone *@
+                    </TitleTemplate>
                     <Content>
                         <div Class="danger-div">
                             <button type="button" @onclick="OnClickDeleteAllLogs" id="cancel" name="cancel" class="button-style danger-button">Eliminar todos los registros</button>
@@ -104,3 +114,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    window.applyFilter = (isActive) => {
+        const root = document.documentElement;
+        if (isActive) {
+            root.classList.add('filter-danger');
+        } else {
+            root.classList.remove('filter-danger');
+        }
+    };
+</script>
+

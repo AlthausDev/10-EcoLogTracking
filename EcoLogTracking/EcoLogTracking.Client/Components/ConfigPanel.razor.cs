@@ -19,13 +19,16 @@ namespace EcoLogTracking.Client.Components
         public string? Email { get; set; } = MainPanel.User.Mail;
 
 
-        public string newUserName { get; set; } = String.Empty;
-        public string newEmail { get; set; } = String.Empty;
-        public string newPassword { get; set; } = String.Empty;
+        public string newUserName { get; set; } = string.Empty;
+        public string newEmail { get; set; } = string.Empty;
+        public string newPassword { get; set; } = string.Empty;
+
+        public static Tabs tabs = default!;
 
         private List<ToastMessage> toastMessages = new();
         private ConfirmDialog dialog = default!;
 
+        public static bool IsDangerTabActive = false;
 
         record TabMessage(string Event, string ActiveTabTitle, string PreviousActiveTabTitle);
         List<TabMessage> messages = new List<TabMessage>();
@@ -33,15 +36,33 @@ namespace EcoLogTracking.Client.Components
         private void OnTabShowingAsync(TabsEventArgs args)
             => messages.Add(new("OnShowing", args.ActiveTabTitle, args.PreviousActiveTabTitle));
 
-        private void OnTabShownAsync(TabsEventArgs args)
-            => messages.Add(new("OnShown", args.ActiveTabTitle, args.PreviousActiveTabTitle));
-
         private void OnTabHidingAsync(TabsEventArgs args)
             => messages.Add(new("OnHiding", args.ActiveTabTitle, args.PreviousActiveTabTitle));
 
-        private void OnTabHiddenAsync(TabsEventArgs args)
-            => messages.Add(new("OnHidden", args.ActiveTabTitle, args.PreviousActiveTabTitle));
-     
+        private async Task OnTabShownAsync(TabsEventArgs args)
+        {
+            messages.Add(new("OnShown", args.ActiveTabTitle, args.PreviousActiveTabTitle));
+            IsDangerTabActive = args.ActiveTabTitle.Contains("Danger Zone");
+            await ToggleDangerTab(IsDangerTabActive);
+        }
+
+        private async Task OnTabHiddenAsync(TabsEventArgs args)
+        {
+            messages.Add(new("OnHidden", args.ActiveTabTitle, args.PreviousActiveTabTitle));
+            IsDangerTabActive = args.ActiveTabTitle.Contains("Danger Zone");
+            await ToggleDangerTab(IsDangerTabActive);
+        }
+
+        public async Task ToggleDangerTab(bool isActive)
+        {
+            IsDangerTabActive = isActive;
+            await JS.InvokeVoidAsync("applyFilter", isActive);
+        }
+
+        public static async Task ShowFirstTabAsync() => await tabs.ShowFirstTabAsync();
+
+
+
         private async Task OnClickDeteleUserAsync()
         {
             string Message = "¿Está seguro de que desea eliminar este usuario?";

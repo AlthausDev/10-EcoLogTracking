@@ -162,3 +162,12 @@
     border: none !important;
     background: transparent !important;
 }
+
+.filter-danger {
+    --primary-color: #ff6347;
+    --secondary-color: red;
+    --main-box-color: #ff6347;
+    --button-background-color: #ff6347;
+    --button-background-hover-color: #ff6347;
+    --shadow-color: #ff6347;
+}
