@@ -9,24 +9,30 @@
 
 <Toasts class="p-3" Messages="messages" AutoHide="true" Delay="6000" StackLength="5" Placement="ToastsPlacement.TopRight" />
 
-<div class="main-box" style="background: rgba(0,0,0,.5); max-width: 600px;">
-    @* <h2>LOGIN</h2> *@
-    <img src="Icons/EcoLog-icon.ico" alt="EcoLog Logo" class="app-icon">
+ @RenderLoadingIndicator()
 
-    <form>
-        <div class="core-box login-input">
-            <input autofocus type="text" name="" required="true" @bind="UserName" @bind:event="oninput">
-            <label>Username</label>
-        </div>
-        <div class="core-box login-input">
-            <input type="password" name="" required="true" @bind="Password" @bind:event="oninput" autocomplete="current-password">
-            <label>Contraseña</label>
-        </div>  
-        <button type="button" id="loginButton" class="button-style" @onclick="OnClickLogin">
-            Login
-        </button>        
-    </form>
-</div>
+
+    @if (!IsLoading)
+{
+    <div class="main-box" style="background: rgba(0,0,0,.5); max-width: 600px;">
+        @* <h2>LOGIN</h2> *@
+        <img src="Icons/EcoLog-icon.ico" alt="EcoLog Logo" class="app-icon">
+
+        <form>
+            <div class="core-box login-input">
+                <input autofocus type="text" name="" required="true" @bind="UserName" @bind:event="oninput">
+                <label>Username</label>
+            </div>
+            <div class="core-box login-input">
+                <input type="password" name="" required="true" @bind="Password" @bind:event="oninput" autocomplete="current-password">
+                <label>Contraseña</label>
+            </div>  
+            <button type="button" id="loginButton" class="button-style" @onclick="OnClickLogin">
+                Login
+            </button>        
+        </form>
+    </div>
+}
 
 <script>
     (function () {

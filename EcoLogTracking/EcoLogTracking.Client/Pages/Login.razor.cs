@@ -2,6 +2,7 @@
 using DocumentFormat.OpenXml.Office2010.Excel;
 using EcoLogTracking.Client.Models;
 using Irony.Parsing;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.JSInterop;
 using Newtonsoft.Json.Linq;
@@ -20,14 +21,32 @@ namespace EcoLogTracking.Client.Pages
         private string UserName { get; set; } = string.Empty;
         private string Password { get; set; } = string.Empty;
 
-        #region Login     
+        [Inject] protected PreloadService PreloadService { get; set; } = default!;
+        private bool IsLoading = true;
+        #region Login  
+
+        #region Initialize
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                await JS.InvokeVoidAsync("addEnterEventListener", "loginButton");
+                try
+                {
+                    IsLoading = true;
+                    PreloadService.Show(spinnerColor:SpinnerColor.Success);
+                    await JS.InvokeVoidAsync("addEnterEventListener", "loginButton");
+                }
+                finally
+                {
+                    await Task.Delay(1000);
+                    IsLoading = false;                    
+                    PreloadService.Hide();
+                    StateHasChanged();
+                }
+
             }
-        }
+        }       
+        #endregion
 
         private async Task OnClickLogin()
         {
@@ -54,6 +73,20 @@ namespace EcoLogTracking.Client.Pages
             }
         }
         #endregion
+
+        private RenderFragment RenderLoadingIndicator() => builder =>
+        {
+            PreloadService.Show();
+            if (IsLoading)
+            {
+                builder.OpenElement(0, "div");
+                builder.AddAttribute(1, "class", "loading-indicator");
+                builder.AddContent(2, "Cargando...");
+                builder.CloseElement();
+
+            }
+            PreloadService.Hide();
+        };
 
         #region Api            
         private async Task<string?> LoginUser(string username, string password)

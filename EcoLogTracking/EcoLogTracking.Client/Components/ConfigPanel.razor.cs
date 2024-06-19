@@ -107,6 +107,7 @@ namespace EcoLogTracking.Client.Components
                     if (response.IsSuccessStatusCode)
                     {
                         var message = await response.Content.ReadAsStringAsync();
+                        ShowMessage(ToastType.Danger, "Todos los registros de la base de datos han sido eliminados exitosamente");
                         Console.WriteLine(message);
                     }
                     else
