@@ -3,19 +3,35 @@ using EcoLogTracking.Client.Models;
 using EcoLogTracking.Client.Pages;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace EcoLogTracking.Client.Components
 {
+    /// <summary>
+    /// Componente que gestiona la configuración del panel de administración.
+    /// </summary>
     public partial class ConfigPanel
     {
+        #region Parámetros y Propiedades
+
         [Parameter]
         public MainPanel MainPanelInstance { get; set; }
-        public int DeleteFrecuencyDays { get; set; }
-        public string? UserName { get; set; } = MainPanel.User.UserName;
-        public string? Email { get; set; } = MainPanel.User.Mail;
 
+        public int DeleteFrecuencyDays { get; set; }
+
+        /// <summary>
+        /// Nombre de usuario actual.
+        /// </summary>
+        public string? UserName { get; set; } = MainPanel.User.UserName;
+
+        /// <summary>
+        /// Correo electrónico actual.
+        /// </summary>
+        public string? Email { get; set; } = MainPanel.User.Mail;
 
         public string newUserName { get; set; } = string.Empty;
         public string newEmail { get; set; } = string.Empty;
@@ -23,27 +39,36 @@ namespace EcoLogTracking.Client.Components
 
         public static Tabs tabs = default!;
 
+        #endregion Parámetros y Propiedades
+
+        #region Campos
+
         private List<ToastMessage> toastMessages = new();
         private ConfirmDialog dialog = default!;
-
         private Configuration Configuration { get; set; }
-
         public static bool IsDangerTabActive = false;
-
         private record TabMessage(string Event, string ActiveTabTitle, string PreviousActiveTabTitle);
-
         private List<TabMessage> messages = new();
 
+        #endregion Campos
+
+        #region Ciclo de Vida
 
         protected override async void OnInitialized()
         {
             base.OnInitialized();
 
+            // Cargar la configuración inicial desde el servidor
             Configuration = await Http.GetFromJsonAsync<Configuration>("/api/Configuration");
             DeleteFrecuencyDays = Configuration.Period;
 
+            // Asegurar que la UI se actualice después de obtener los datos
             StateHasChanged();
         }
+
+        #endregion Ciclo de Vida
+
+        #region Manejadores de Eventos de Pestañas
 
         private void OnTabShowingAsync(TabsEventArgs args)
             => messages.Add(new("OnShowing", args.ActiveTabTitle, args.PreviousActiveTabTitle));
@@ -65,20 +90,60 @@ namespace EcoLogTracking.Client.Components
             await ToggleDangerTab(IsDangerTabActive);
         }
 
+        #endregion Manejadores de Eventos de Pestañas
+
+        #region Métodos
+
+        /// <summary>
+        /// Cambia el estado de la pestaña "Danger Zone".
+        /// </summary>
+        /// <param name="isActive">Estado activo/desactivo.</param>
         public async Task ToggleDangerTab(bool isActive)
         {
             IsDangerTabActive = isActive;
             await JS.InvokeVoidAsync("applyFilter", isActive);
         }
 
+        /// <summary>
+        /// Muestra la primera pestaña activa.
+        /// </summary>
         public static async Task ShowFirstTabAsync() => await tabs.ShowFirstTabAsync();
 
+        /// <summary>
+        /// Muestra un cuadro de diálogo de confirmación.
+        /// </summary>
+        /// <param name="Message">Mensaje de confirmación.</param>
+        /// <returns>True si se confirma; False si se cancela.</returns>
+        private async Task<bool> ConfirmDialogAsync(string Message)
+        {
+            var parameters = new Dictionary<string, object?>
+            {
+                { "Message", Message }
+            };
 
+            var options = new ConfirmDialogOptions
+            {
+                YesButtonColor = ButtonColor.Danger,
+                YesButtonText = "Eliminar",
+                NoButtonText = "Cancelar",
+                IsVerticallyCentered = true,
+                Dismissable = true
+            };
 
+            var DialogResponse = await dialog.ShowAsync<ConfirmDialogComponent>(
+                title: "Confirmar Eliminación",
+                parameters,
+                confirmDialogOptions: options);
+
+            return DialogResponse;
+        }
+
+        /// <summary>
+        /// Maneja el evento de clic para eliminar un usuario.
+        /// </summary>
         private async Task OnClickDeteleUserAsync()
         {
             string Message = "¿Está seguro de que desea eliminar este usuario?";
-
 
             if (await ConfirmDialogAsync(Message))
             {
@@ -92,10 +157,12 @@ namespace EcoLogTracking.Client.Components
             }
         }
 
+        /// <summary>
+        /// Maneja el evento de clic para eliminar todos los registros de la base de datos.
+        /// </summary>
         private async Task OnClickDeleteAllLogs()
         {
             string Message = "¿Está seguro de que desea eliminar todos los registros de la base de datos?";
-
 
             if (await ConfirmDialogAsync(Message))
             {
@@ -124,10 +191,11 @@ namespace EcoLogTracking.Client.Components
             {
                 ShowMessage(ToastType.Secondary, "Acción de eliminación cancelada.");
             }
-
-
-
         }
+
+        /// <summary>
+        /// Maneja el evento de clic para actualizar la información del usuario.
+        /// </summary>
         private async Task OnClickUpdate()
         {
             try
@@ -140,7 +208,6 @@ namespace EcoLogTracking.Client.Components
 
                 var response = await Http.PutAsJsonAsync("api/User", userToUpdate);
                 _ = await Http.PutAsJsonAsync("api/Configuration", Configuration);
-
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -160,11 +227,13 @@ namespace EcoLogTracking.Client.Components
             }
         }
 
+        /// <summary>
+        /// Maneja el evento de clic para registrar un nuevo usuario.
+        /// </summary>
         private async Task OnClickRegister()
         {
             try
             {
-
                 User newUser = new()
                 {
                     UserName = newUserName,
@@ -192,6 +261,9 @@ namespace EcoLogTracking.Client.Components
             }
         }
 
+        /// <summary>
+        /// Limpia los campos de entrada para un nuevo usuario.
+        /// </summary>
         private void OnClickClear()
         {
             newUserName = string.Empty;
@@ -199,33 +271,18 @@ namespace EcoLogTracking.Client.Components
             newPassword = string.Empty;
         }
 
-        private async Task<bool> ConfirmDialogAsync(string Message)
-        {
-            var parameters = new Dictionary<string, object?>
-            {
-                { "Message", Message }
-            };
-
-            var options = new ConfirmDialogOptions
-            {
-                YesButtonColor = ButtonColor.Danger,
-                YesButtonText = "Eliminar",
-                NoButtonText = "Cancelar",
-                IsVerticallyCentered = true,
-                Dismissable = true
-            };
-
-            var DialogResponse = await dialog.ShowAsync<ConfirmDialogComponent>(
-                title: "Confirmar Eliminación",
-                parameters,
-                confirmDialogOptions: options);
-
-            return DialogResponse;
-        }
+        #endregion Métodos
 
         #region Toast
+
+        /// <summary>
+        /// Muestra un mensaje de toast con el tipo y mensaje especificados.
+        /// </summary>
         private void ShowMessage(ToastType toastType, string message) => toastMessages.Add(CreateToastMessage(toastType, message));
 
+        /// <summary>
+        /// Crea un objeto de mensaje de toast con el tipo y mensaje especificados.
+        /// </summary>
         private ToastMessage CreateToastMessage(ToastType toastType, string message)
         {
             var toastMessage = new ToastMessage();
@@ -234,6 +291,7 @@ namespace EcoLogTracking.Client.Components
 
             return toastMessage;
         }
+
         #endregion Toast
     }
 }
