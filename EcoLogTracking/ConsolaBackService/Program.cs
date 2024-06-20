@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using System.IO;
+using System;
 
 namespace ConsolaBackService
 {
@@ -16,7 +18,7 @@ namespace ConsolaBackService
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                    config.AddJsonFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json"), optional: false, reloadOnChange: false);
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
