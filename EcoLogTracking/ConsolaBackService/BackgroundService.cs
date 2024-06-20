@@ -12,6 +12,9 @@ using MailKit.Security;
 using System.IO;
 using System.Collections.Generic;
 using System.Text.Json;
+using ConsolaBackService.Models;
+using Microsoft.Extensions.Configuration;
+using System.Runtime.Remoting.Messaging;
 
 namespace ConsolaBackService
 {
@@ -19,11 +22,26 @@ namespace ConsolaBackService
     {
         private readonly ILogger<Service> _logger;
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
         private Timer _timerEmail;
+        private string _apiBaseUrl;
+        private string _logFilePath;
+        private EmailSettings _emailSettings;
 
-        public Service(HttpClient httpClient)
+        private int _hour;
+        private int _minute;
+
+        public Service(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
+            _configuration = configuration;
+            _apiBaseUrl = _configuration["ApiSettings:BaseUrl"];
+            _logFilePath = _configuration["DestinationFolder:Route"];
+            _emailSettings = _configuration.GetSection("EmailSettings").Get<EmailSettings>();
+
+            _hour = Convert.ToInt32(_configuration["DateTimeExec:hour"]);
+            _minute = Convert.ToInt32(_configuration["DateTimeExec:minute"]);
+
         }
 
         /// <summary>
@@ -34,11 +52,8 @@ namespace ConsolaBackService
         {
             try
             {
-                Configuration response = await _httpClient.GetFromJsonAsync<Configuration>("https://localhost:7216/api/Configuration");
-                if (response==null)
-                {
-                    return null;
-                }
+                Configuration response = await _httpClient.GetFromJsonAsync<Configuration>(_apiBaseUrl +"/api/Configuration");
+              
                 return response;
             }
             catch (Exception ex)
@@ -57,7 +72,7 @@ namespace ConsolaBackService
         {
             try
             {
-                StreamWriter sw = new StreamWriter("C:\\Althaus\\LogRecap.txt");
+                StreamWriter sw = new StreamWriter(_logFilePath);
                 DateTime date = DateTime.Now;
                 DateTime secondDate = date.AddDays(-1);
                 DateFilter dateFilter = new DateFilter {
@@ -66,7 +81,7 @@ namespace ConsolaBackService
                 };
                     
                 List<Log> listaLogs = new List<Log>();
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:7216/GetBetween", dateFilter);
+                var response = await _httpClient.PostAsJsonAsync(_apiBaseUrl + "/GetBetween", dateFilter);
                 string responseAUX = await response.Content.ReadAsStringAsync();
                 
                 listaLogs = JsonSerializer.Deserialize<List<Log>>(responseAUX);
@@ -78,22 +93,23 @@ namespace ConsolaBackService
                 }
                 sw.Close();
                 var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("EcoLog Tracking", "testweb@ecocomputer.com"));
-                message.To.Add(new MailboxAddress("Recipient Name", "nrk19969@educastur.es"));
-                message.Subject = "Logs "+ "[Date: "+secondDate.DayOfWeek+", " +
-                    secondDate.Date.Day+"/" + secondDate.Month +"/" +secondDate.Year+"]";
 
-                var bodyBuilder = new BodyBuilder {
-                    TextBody = "Recap error logs [Date: "+secondDate.DayOfWeek+", " +
-                    secondDate.Date.Day+"/" + secondDate.Month +"/" +secondDate.Year+"]"};
+                message.From.Add(new MailboxAddress(_emailSettings.FromName, _emailSettings.FromAddress));
+                message.To.Add(new MailboxAddress(_emailSettings.ToName, _emailSettings.ToAddress));
+                message.Subject = "Logs " + "[Date: " + DateTime.Now.AddDays(-1).ToString("dddd, dd/MM/yyyy") + "]";
 
-                bodyBuilder.Attachments.Add("C:\\Althaus\\LogRecap.txt");
+                var bodyBuilder = new BodyBuilder
+                {
+                    TextBody = "Recap error logs [Date: " + DateTime.Now.AddDays(-1).ToString("dddd, dd/MM/yyyy") + "]"
+                };
+
+                bodyBuilder.Attachments.Add(_logFilePath);
                 message.Body = bodyBuilder.ToMessageBody();
 
                 using (var client = new SmtpClient())
                 {
-                    client.Connect("smtp.ecocomputer.com", 587, SecureSocketOptions.StartTls);
-                    client.Authenticate("testweb@ecocomputer.com", "tevhfXhNUC!K3");
+                    client.Connect(_emailSettings.SmtpServer, _emailSettings.SmtpPort, SecureSocketOptions.StartTls);
+                    client.Authenticate(_emailSettings.SmtpUser, _emailSettings.SmtpPassword);
                     client.Send(message);
                     client.Disconnect(true);
                 }
@@ -115,13 +131,13 @@ namespace ConsolaBackService
             DateTime nextDelete = configuration.DeletedDate.AddDays(configuration.Period);
             if (DateTime.Now > nextDelete)
             {
-                _httpClient.DeleteAsync("https://localhost:7216/"+configuration.Period);
+                _httpClient.DeleteAsync(_logFilePath + configuration.Period);
                 Configuration newConfig = new Configuration {
                     Id = configuration.Id,
                     Period = configuration.Period,
                     DeletedDate = DateTime.Now
                 };
-                _httpClient.PutAsJsonAsync("https://localhost:7216/api/Configuration",newConfig);
+                _httpClient.PutAsJsonAsync(_apiBaseUrl + "/api/Configuration",newConfig);
             }
             
 
@@ -153,7 +169,13 @@ namespace ConsolaBackService
 
         public override Task StartAsync(CancellationToken stoppingToken)
         {
-            TaskEmail(15,00); 
+            Console.WriteLine("path: "+_apiBaseUrl);
+            Console.WriteLine("path: " +  _logFilePath);
+            Console.WriteLine("path: " + _emailSettings.FromName);
+            Console.WriteLine("path: " + _hour);
+            Console.WriteLine("path: " + _minute);
+
+            TaskEmail(_hour,_minute); 
             return Task.CompletedTask;
             //TaskEmail(13,13); 
         }

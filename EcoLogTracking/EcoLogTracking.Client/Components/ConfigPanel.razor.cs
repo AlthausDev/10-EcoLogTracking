@@ -3,10 +3,8 @@ using EcoLogTracking.Client.Models;
 using EcoLogTracking.Client.Pages;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.Http.Json;
-using static System.Net.WebRequestMethods;
 
 namespace EcoLogTracking.Client.Components
 {
@@ -32,12 +30,13 @@ namespace EcoLogTracking.Client.Components
 
         public static bool IsDangerTabActive = false;
 
-        record TabMessage(string Event, string ActiveTabTitle, string PreviousActiveTabTitle);
-        List<TabMessage> messages = new List<TabMessage>();
+        private record TabMessage(string Event, string ActiveTabTitle, string PreviousActiveTabTitle);
+
+        private List<TabMessage> messages = new();
 
 
         protected override async void OnInitialized()
-        {         
+        {
             base.OnInitialized();
 
             Configuration = await Http.GetFromJsonAsync<Configuration>("/api/Configuration");
@@ -122,7 +121,7 @@ namespace EcoLogTracking.Client.Components
                 }
             }
             else
-            {    
+            {
                 ShowMessage(ToastType.Secondary, "Acción de eliminación cancelada.");
             }
 
@@ -132,7 +131,7 @@ namespace EcoLogTracking.Client.Components
         private async Task OnClickUpdate()
         {
             try
-            {               
+            {
                 User userToUpdate = MainPanel.User;
                 userToUpdate.UserName = UserName;
                 userToUpdate.Mail = Email;
@@ -147,7 +146,7 @@ namespace EcoLogTracking.Client.Components
                 {
                     var message = await response.Content.ReadAsStringAsync();
                     ShowMessage(ToastType.Success, "Usuario actualizado correctamente.");
-                    Console.WriteLine(message); 
+                    Console.WriteLine(message);
                 }
                 else
                 {
@@ -165,12 +164,12 @@ namespace EcoLogTracking.Client.Components
         {
             try
             {
-                
-                User newUser = new User
+
+                User newUser = new()
                 {
                     UserName = newUserName,
                     Mail = newEmail,
-                    Password = newPassword                   
+                    Password = newPassword
                 };
 
                 var response = await Http.PostAsJsonAsync("api/User", newUser);
@@ -179,7 +178,7 @@ namespace EcoLogTracking.Client.Components
                 {
                     var message = await response.Content.ReadAsStringAsync();
                     ShowMessage(ToastType.Success, "Usuario creado correctamente.");
-                    OnClickClear();                  
+                    OnClickClear();
                 }
                 else
                 {

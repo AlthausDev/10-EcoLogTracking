@@ -1,12 +1,9 @@
 ﻿using BlazorBootstrap;
 using EcoLogTracking.Client.Models;
 using EcoLogTracking.Client.Pages;
-using EcoLogTracking.Client.Services;
 using Microsoft.AspNetCore.Components;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Net.Http.Json;
-using System.Threading;
 
 
 namespace EcoLogTracking.Client.Components
@@ -37,7 +34,7 @@ namespace EcoLogTracking.Client.Components
                     selectedLogItem = value;
                 }
             }
-        }     
+        }
 
         #region Initialize
         protected override async Task OnInitializedAsync()
@@ -45,7 +42,7 @@ namespace EcoLogTracking.Client.Components
             try
             {
                 IsLoading = true;
-                
+
             }
             finally
             {
@@ -59,7 +56,7 @@ namespace EcoLogTracking.Client.Components
         public async Task<GridDataProviderResult<Log>> LogsDataProvider(GridDataProviderRequest<Log> request)
         {
             return await Task.FromResult(request.ApplyTo(LogList.OrderBy(Log => Log.Id)));
-        }        
+        }
 
 
         private async Task<IEnumerable<FilterOperatorInfo>> GridFiltersTranslationProvider()
@@ -127,7 +124,7 @@ namespace EcoLogTracking.Client.Components
 
         #region Loader
         private RenderFragment RenderLoadingIndicator() => builder =>
-        {            
+        {
             PreloadService.Show(spinnerColor: SpinnerColor.Success, "Cargando...");
             if (IsLoading)
             {

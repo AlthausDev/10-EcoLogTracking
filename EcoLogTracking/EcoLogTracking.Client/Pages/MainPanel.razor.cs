@@ -1,26 +1,15 @@
-﻿using Azure.Core;
-using BlazorBootstrap;
-using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Presentation;
+﻿using BlazorBootstrap;
 using EcoLogTracking.Client.Components;
 using EcoLogTracking.Client.Models;
-using EcoLogTracking.Client.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.JSInterop;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Json;
-using System.Security.Claims;
 
 namespace EcoLogTracking.Client.Pages
 {
     public partial class MainPanel
-    {    
+    {
         private bool IsLoading { get; set; } = true;
         public static bool IsLogged { get; set; } = false;
         public static Modal ModalInstance { get; set; } = default!;
@@ -49,7 +38,7 @@ namespace EcoLogTracking.Client.Pages
                     NavManager.NavigateTo("/login");
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
 
             //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
             //var user = authState.User;
@@ -95,13 +84,13 @@ namespace EcoLogTracking.Client.Pages
         {
             ShowLogs = ShowLogs == "block" ? "none" : "block";
             ShowConfig = ShowConfig == "block" ? "none" : "block";
-            ConfigPanel.ShowFirstTabAsync();
+            _ = ConfigPanel.ShowFirstTabAsync();
             UpdateButtonState();
         }
 
         private async void OnClickSearch()
         {
-           await GetLogDataBetweenDates();
+            await GetLogDataBetweenDates();
         }
 
         /// <summary>
@@ -113,7 +102,7 @@ namespace EcoLogTracking.Client.Pages
             {
                 await storageService.RemoveItemAsync("token");
                 await storageService.ClearAsync();
-                Http.DefaultRequestHeaders.Remove("Authorization");
+                _ = Http.DefaultRequestHeaders.Remove("Authorization");
             }
             catch (Exception ex)
             {
@@ -180,6 +169,6 @@ namespace EcoLogTracking.Client.Pages
         private async Task HideModal()
         {
             await ModalInstance.HideAsync();
-        }   
+        }
     }
 }

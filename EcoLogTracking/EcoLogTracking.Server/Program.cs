@@ -1,5 +1,4 @@
 ﻿using Blazored.LocalStorage;
-using EcoLogTracking.Client.Services;
 using EcoLogTracking.Server.Components;
 using EcoLogTracking.Server.Repository.Impl;
 using EcoLogTracking.Server.Repository.Interfaces;
@@ -32,7 +31,6 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IConfigurationRepository, ConfigurationRepository>();
 builder.Services.AddTransient<IConfigurationService, ConfigurationService>();
-builder.Services.AddSingleton<MockLogService>();
 
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddHttpClient();

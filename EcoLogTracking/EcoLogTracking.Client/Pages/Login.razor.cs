@@ -1,16 +1,8 @@
 ﻿using BlazorBootstrap;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using EcoLogTracking.Client.Models;
-using Irony.Parsing;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.JSInterop;
-using Newtonsoft.Json.Linq;
-using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Security.Claims;
 
 namespace EcoLogTracking.Client.Pages
 {
@@ -33,7 +25,7 @@ namespace EcoLogTracking.Client.Pages
                 try
                 {
                     IsLoading = true;
-                    PreloadService.Show(spinnerColor:SpinnerColor.Success, "Cargando...");
+                    PreloadService.Show(spinnerColor: SpinnerColor.Success, "Cargando...");
                     await JS.InvokeVoidAsync("addEnterEventListener", "loginButton");
                 }
                 finally
@@ -45,7 +37,7 @@ namespace EcoLogTracking.Client.Pages
                 }
 
             }
-        }       
+        }
         #endregion
 
         private async Task OnClickLogin()
@@ -55,7 +47,7 @@ namespace EcoLogTracking.Client.Pages
         }
 
         private async Task LoginResult(string? result)
-        {          
+        {
             try
             {
                 if (string.IsNullOrEmpty(result))
@@ -101,9 +93,10 @@ namespace EcoLogTracking.Client.Pages
                     var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponse>();
 
                     if (loginResponse != null)
-                    {        
+                    {
+
+                        await GenerateTokenAsync(loginResponse.Token);
                         MainPanel.User = await Http.GetFromJsonAsync<User>($"/user/{loginResponse.User.Id}");
-                       await GenerateTokenAsync(loginResponse.Token);
 
                         return loginResponse.Token;
                     }

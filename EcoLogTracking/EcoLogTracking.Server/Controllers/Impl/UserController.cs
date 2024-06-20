@@ -36,7 +36,6 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="user">Nombre de usuario introducido por teclado</param>
         /// <param name="pass">Contraseña introducida por teclado</param>
         /// <returns>Devuelve objeto usuario con nombre, contraseña e id del usuario (si existe)</returns>
-        ///https://localhost:7216/api/login
         [HttpPost("login")]
         [AllowAnonymous]
         public async Task<ActionResult<LoginResponse>> GetUserByUsernameAndPass(User user)
@@ -89,10 +88,8 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <param name="user">Objeto usuario con los datos del nuevo usuario que se quiere registrar</param>
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: no afecta a ninguna tupla)</returns>
-        /// https://localhost:7216/api/User
         [HttpPost]
-        [AllowAnonymous]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> PostUser(User user)
         {
             try
@@ -111,9 +108,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="id">id de usuario</param>
         /// <returns>Devuelve objeto usuario con id, nombre, contraseña e email(si existe)</returns>
         [HttpGet("/user/{id}")]
-        [AllowAnonymous]
-        //https://localhost:7216/UserById/1
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<User>> GetuserById(int id)
         {           
                 User user = await userService.GetUserById(id);
@@ -128,7 +123,6 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <param name="id">Id del usuario que está borrando su cuenta</param>
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: no afecta a ninguna tupla)</returns>
-        /// https://localhost:7216/api/User
         [HttpDelete("/user/{id}")]
         [Authorize(Roles = "admin")]
         //[AllowAnonymous]
@@ -150,7 +144,6 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// </summary>
         /// <param name="user">Objeto usuario con mismo id( para poder filtrar la tabla) pero con los nuevos datos del usuario</param>
         /// <returns>bool (true: si la consulta afecta a alguna tupla; false: no afecta a ninguna tupla)</returns>
-        /// https://localhost:7216/api/User
         [HttpPut]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateUser(User user)

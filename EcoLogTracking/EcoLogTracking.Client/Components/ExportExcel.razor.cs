@@ -1,14 +1,9 @@
 ﻿using ClosedXML.Excel;
-using EcoLogTracking.Client.Models;
 using EcoLogTracking.Client.Pages;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using System;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EcoLogTracking.Client.Components
 {
@@ -21,7 +16,7 @@ namespace EcoLogTracking.Client.Components
 
         [Parameter]
         public EventCallback<MouseEventArgs> Cerrar { get; set; }
-    
+
 
         private async Task OnClickExport(MouseEventArgs e)
         {
@@ -46,7 +41,7 @@ namespace EcoLogTracking.Client.Components
             var logList = LogViewer.LogList
                 .Where(log => log.Logged >= FirstDate && log.Logged <= LastDate)
                 .ToList();
-           
+
             // Define las cabeceras del archivo Excel
             worksheet.Cell(1, 1).Value = "Id";
             worksheet.Cell(1, 2).Value = "Fecha y hora";
@@ -82,7 +77,7 @@ namespace EcoLogTracking.Client.Components
             workbook.SaveAs(memoryStream);
             var excelFileName = $"Logs_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
 
-            await JS.InvokeAsync<object>("DescargarExcel", excelFileName, Convert.ToBase64String(memoryStream.ToArray()));
+            _ = await JS.InvokeAsync<object>("DescargarExcel", excelFileName, Convert.ToBase64String(memoryStream.ToArray()));
             await Cerrar.InvokeAsync();
         }
     }
