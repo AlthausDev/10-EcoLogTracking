@@ -18,7 +18,6 @@ namespace EcoLogTracking.Server.Controllers.Impl
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : Controller
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public readonly IUserService userService;
         private readonly IConfigurationSection jwtConfiguration;

@@ -118,12 +118,6 @@ namespace EcoLogTracking.Server.Services.Impl
         {
             try
             {
-                //User userToUpdate = new()
-                //{
-                //    Id = user.Id,
-                //    UserName = user.UserName,
-                //    Password = encryptionHelper.Encrypt(user.Password)
-                //};
                 bool response = await userRepository.UpdateUser(user);
                 return response;
             }

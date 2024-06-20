@@ -41,7 +41,11 @@ namespace EcoLogTracking.Server.Repository.Impl
         }
 
 
-
+        /// <summary>
+        /// MÉTODO QUE OBTIENE LOS DATOS DE UN USUARIO EN FUNCIÓN DE SU ID
+        /// </summary>
+        /// <param name="id">Id de usuario</param>
+        /// <returns>Objeto usuario con los datos del usuario cuyo Id coincide con el parámetro</returns>
         public async Task<User?> GetUserById(int id)
         {
             try

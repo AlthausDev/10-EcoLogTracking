@@ -92,6 +92,11 @@ namespace EcoLogTracking.Server.Services.Impl
             }
         }
 
+        /// <summary>
+        /// Método que obtiene los logs de una fecha específica.
+        /// </summary>
+        /// <param name="date">Fecha específica para obtener los logs</param>
+        /// <returns>Retorna estado HTTP 200 con la lista de logs si se encontraron, de lo contrario, estado HTTP 204</returns>
 
         public async Task<IEnumerable<Log>> GetLogsByDate(DateTime date) { 
             return await LogRepository.GetLogsByDate(date);

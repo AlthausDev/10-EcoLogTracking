@@ -177,7 +177,6 @@ namespace ConsolaBackService
 
             TaskEmail(_hour,_minute); 
             return Task.CompletedTask;
-            //TaskEmail(13,13); 
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)

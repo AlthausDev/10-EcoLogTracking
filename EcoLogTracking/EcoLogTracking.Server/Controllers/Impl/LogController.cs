@@ -13,7 +13,6 @@ namespace EcoLogTracking.Server.Controllers.Impl
     public class LogController : ControllerBase
     {
         private readonly ILogService _logService;
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public LogController(ILogService logService)
         {
@@ -33,10 +32,11 @@ namespace EcoLogTracking.Server.Controllers.Impl
 
 
         /// <summary>
-        /// MÉTODO QUE GUARDA EN LA BASE DE DATOS LOS REGISTROS RECIBIDOS
+        /// Método que guarda en la base de datos los registros recibidos.
         /// </summary>
-        /// <param name="log">NLog generado por los programas que implementan nuestro software</param>
-        /// <returns>bool OK() si registro correcto/ BadRequest() si registro incorrecto</returns>
+        /// <param name="log">Log generado por los programas que implementan nuestro software</param>
+        /// <returns>Retorna estado HTTP 200 si el registro fue correcto, de lo contrario, estado HTTP 500</returns>
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> PostLog([FromBody] Log log)
@@ -90,13 +90,18 @@ namespace EcoLogTracking.Server.Controllers.Impl
             }
         }
 
+        /// <summary>
+        /// Método que obtiene los logs de una fecha específica.
+        /// </summary>
+        /// <param name="date">Fecha específica para obtener los logs</param>
+        /// <returns>Retorna estado HTTP 200 con la lista de logs si se encontraron, de lo contrario, estado HTTP 204</returns>
 
         [HttpGet("/GetByDate/{date}")]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetLogsByDay(DateTime date)
         {
             var list = await _logService.GetLogsByDate(date);
-            return list.IsNullOrEmpty() ? BadRequest("No logs found.") : Ok(list);
+            return list.IsNullOrEmpty() ? NotFound("Logs no encontrados.") : Ok(list);
         }
     }
 }

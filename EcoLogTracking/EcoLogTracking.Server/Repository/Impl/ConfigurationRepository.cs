@@ -20,6 +20,13 @@ namespace EcoLogTracking.Server.Repository.Impl
             _configuration = configuration;
         }
 
+
+        /// <summary>
+        /// MÉTODO QUE ACTUALIZA LA CONFIGURACIÓN (PERIODO DE BORRADO)
+        /// </summary>
+        /// <param name="configuration">Objeto Configuración que porta el período de configuración y la fecha
+        /// del último borrado </param>
+        /// <returns>Return (true: si la consulta afecta a alguna tupla; false: si ocurre lo contrario)</returns>
         public async Task<bool> updateConfiguration(Configuration configuration)
         {
             try
@@ -38,7 +45,10 @@ namespace EcoLogTracking.Server.Repository.Impl
         }
 
 
-
+        /// <summary>
+        /// MÉTODO QUE OBTIENE LA CONFIGURACIÓN ESTABLECIDA PARA LA APLICACION
+        /// </summary>
+        /// <returns>Devuelve objeto Configuración con el período y el último borrado</returns>
         public Configuration getConfiguration()
         {
             try
