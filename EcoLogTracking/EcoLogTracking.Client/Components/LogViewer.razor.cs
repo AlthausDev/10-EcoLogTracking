@@ -47,7 +47,7 @@ namespace EcoLogTracking.Client.Components
             finally
             {
                 IsLoading = false;
-                await Task.Delay(1000);
+                await Task.Delay(500);
                 PreloadService.Hide();
             }
         }

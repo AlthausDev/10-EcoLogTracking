@@ -107,7 +107,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         /// <param name="id">id de usuario</param>
         /// <returns>Devuelve objeto usuario con id, nombre, contraseña e email(si existe)</returns>
         [HttpGet("/user/{id}")]
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         public async Task<ActionResult<User>> GetuserById(int id)
         {           
                 User user = await userService.GetUserById(id);

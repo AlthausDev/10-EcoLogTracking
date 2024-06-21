@@ -11,12 +11,9 @@ namespace EcoLogTracking.Client.Pages
     public partial class MainPanel
     {
         private bool IsLoading { get; set; } = true;
-        public static bool IsLogged { get; set; } = false;
+        public static bool IsLogged { get; set; } = true;
         public static Modal ModalInstance { get; set; } = default!;
         public static User User { get; set; } = new();
-
-        //private string ShowLogs { get; set; } = "none";
-        //private string ShowConfig { get; set; } = "block";
 
         private string ShowLogs { get; set; } = "block";
         private string ShowConfig { get; set; } = "none";
@@ -37,17 +34,21 @@ namespace EcoLogTracking.Client.Pages
                 {
                     NavManager.NavigateTo("/login");
                 }
+                else
+                {
+                    IsLogged = true;
+                }
             }
             catch (Exception) { }
-
-            //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            //var user = authState.User;
-
-            //if (!user.Identity.IsAuthenticated)
-            //{
-            //    NavManager.NavigateTo("/login");
-            //}
         }
+        //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        //var user = authState.User;
+
+        //if (!user.Identity.IsAuthenticated)
+        //{
+        //    NavManager.NavigateTo("/login");
+        //}
+
 
         //protected override async void OnInitialized()
         //{

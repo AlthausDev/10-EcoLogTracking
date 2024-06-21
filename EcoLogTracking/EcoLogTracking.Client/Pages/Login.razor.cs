@@ -30,7 +30,7 @@ namespace EcoLogTracking.Client.Pages
                 }
                 finally
                 {
-                    await Task.Delay(1000);
+                    await Task.Delay(500);
                     IsLoading = false;
                     PreloadService.Hide();
                     StateHasChanged();
