@@ -2,6 +2,7 @@
 using EcoLogTracking.Client.Models;
 using EcoLogTracking.Client.Pages;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System.Collections.ObjectModel;
 using System.Net.Http.Json;
 
@@ -35,6 +36,7 @@ namespace EcoLogTracking.Client.Components
                 }
             }
         }
+      
 
         #region Initialize
         protected override async Task OnInitializedAsync()

@@ -21,7 +21,7 @@ namespace EcoLogTracking.Client.Pages
                 bool isTokenPresent = !string.IsNullOrEmpty(token);
 
                 string nextPage = isTokenPresent ? "/logger" : "/login";
-                //string nextPage = "/logger";
+                
 
                 if (isTokenPresent)
                 {

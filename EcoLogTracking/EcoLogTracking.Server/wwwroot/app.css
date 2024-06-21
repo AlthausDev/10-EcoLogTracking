@@ -5,6 +5,7 @@ html, body {
 :root {
     /*    --primary-color: #a1f097;
     --secondary-color: lime;
+         --letters-color: white;
     --main-box-color: #03e9f4;
     --button-background-color: #6fef88;
     --button-background-hover-color: #b7f8ce;
@@ -12,12 +13,15 @@ html, body {
     --border-radius: 12px;*/
 
     --primary-color: grey;
+
     --secondary-color: grey;
+    --letters-color: white;
+    --letters-color-hover: black;
     --main-box-color: grey;
     --button-background-color: grey;
     --button-background-hover-color: white;
     --shadow-color: transparent;
-    --border-radius: 12px;
+    --border-radius: 0px;
 }
 
 /* Icono de la aplicación */

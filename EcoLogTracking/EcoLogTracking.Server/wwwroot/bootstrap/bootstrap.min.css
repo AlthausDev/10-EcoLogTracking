@@ -4016,7 +4016,7 @@ textaskitem.form-control-lg {
 
         .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
             border-color: #e9ecef #e9ecef #dee2e6;
-            isolation: isolate
+            isolation: isolate;           
         }
 
         .nav-tabs .nav-link.disabled {
