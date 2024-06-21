@@ -3,12 +3,20 @@ html, body {
 }
 
 :root {
-    --primary-color: #a1f097;
+    /*    --primary-color: #a1f097;
     --secondary-color: lime;
     --main-box-color: #03e9f4;
     --button-background-color: #6fef88;
     --button-background-hover-color: #b7f8ce;
     --shadow-color: rgb(105 235 109);
+    --border-radius: 12px;*/
+
+    --primary-color: grey;
+    --secondary-color: grey;
+    --main-box-color: grey;
+    --button-background-color: grey;
+    --button-background-hover-color: white;
+    --shadow-color: transparent;
     --border-radius: 12px;
 }
 
