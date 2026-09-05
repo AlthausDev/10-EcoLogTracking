@@ -12,11 +12,27 @@ La solución principal se encuentra en `EcoLogTracking/` e incluye varios proyec
 - `EcoConsoleBackService` — procesamiento/servicio auxiliar en segundo plano.
 - `RequestLoggingMiddleware` — middleware dedicado al registro de peticiones.
 
-## Objetivo
+## Flujo de logging
+
+```text
+Request
+  ↓
+RequestLoggingMiddleware
+  ↓
+Server / application flow
+  ↓
+Persistence layer
+  ↓
+Consulta y recap de eventos
+```
+
+La idea principal es mantener el logging como una responsabilidad reconocible y sustituible, en lugar de repartir llamadas de registro sin una frontera clara por toda la aplicación.
+
+## Objetivo y estado
 
 El repositorio sirve como laboratorio para separar la infraestructura de logging de la aplicación principal y probar un flujo completo desde la captura de eventos hasta su almacenamiento y consulta.
 
-`LogRecap.txt` conserva un resumen ligero del estado de los logs durante el desarrollo.
+`LogRecap.txt` conserva un resumen ligero del estado de los logs durante el desarrollo. El proyecto se mantiene como referencia técnica más que como producto final.
 
 ## Licencia
 
