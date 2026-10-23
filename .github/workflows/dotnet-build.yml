@@ -1,0 +1,21 @@
+name: .NET 8 build
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore server and referenced projects
+        run: dotnet restore EcoLogTracking/EcoLogTracking.Server/EcoLogTracking.Server.csproj
+      - name: Build server and referenced projects
+        run: dotnet build EcoLogTracking/EcoLogTracking.Server/EcoLogTracking.Server.csproj --no-restore --configuration Release
