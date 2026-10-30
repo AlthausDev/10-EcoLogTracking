@@ -27,7 +27,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.32" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.32" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.32" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.3.11" />
     <Content Update="wwwroot\Icons\excel.png">
