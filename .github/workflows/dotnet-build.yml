@@ -1,4 +1,4 @@
-name: .NET 8 build
+name: .NET 10 migration validation
 on:
   push:
     branches: [master]
@@ -9,13 +9,27 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - EcoLogTracking/RequestLoggingMiddleware/RequestLoggingMiddleware.csproj
+          - EcoLogTracking/EcoConsoleBackService/EcoConsoleBackService.csproj
+          - EcoLogTracking/EcoLogTracking.Client/EcoLogTracking.Client.csproj
+          - EcoLogTracking/EcoLogTracking.Server/EcoLogTracking.Server.csproj
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
-      - name: Restore server and referenced projects
-        run: dotnet restore EcoLogTracking/EcoLogTracking.Server/EcoLogTracking.Server.csproj
-      - name: Build server and referenced projects
-        run: dotnet build EcoLogTracking/EcoLogTracking.Server/EcoLogTracking.Server.csproj --no-restore --configuration Release
+          dotnet-version: '10.0.x'
+      - name: Install WebAssembly workload
+        if: contains(matrix.project, 'Client') || contains(matrix.project, 'Server')
+        run: dotnet workload install wasm-tools
+      - name: Restore
+        run: dotnet restore "${{ matrix.project }}"
+      - name: Build Release
+        run: dotnet build "${{ matrix.project }}" --no-restore --configuration Release
+      - name: Publish Release
+        if: contains(matrix.project, 'Server') || contains(matrix.project, 'EcoConsoleBackService')
+        run: dotnet publish "${{ matrix.project }}" --no-restore --configuration Release --output "${{ runner.temp }}/publish"
