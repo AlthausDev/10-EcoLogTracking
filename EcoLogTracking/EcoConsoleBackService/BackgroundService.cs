@@ -85,7 +85,7 @@ namespace EcoConsoleBackService
                 var response = await _httpClient.PostAsJsonAsync(_apiBaseUrl + "/GetBetween", dateFilter);
                 string? responseAUX = await response.Content.ReadAsStringAsync();
                 listaLogs = JsonSerializer.Deserialize<List<Log>>(responseAUX);
-                if (!listaLogs.IsNullOrEmpty())
+                if (listaLogs is { Count: > 0 })
                 {
                     foreach (Log l in listaLogs)
                     {
