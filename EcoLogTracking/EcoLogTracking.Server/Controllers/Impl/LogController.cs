@@ -65,7 +65,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         public async Task<IActionResult> GetLogsBetween(DateFilter dates)
         {
             var list = await _logService.GetLogsBetween(dates);
-            return list.IsNullOrEmpty() ? NotFound(list) : Ok(list);
+            return list?.Any() != true ? NotFound(list) : Ok(list);
         }
 
 
@@ -101,7 +101,7 @@ namespace EcoLogTracking.Server.Controllers.Impl
         public async Task<IActionResult> GetLogsByDay(DateTime date)
         {
             var list = await _logService.GetLogsByDate(date);
-            return list.IsNullOrEmpty() ? NotFound("Logs no encontrados.") : Ok(list);
+            return list?.Any() != true ? NotFound("Logs no encontrados.") : Ok(list);
         }
     }
 }
