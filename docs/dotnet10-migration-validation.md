@@ -15,6 +15,12 @@ Branch `migration/dotnet10-20261116` is an isolated **candidate**, not a validat
 - The execution environment does not have the dotnet SDK, a SQL Server test instance, browser or SMTP sandbox. Therefore no local restore, build, publish, SQL, browser or mail test was performed.
 - CI results must be inspected before opening a non-draft PR or merging. Do not infer runtime compatibility from a green compile.
 
+## Candidate CI results (2026-11-16)
+- Workflow run [43891445919](https://github.com/AlthausDev/10-EcoLogTracking/actions/runs/43891445919): all four project jobs restored and built successfully; the server and console service published successfully.
+- The first CI attempts revealed a missing `IsNullOrEmpty` extension method for collections under the new dependency graph. Replaced its two server uses with `list?.Any() != true` and the console use with `listaLogs is { Count: > 0 }`, preserving empty/null handling.
+- CI green proves compilation/publication only. No browser, SQL, JWT, NLog or SMTP regression tests have run.
+- The package versions 10.0.0 are a baseline, **not** the final supported servicing versions. Update to a verified current patch before approval.
+
 ## Compatibility and risks
 - Blazor InteractiveAuto and WebAssembly static assets, routing, JS interop, Blazor.Bootstrap 2.2.0, Blazored.LocalStorage 4.5.0, ClosedXML 0.102.2: test browser startup, prerender, WASM activation, Excel download and navigation.
 - JWT bearer authentication: validate valid, invalid and expired tokens, roles, 401/403 and logout.
